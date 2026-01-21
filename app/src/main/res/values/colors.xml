@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary palette - Calming Purple/Blue -->
+    <color name="primary">#FF6C63FF</color>
+    <color name="primary_dark">#FF5A52E0</color>
+    <color name="primary_light">#FF9D97FF</color>
+    <color name="secondary">#FF00D9FF</color>
+
+    <!-- Background gradients -->
+    <color name="bg_gradient_start">#FFE8E6FF</color>
+    <color name="bg_gradient_end">#FFFFFFFF</color>
+    <color name="bg_dark">#FF1A1A2E</color>
+
+    <!-- Surface colors -->
+    <color name="surface">#FFFFFFFF</color>
+    <color name="surface_variant">#FFF5F3FF</color>
+    <color name="card_background">#FFFFFFFF</color>
+
+    <!-- Text colors -->
+    <color name="text_primary">#FF1A1A2E</color>
+    <color name="text_secondary">#FF6B6B8D</color>
+    <color name="text_on_primary">#FFFFFFFF</color>
+
+    <!-- Cuby skin colors -->
+    <color name="cuby_pink">#FFFFB6C1</color>
+    <color name="cuby_blue">#FF87CEEB</color>
+    <color name="cuby_default">#FFFFE4B5</color>
+    <color name="cuby_outline">#FF4A4A6A</color>
+
+    <!-- Mood colors -->
+    <color name="mood_happy">#FFFFD93D</color>
+    <color name="mood_calm">#FF6BCB77</color>
+    <color name="mood_anxious">#FFFF8C42</color>
+    <color name="mood_sad">#FF6C757D</color>
+
+    <!-- UI accents -->
+    <color name="button_gradient_start">#FF6C63FF</color>
+    <color name="button_gradient_end">#FF9D97FF</color>
+    <color name="ripple">#336C63FF</color>
+    <color name="divider">#1A000000</color>
+
+    <!-- Drawing colors -->
+    <color name="draw_green">#FF4CAF50</color>
+    <color name="draw_red">#FFF44336</color>
+    <color name="draw_blue">#FF2196F3</color>
+    <color name="draw_yellow">#FFFFEB3B</color>
+    <color name="draw_purple">#FF9C27B0</color>
 </resources>

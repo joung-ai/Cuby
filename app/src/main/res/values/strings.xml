@@ -1,3 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App -->
     <string name="app_name">Cuby</string>
+
+    <!-- Onboarding -->
+    <string name="welcome_message">Welcome to Cuby!</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="name_cuby">Name your Cuby</string>
+    <string name="choose_skin">Choose Cuby\'s skin color</string>
+    <string name="start_adventure">Start Adventure</string>
+
+    <!-- Home -->
+    <string name="greeting_format">Hi, %s!</string>
+    <string name="bloxy_food_format">Bloxy Food: %d</string>
+    <string name="feed_cuby">Feed Cuby</string>
+    <string name="yum_message">Yum! Cuby feels happy!</string>
+
+    <!-- Navigation -->
+    <string name="chat">Chat</string>
+    <string name="diary">Diary</string>
+    <string name="garden">Garden</string>
+    <string name="detox">Detox</string>
+    <string name="settings">Settings</string>
+
+    <!-- Garden -->
+    <string name="draw_plant_title">Draw your plant for today!</string>
+    <string name="how_do_you_feel">How do you feel?</string>
+    <string name="plant_seed">Plant Seed</string>
+    <string name="seed_planted_success">Seed planted successfully!</string>
+    <string name="clear">Clear</string>
+
+    <!-- Moods -->
+    <string name="mood_happy">Happy</string>
+    <string name="mood_calm">Calm</string>
+    <string name="mood_anxious">Anxious</string>
+    <string name="mood_sad">Sad</string>
+
+    <!-- Detox -->
+    <string name="detox_tasks">Detox &amp; Tasks</string>
+    <string name="free_food">Free Food</string>
+    <string name="collect_free_food">Collect Free Food</string>
+    <string name="available_tasks">Available Tasks</string>
+    <string name="task_walk">Take a 15 min walk</string>
+    <string name="task_breathe">Deep Breathing (1 min)</string>
+    <string name="ready">Ready!</string>
+    <string name="next_food_format">Next food in: %02d:%02d</string>
+    <string name="task_complete_seed">Great job! You earned food &amp; a seed.</string>
+    <string name="task_complete_no_seed">Good job! You earned food (Seed already planted today).</string>
+
+    <!-- Settings -->
+    <string name="notifications_toggle">Daily Check-in Notifications</string>
+    <string name="view_disclaimer">View Disclaimer</string>
+    <string name="reset_data">Reset App Data</string>
+    <string name="reset_confirm_title">Reset Data?</string>
+    <string name="reset_confirm_message">This will delete all your progress. Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="disclaimer_title">Disclaimer</string>
+    <string name="disclaimer_message">Cuby is for reflection and support, not medical advice. If you
+        are in crisis, please contact emergency services.</string>
+    <string name="ok">OK</string>
+    <string name="close">Close</string>
+
+    <!-- Diary -->
+    <string name="add_entry">Add Entry</string>
+    <string name="write_with_cuby">Write with Cuby</string>
+    <string name="reflection_note">Reflection Note</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Daily Check-in</string>
+    <string name="notification_title">Cuby misses you!</string>
+    <string name="notification_message">Hey, are you okay today?</string>
 </resources>
