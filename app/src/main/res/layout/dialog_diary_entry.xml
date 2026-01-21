@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Switch
+        android:id="@+id/swCubyMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Write with Cuby"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvCubyPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E1BEE7"
+        android:padding="8dp"
+        android:text="Cuby asks..."
+        android:textColor="#000000"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etContent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="top|start"
+        android:hint="Dear Diary..."
+        android:inputType="textMultiLine"
+        android:background="@android:drawable/edit_text"/>
+        
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_gravity="end"
+        android:tint="#FF0000"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>
