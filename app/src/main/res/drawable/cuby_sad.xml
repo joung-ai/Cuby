@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Body slightly hunched -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M60,85 Q60,65 100,65 Q140,65 140,85 L140,145 Q140,165 100,165 Q60,165 60,145 Z" />
+
+    <!-- Body outline -->
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"
+        android:pathData="M60,85 Q60,65 100,65 Q140,65 140,85 L140,145 Q140,165 100,165 Q60,165 60,145 Z" />
+
+    <!-- Left arm (droopy) -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M55,90 Q45,100 45,115 Q45,125 55,120" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M55,90 Q45,100 45,115 Q45,125 55,120" />
+
+    <!-- Right arm (droopy) -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M145,90 Q155,100 155,115 Q155,125 145,120" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M145,90 Q155,100 155,115 Q155,125 145,120" />
+
+    <!-- Left leg -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M75,160 L75,185 Q75,190 80,190 L85,190 Q90,190 90,185 L90,160" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M75,160 L75,185 Q75,190 80,190 L85,190 Q90,190 90,185 L90,160" />
+
+    <!-- Right leg -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M110,160 L110,185 Q110,190 115,190 L120,190 Q125,190 125,185 L125,160" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M110,160 L110,185 Q110,190 115,190 L120,190 Q125,190 125,185 L125,160" />
+
+    <!-- Face background -->
+    <path
+        android:fillColor="#FFFAF0"
+        android:pathData="M70,80 Q70,70 100,70 Q130,70 130,80 L130,115 Q130,125 100,125 Q70,125 70,115 Z" />
+
+    <!-- Left eye (sad, looking down) -->
+    <path
+        android:fillColor="#4A4A6A"
+        android:pathData="M82,95 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M80,97 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- Sad eyebrow left -->
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M73,82 L91,86" />
+
+    <!-- Right eye (sad, looking down) -->
+    <path
+        android:fillColor="#4A4A6A"
+        android:pathData="M118,95 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M116,97 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- Sad eyebrow right -->
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M127,82 L109,86" />
+
+    <!-- Sad mouth (frown) -->
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M85,115 Q100,105 115,115" />
+
+    <!-- Teardrop left -->
+    <path
+        android:fillColor="#64B5F6"
+        android:pathData="M75,105 Q72,115 75,120 Q78,115 75,105" />
+
+    <!-- Antenna (droopy) -->
+    <path
+        android:fillColor="#6C63FF"
+        android:pathData="M100,65 Q95,55 90,50 Q88,45 92,48" />
+</vector>

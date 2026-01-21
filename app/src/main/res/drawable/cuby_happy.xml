@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Body -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M60,80 Q60,60 100,60 Q140,60 140,80 L140,140 Q140,160 100,160 Q60,160 60,140 Z" />
+
+    <!-- Body outline -->
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"
+        android:pathData="M60,80 Q60,60 100,60 Q140,60 140,80 L140,140 Q140,160 100,160 Q60,160 60,140 Z" />
+
+    <!-- Left arm (raised for wave) -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M55,85 Q35,70 30,55 Q28,45 35,50 Q45,60 55,75" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M55,85 Q35,70 30,55 Q28,45 35,50 Q45,60 55,75" />
+
+    <!-- Hand waving -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M30,50 m-8,0 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M22,50 A8,8 0 1,1 38,50" />
+
+    <!-- Right arm -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M145,85 Q160,85 160,100 Q160,115 145,115" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M145,85 Q160,85 160,100 Q160,115 145,115" />
+
+    <!-- Left leg -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M75,155 L75,180 Q75,185 80,185 L85,185 Q90,185 90,180 L90,155" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M75,155 L75,180 Q75,185 80,185 L85,185 Q90,185 90,180 L90,155" />
+
+    <!-- Right leg -->
+    <path
+        android:fillColor="#FFE4B5"
+        android:pathData="M110,155 L110,180 Q110,185 115,185 L120,185 Q125,185 125,180 L125,155" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M110,155 L110,180 Q110,185 115,185 L120,185 Q125,185 125,180 L125,155" />
+
+    <!-- Face background -->
+    <path
+        android:fillColor="#FFFAF0"
+        android:pathData="M70,75 Q70,65 100,65 Q130,65 130,75 L130,110 Q130,120 100,120 Q70,120 70,110 Z" />
+
+    <!-- Left eye (happy squint) -->
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M75,90 Q82,85 89,90" />
+
+    <!-- Right eye (happy squint) -->
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M111,90 Q118,85 125,90" />
+
+    <!-- Big happy mouth -->
+    <path
+        android:fillColor="#FFD93D"
+        android:pathData="M80,100 Q100,125 120,100 Q100,115 80,100" />
+    <path
+        android:strokeColor="#4A4A6A"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M80,100 Q100,125 120,100" />
+
+    <!-- Blush left -->
+    <path
+        android:fillColor="#FFCDD2"
+        android:pathData="M72,100 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
+
+    <!-- Blush right -->
+    <path
+        android:fillColor="#FFCDD2"
+        android:pathData="M128,100 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
+
+    <!-- Sparkle effects -->
+    <path
+        android:fillColor="#FFD93D"
+        android:pathData="M45,40 L48,35 L51,40 L48,45 Z" />
+    <path
+        android:fillColor="#FFD93D"
+        android:pathData="M155,50 L158,45 L161,50 L158,55 Z" />
+
+    <!-- Antenna -->
+    <path
+        android:fillColor="#6C63FF"
+        android:pathData="M100,60 L100,45 Q95,40 100,35 Q105,40 100,45" />
+</vector>

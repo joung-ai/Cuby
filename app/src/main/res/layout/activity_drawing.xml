@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Draw your plant for today!"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <com.example.cuby.ui.views.DrawingView
+            android:id="@+id/drawingView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="#F0F0F0"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnColorGreen"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#4CAF50"
+                android:layout_margin="4dp"/>
+            <Button
+                android:id="@+id/btnColorRed"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#F44336"
+                android:layout_margin="4dp"/>
+            <Button
+                android:id="@+id/btnColorBlue"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#2196F3"
+                android:layout_margin="4dp"/>
+            
+            <Button
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How do you feel?"
+            android:layout_marginBottom="8dp"/>
+
+        <RadioGroup
+            android:id="@+id/rgMood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/rbHappy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Happy"
+                android:layout_marginEnd="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rbCalm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calm"
+                android:layout_marginEnd="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rbAnxious"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anxious"
+                android:layout_marginEnd="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rbSad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sad"/>
+        </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Reflection Note"
+            android:layout_marginBottom="24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etReflection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Plant Seed"/>
+
+    </LinearLayout>
+</ScrollView>
