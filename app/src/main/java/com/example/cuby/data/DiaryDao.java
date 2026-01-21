@@ -1,0 +1,29 @@
+package com.example.cuby.data;
+
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+import androidx.room.Update;
+import com.example.cuby.model.DiaryEntry;
+import java.util.List;
+
+@Dao
+public interface DiaryDao {
+    @Query("SELECT * FROM diary_entry ORDER BY createdAt DESC")
+    LiveData<List<DiaryEntry>> getAllEntries();
+
+    @Query("SELECT * FROM diary_entry WHERE date = :date ORDER BY createdAt DESC")
+    LiveData<List<DiaryEntry>> getEntriesForDate(String date);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(DiaryEntry entry);
+
+    @Update
+    void update(DiaryEntry entry);
+
+    @Delete
+    void delete(DiaryEntry entry);
+}
