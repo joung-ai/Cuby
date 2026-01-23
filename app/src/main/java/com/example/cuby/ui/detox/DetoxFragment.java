@@ -58,9 +58,9 @@ public class DetoxFragment extends Fragment {
              if (getActivity() != null) {
                  getActivity().runOnUiThread(() -> {
                      if (alreadyPlanted) {
-                         Toast.makeText(getContext(), "Good job! You earned food 🎉", Toast.LENGTH_SHORT).show();
+                         Toast.makeText(getContext(), "Good job! You earned food", Toast.LENGTH_SHORT).show();
                      } else {
-                         Toast.makeText(getContext(), "Great job! You earned food & a seed 🌱", Toast.LENGTH_SHORT).show();
+                         Toast.makeText(getContext(), "Great job! You earned food & a seed", Toast.LENGTH_SHORT).show();
                          startActivity(new Intent(getActivity(), DrawingActivity.class));
                      }
                  });
@@ -74,7 +74,7 @@ public class DetoxFragment extends Fragment {
         inv.id = 1;
         inv.lastFreeFoodAt = System.currentTimeMillis();
         repository.insertInventory(inv);
-        Toast.makeText(getContext(), "Collected free food! 🍎", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Collected free food!", Toast.LENGTH_SHORT).show();
         updateTimer();
     }
 

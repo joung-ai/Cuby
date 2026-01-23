@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -18,16 +19,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.cuby.R;
+import com.example.cuby.data.AppRepository;
+import com.example.cuby.logic.CubyMoodEngine;
 import com.example.cuby.ui.chat.ChatFragment;
 import com.example.cuby.ui.diary.DiaryFragment;
 import com.example.cuby.ui.garden.GardenFragment;
 import com.example.cuby.ui.detox.DetoxFragment;
 import com.example.cuby.ui.settings.SettingsFragment;
 
+import java.time.LocalDate;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel viewModel;
     private TextView tvGreeting;
+
+    private TextView tvCubyBubble;
+    private View layoutMoodButtons;
+    private AppRepository repository;
+    private CubyMoodEngine cubyMoodEngine;
     private TextView tvFoodCount;
     private ImageView ivCuby;
     private ObjectAnimator breathingAnimator;
@@ -47,11 +57,51 @@ public class HomeFragment extends Fragment {
         tvFoodCount = view.findViewById(R.id.tvFoodCount);
         ivCuby = view.findViewById(R.id.ivCuby);
 
+        tvCubyBubble = view.findViewById(R.id.tvCubyBubble);
+        layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons);
+
+        repository = AppRepository.getInstance(requireActivity().getApplication());
+        cubyMoodEngine = new CubyMoodEngine(repository);
+
+
         setupNavigation(view);
         setupCubyInteraction();
         observeData();
         startBreathingAnimation();
+
+        String today = LocalDate.now().toString();
+
+        repository.getDailyLog(today).observe(getViewLifecycleOwner(), log -> {
+
+            if (log == null || log.mood == null) {
+                // Tell-Tale mode
+                tvCubyBubble.setText("Hey, how are you feeling today?");
+                tvCubyBubble.setVisibility(View.VISIBLE);
+                layoutMoodButtons.setVisibility(View.VISIBLE);
+            } else {
+                // Normal Cuby dialogue
+                tvCubyBubble.setText(
+                        cubyMoodEngine.getCubyMessage(
+                                log.mood,
+                                false,
+                                log.seedUnlocked
+                        )
+                );
+                tvCubyBubble.setVisibility(View.VISIBLE);
+                layoutMoodButtons.setVisibility(View.GONE);
+            }
+        });
+
+        //mood buttons
+        setupMoodButton(view, R.id.btnCalm, "CALM");
+        setupMoodButton(view, R.id.btnOkay, "OKAY");
+        setupMoodButton(view, R.id.btnTired, "TIRED");
+        setupMoodButton(view, R.id.btnOverwhelmed, "OVERWHELMED");
+        setupMoodButton(view, R.id.btnHappy, "HAPPY");
+
+
     }
+
 
     private void setupNavigation(View view) {
         // Card-based navigation
@@ -126,6 +176,21 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    private void setupMoodButton(View root, int id, String mood) {
+        root.findViewById(id).setOnClickListener(v -> {
+            String today = LocalDate.now().toString();
+
+            cubyMoodEngine.recordDailyMood(today, mood);
+
+            tvCubyBubble.setText(
+                    cubyMoodEngine.getCubyMessage(mood, false, false)
+            );
+
+            layoutMoodButtons.setVisibility(View.GONE);
+        });
+    }
+
 
     @Override
     public void onDestroyView() {

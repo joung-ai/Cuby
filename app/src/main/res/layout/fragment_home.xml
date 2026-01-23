@@ -62,6 +62,68 @@
                 android:padding="24dp"
                 android:gravity="center">
 
+                <!-- Cuby Dialogue Bubble -->
+                <TextView
+                    android:id="@+id/tvCubyBubble"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_speech_bubble"
+                    android:padding="12dp"
+                    android:text="Hey, how are you feeling today?"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone"
+                    android:gravity="center" />
+
+                <!-- Tell-Tale Mood Buttons -->
+                <LinearLayout
+                    android:id="@+id/layoutMoodButtons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginBottom="12dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCalm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="😌 Calm"
+                        style="@style/SecondaryButton"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOkay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🙂 Okay"
+                        style="@style/SecondaryButton"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTired"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="😴 Tired"
+                        style="@style/SecondaryButton"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOverwhelmed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="😣 Overwhelmed"
+                        style="@style/SecondaryButton"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnHappy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="😊 Happy"
+                        style="@style/SecondaryButton"/>
+                </LinearLayout>
+
+
+
                 <ImageView
                     android:id="@+id/ivCuby"
                     android:layout_width="180dp"

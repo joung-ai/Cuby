@@ -10,13 +10,17 @@ public class DailyLog {
     @PrimaryKey
     @NonNull
     public String date; // ISO yyyy-MM-dd
-
-    public String mood; // HAPPY, SAD, ANXIOUS, etc.
+    public String mood; // CALM, OKAY, TIRED, OVERWHELMED, HAPPY & only made once per day
     public String reflectionNote;
     public boolean seedPlanted;
-    public String plantType;
     public String drawingPath;
     public long lastUpdated;
+
+    // added
+    public int currentTaskIndex;
+    public boolean taskCompleted;
+    public boolean seedUnlocked;
+    public String taskId; // refference to daily task
     
     public DailyLog(@NonNull String date) {
         this.date = date;
