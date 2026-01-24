@@ -7,117 +7,117 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/margin_standard">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Draw your plant for today!"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_subheading"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="@dimen/margin_standard" />
 
         <com.example.cuby.ui.views.DrawingView
             android:id="@+id/drawingView"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/drawing_canvas_height"
             android:background="#F0F0F0"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="@dimen/margin_small" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="@dimen/margin_standard">
 
             <Button
                 android:id="@+id/btnColorGreen"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/color_button_size"
+                android:layout_height="@dimen/color_button_size"
                 android:backgroundTint="#4CAF50"
-                android:layout_margin="4dp"/>
+                android:layout_margin="@dimen/margin_tiny" />
             <Button
                 android:id="@+id/btnColorRed"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/color_button_size"
+                android:layout_height="@dimen/color_button_size"
                 android:backgroundTint="#F44336"
-                android:layout_margin="4dp"/>
+                android:layout_margin="@dimen/margin_tiny" />
             <Button
                 android:id="@+id/btnColorBlue"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/color_button_size"
+                android:layout_height="@dimen/color_button_size"
                 android:backgroundTint="#2196F3"
-                android:layout_margin="4dp"/>
-            
+                android:layout_margin="@dimen/margin_tiny" />
+
             <Button
                 android:id="@+id/btnClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Clear"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="How do you feel?"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="@dimen/margin_small" />
 
         <RadioGroup
             android:id="@+id/rgMood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="@dimen/margin_standard">
 
             <RadioButton
                 android:id="@+id/rbHappy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Happy"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="@dimen/margin_small" />
 
             <RadioButton
                 android:id="@+id/rbCalm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Calm"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="@dimen/margin_small" />
 
             <RadioButton
                 android:id="@+id/rbAnxious"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Anxious"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="@dimen/margin_small" />
 
             <RadioButton
                 android:id="@+id/rbSad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sad"/>
+                android:text="Sad" />
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Reflection Note"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="@dimen/margin_medium">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etReflection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:minLines="2"/>
+                android:minLines="2" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Plant Seed"/>
+            android:text="Plant Seed" />
 
     </LinearLayout>
 </ScrollView>

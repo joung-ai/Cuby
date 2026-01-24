@@ -57,4 +57,9 @@
     <color name="room_floor">#CFE8FF</color>
     <color name="room_ceiling">#F5FBFF</color>
 
+    <!-- Mockup Colors -->
+    <color name="mockup_blue">#42A5F5</color>
+    <color name="mockup_lime">#CCFF90</color>
+    <color name="mockup_text_blue">#0D47A1</color> <!-- Darker blue for contrast -->
+
 </resources>

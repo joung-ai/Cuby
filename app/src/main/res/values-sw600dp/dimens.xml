@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General Margins & Paddings - Scaled up for tablet breathing room -->
+    <dimen name="margin_tiny">8dp</dimen>
+    <dimen name="margin_small">12dp</dimen>
+    <dimen name="margin_standard">24dp</dimen>
+    <dimen name="margin_medium">32dp</dimen>
+    <dimen name="margin_large">48dp</dimen>
+    <dimen name="margin_xlarge">64dp</dimen>
+
+    <!-- Text Sizes - Slightly larger for readability on large screens -->
+    <dimen name="text_small">16sp</dimen>
+    <dimen name="text_body">18sp</dimen>
+    <dimen name="text_subheading">22sp</dimen>
+    <dimen name="text_heading">32sp</dimen>
+    <dimen name="text_display">48sp</dimen>
+
+    <!-- Cuby Home Screen - Significantly larger -->
+    <dimen name="cuby_home_size">400dp</dimen>
+    <dimen name="cuby_home_margin_bottom">120dp</dimen>
+    <dimen name="cuby_shadow_width">280dp</dimen>
+    <dimen name="cuby_shadow_height">56dp</dimen>
+    <dimen name="cuby_shadow_translation_y">-72dp</dimen>
+
+    <!-- Component Sizes -->
+    <dimen name="icon_button_size">64dp</dimen>
+    <dimen name="icon_button_large_size">80dp</dimen>
+    <dimen name="bottom_bar_height">120dp</dimen>
+    <dimen name="feed_button_width">240dp</dimen>
+    <dimen name="feed_button_height">64dp</dimen>
+    <dimen name="chat_avatar_size">56dp</dimen>
+    <dimen name="color_button_size">64dp</dimen>
+    <dimen name="drawing_canvas_height">500dp</dimen>
+
+    <!-- Container Widths -->
+    <dimen name="content_max_width">600dp</dimen>
+</resources>

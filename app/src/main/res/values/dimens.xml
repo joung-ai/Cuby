@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General Margins & Paddings -->
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_standard">16dp</dimen>
+    <dimen name="margin_medium">24dp</dimen>
+    <dimen name="margin_large">32dp</dimen>
+    <dimen name="margin_xlarge">48dp</dimen>
+
+    <!-- Text Sizes -->
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_body">16sp</dimen>
+    <dimen name="text_subheading">18sp</dimen>
+    <dimen name="text_heading">24sp</dimen>
+    <dimen name="text_display">32sp</dimen>
+
+    <!-- Cuby Home Screen -->
+    <dimen name="cuby_home_size">200dp</dimen>
+    <dimen name="cuby_home_margin_bottom">100dp</dimen>
+    <dimen name="cuby_shadow_width">140dp</dimen>
+    <dimen name="cuby_shadow_height">28dp</dimen>
+    <dimen name="cuby_shadow_translation_y">-36dp</dimen>
+
+    <!-- Component Sizes -->
+    <dimen name="icon_button_size">48dp</dimen>
+    <dimen name="icon_button_large_size">56dp</dimen>
+    <dimen name="bottom_bar_height">96dp</dimen>
+    <dimen name="feed_button_width">160dp</dimen>
+    <dimen name="feed_button_height">48dp</dimen>
+    <dimen name="chat_avatar_size">40dp</dimen>
+    <dimen name="color_button_size">40dp</dimen>
+    <dimen name="drawing_canvas_height">300dp</dimen>
+
+    <!-- Container Widths (for constraining width on tablets) -->
+    <!-- On mobile, match parent effectively (0dp in constraints often) or full width -->
+    <dimen name="content_max_width">0dp</dimen>
+</resources>

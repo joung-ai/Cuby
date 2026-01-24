@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="@dimen/margin_standard">
 
         <!-- Header -->
         <TextView
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="🧘 Detox &amp; Tasks"
             style="@style/TitleText"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="@dimen/margin_standard" />
 
         <!-- Free Food Card -->
         <com.google.android.material.card.MaterialCardView
@@ -26,32 +26,32 @@
             app:cardCornerRadius="20dp"
             app:cardElevation="4dp"
             app:cardBackgroundColor="@color/primary_light"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="@dimen/margin_standard">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp"
+                android:padding="@dimen/margin_standard"
                 android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🍎 Free Food!"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/text_subheading"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="@dimen/margin_small" />
 
                 <TextView
                     android:id="@+id/tvTimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ready to collect!"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/text_small"
                     android:textColor="@color/white"
-                    android:layout_marginBottom="12dp" />
+                    android:layout_marginBottom="@dimen/margin_small" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCollect"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text="Complete a task to earn food:"
             style="@style/SubtitleText"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="@dimen/margin_small" />
 
         <!-- Task 1 -->
         <com.google.android.material.card.MaterialCardView
@@ -79,7 +79,7 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
             app:cardBackgroundColor="@color/surface"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/margin_small"
             android:clickable="true"
             android:focusable="true"
             app:rippleColor="@color/ripple">
@@ -89,15 +89,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp"
+                android:padding="@dimen/margin_standard"
                 android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🚶"
-                    android:textSize="28sp"
-                    android:layout_marginEnd="12dp" />
+                    android:textSize="@dimen/text_display"
+                    android:layout_marginEnd="@dimen/margin_small" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -109,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Take a 15 min walk"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/text_body"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary" />
 
@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reward: +2 Food"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
                         android:textColor="@color/mood_calm" />
                 </LinearLayout>
 
@@ -136,7 +136,7 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
             app:cardBackgroundColor="@color/surface"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/margin_small"
             android:clickable="true"
             android:focusable="true"
             app:rippleColor="@color/ripple">
@@ -146,15 +146,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp"
+                android:padding="@dimen/margin_standard"
                 android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🧘"
-                    android:textSize="28sp"
-                    android:layout_marginEnd="12dp" />
+                    android:textSize="@dimen/text_display"
+                    android:layout_marginEnd="@dimen/margin_small" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -166,7 +166,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Deep Breathing (1 min)"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/text_body"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary" />
 
@@ -174,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reward: +1 Food"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
                         android:textColor="@color/mood_calm" />
                 </LinearLayout>
 
