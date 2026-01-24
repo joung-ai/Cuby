@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Wall (base layer) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/room_wall"/>
+        </shape>
+    </item>
+
+    <!-- Ceiling tint (optional accent) -->
+    <item android:bottom="600dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/room_ceiling"/>
+        </shape>
+    </item>
+
+    <!-- Floor -->
+    <item android:top="500dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/room_floor"/>
+        </shape>
+    </item>
+
+</layer-list>

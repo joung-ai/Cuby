@@ -49,4 +49,12 @@
     <color name="draw_blue">#FF2196F3</color>
     <color name="draw_yellow">#FFFFEB3B</color>
     <color name="draw_purple">#FF9C27B0</color>
+
+    <!-- For background room -->
+
+    <!-- Default room -->
+    <color name="room_wall">#EAF6FF</color>
+    <color name="room_floor">#CFE8FF</color>
+    <color name="room_ceiling">#F5FBFF</color>
+
 </resources>

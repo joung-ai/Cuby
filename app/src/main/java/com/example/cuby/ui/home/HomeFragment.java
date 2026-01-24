@@ -2,6 +2,7 @@ package com.example.cuby.ui.home;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -41,6 +42,8 @@ public class HomeFragment extends Fragment {
     private TextView tvFoodCount;
     private ImageView ivCuby;
     private ObjectAnimator breathingAnimator;
+    private View cubyShadow;
+
     private Handler animationHandler = new Handler(Looper.getMainLooper());
 
     @Override
@@ -54,8 +57,11 @@ public class HomeFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         tvGreeting = view.findViewById(R.id.tvGreeting);
-        tvFoodCount = view.findViewById(R.id.tvFoodCount);
+        //tvFoodCount = view.findViewById(R.id.tvFoodCount);
         ivCuby = view.findViewById(R.id.ivCuby);
+
+        cubyShadow = view.findViewById(R.id.cubyShadow);
+
 
         tvCubyBubble = view.findViewById(R.id.tvCubyBubble);
         layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons);
@@ -105,11 +111,11 @@ public class HomeFragment extends Fragment {
 
     private void setupNavigation(View view) {
         // Card-based navigation
-        view.findViewById(R.id.cardChat).setOnClickListener(v -> navigateWithAnimation(new ChatFragment()));
-        view.findViewById(R.id.cardDiary).setOnClickListener(v -> navigateWithAnimation(new DiaryFragment()));
-        view.findViewById(R.id.cardGarden).setOnClickListener(v -> navigateWithAnimation(new GardenFragment()));
-        view.findViewById(R.id.cardDetox).setOnClickListener(v -> navigateWithAnimation(new DetoxFragment()));
-        view.findViewById(R.id.btnSettings).setOnClickListener(v -> navigateWithAnimation(new SettingsFragment()));
+        //view.findViewById(R.id.cardChat).setOnClickListener(v -> navigateWithAnimation(new ChatFragment()));
+        //view.findViewById(R.id.cardDiary).setOnClickListener(v -> navigateWithAnimation(new DiaryFragment()));
+        //view.findViewById(R.id.cardGarden).setOnClickListener(v -> navigateWithAnimation(new GardenFragment()));
+        //view.findViewById(R.id.cardDetox).setOnClickListener(v -> navigateWithAnimation(new DetoxFragment()));
+        //view.findViewById(R.id.btnSettings).setOnClickListener(v -> navigateWithAnimation(new SettingsFragment()));
         
         view.findViewById(R.id.btnFeed).setOnClickListener(v -> {
             viewModel.feedCuby();
@@ -144,14 +150,37 @@ public class HomeFragment extends Fragment {
     }
 
     private void startBreathingAnimation() {
-        PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 1.05f);
-        PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 1.05f);
-        
-        breathingAnimator = ObjectAnimator.ofPropertyValuesHolder(ivCuby, scaleX, scaleY);
-        breathingAnimator.setDuration(2000);
-        breathingAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-        breathingAnimator.setRepeatMode(ObjectAnimator.REVERSE);
-        breathingAnimator.start();
+
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
+        animator.setDuration(2200);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        animator.setRepeatMode(ValueAnimator.REVERSE);
+        animator.setInterpolator(new android.view.animation.LinearInterpolator());
+
+        animator.addUpdateListener(animation -> {
+            float t = (float) animation.getAnimatedValue();
+
+            // ---- CUBY ----
+            float cubyScale = 1.0f + (0.05f * t);
+            ivCuby.setScaleX(cubyScale);
+            ivCuby.setScaleY(cubyScale);
+
+            // ---- SHADOW ----
+            if (cubyShadow != null) {
+
+                // Larger visible change
+                float shadowScaleX = 1.0f + (0.08f * t);
+                float shadowScaleY = 1.0f + (0.04f * t);
+
+                cubyShadow.setScaleX(shadowScaleX);
+                cubyShadow.setScaleY(shadowScaleY);
+
+                // Stronger alpha contrast
+                cubyShadow.setAlpha(0.25f + (0.25f * t));
+            }
+        });
+
+        animator.start();
     }
 
     private void observeData() {
