@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pomodoro Timer"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <!-- Circle container -->
+    <FrameLayout
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:background="@drawable/circle_timer"
+        android:layout_marginBottom="32dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25:00"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnPomodoro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pomodoro (25 min)" />
+
+    <Button
+        android:id="@+id/btnShortBreak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Short Break (5 min)"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnLongBreak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Long Break (15 min)"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnPause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pause"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnResetTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>
