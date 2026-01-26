@@ -39,7 +39,7 @@ public class CubyMoodEngine {
                 return "Your happiness makes today brighter!";
             default:
                 return seedPlanted
-                        ? "Look at our garden growing 🌱"
+                        ? "Look at our garden growing"
                         : "I’m here for you, no matter what.";
         }
     }

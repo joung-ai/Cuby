@@ -1,188 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- ROOM BACKGROUND (STATIC) -->
-    <com.example.cuby.ui.room.RoomBackgroundView
-        android:id="@+id/roomBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.example.cuby.ui.room.RoomBackgroundView
+            android:id="@+id/roomBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     <!-- FOREGROUND UI -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    >
+        >
 
-        <!-- TOP RIGHT MENU (Vertical Stack) -->
-        <LinearLayout
-            android:id="@+id/menuStack"
+        <!-- GREETING (TOP LEFT) -->
+        <TextView
+            android:id="@+id/tvGreeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/margin_standard"
-            android:layout_marginEnd="@dimen/margin_standard"
+            android:text="Hi there!"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <!-- Settings -->
-            <ImageButton
-                android:id="@+id/btnSettings"
-                android:layout_width="@dimen/icon_button_size"
-                android:layout_height="@dimen/icon_button_size"
-                android:background="@drawable/bg_transparent_ripple"
-                android:src="@drawable/ic_settings"
-                android:scaleType="fitCenter"
-                android:padding="8dp"
-                app:tint="@color/mockup_lime"
-                android:contentDescription="Settings" />
-
-            <!-- Chat -->
-            <ImageButton
-                android:id="@+id/btnChat"
-                android:layout_width="@dimen/icon_button_size"
-                android:layout_height="@dimen/icon_button_size"
-                android:layout_marginTop="@dimen/margin_small"
-                android:background="@drawable/bg_transparent_ripple"
-                android:src="@drawable/ic_chat"
-                android:scaleType="fitCenter"
-                android:padding="8dp"
-                app:tint="@color/mockup_lime"
-                android:contentDescription="Chat" />
-
-            <!-- Activity (Placeholder using 'garden') -->
-            <ImageButton
-                android:id="@+id/btnActivity"
-                android:layout_width="@dimen/icon_button_size"
-                android:layout_height="@dimen/icon_button_size"
-                android:layout_marginTop="@dimen/margin_small"
-                android:background="@drawable/bg_transparent_ripple"
-                android:src="@drawable/ic_garden"
-                android:scaleType="fitCenter"
-                android:padding="8dp"
-                app:tint="@color/mockup_lime"
-                android:contentDescription="Activity" />
-
-            <!-- Timer (Placeholder using 'chat' for now until actual icon added) -->
-            <ImageButton
-                android:id="@+id/btnTimer"
-                android:layout_width="@dimen/icon_button_size"
-                android:layout_height="@dimen/icon_button_size"
-                android:layout_marginTop="@dimen/margin_small"
-                android:background="@drawable/bg_transparent_ripple"
-                android:src="@drawable/ic_chat"
-                android:scaleType="fitCenter"
-                android:padding="8dp"
-                android:visibility="gone"
-                app:tint="@color/mockup_lime"
-                android:contentDescription="Timer" />
-
-        </LinearLayout>
-
-
-        <!-- SPEECH BUBBLE (Centered Blue Pill) -->
+        <!-- SPEECH BUBBLE -->
         <TextView
             android:id="@+id/tvCubyBubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_speech_bubble_blue"
+            android:background="@drawable/bg_speech_bubble"
+            android:padding="12dp"
             android:text="Hello!"
-            android:textSize="@dimen/text_heading"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/ivCuby"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvGreeting"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="@dimen/margin_medium" />
+            android:layout_marginTop="12dp" />
 
         <!-- MOOD BUTTONS (TELL-TALE) -->
-        <!-- This section was removed as per the instructions -->
+        <LinearLayout
+            android:id="@+id/layoutMoodButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvCubyBubble"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCalm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="😌 Calm"
+                style="@style/SecondaryButton"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOkay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🙂 Okay"
+                style="@style/SecondaryButton"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTired"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="😴 Tired"
+                style="@style/SecondaryButton"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOverwhelmed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="😣 Overwhelmed"
+                style="@style/SecondaryButton"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHappy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="😊 Happy"
+                style="@style/SecondaryButton"/>
+        </LinearLayout>
 
         <View
             android:id="@+id/cubyShadow"
-            android:layout_width="@dimen/cuby_shadow_width"
-            android:layout_height="@dimen/cuby_shadow_height"
+            android:layout_width="140dp"
+            android:layout_height="28dp"
             android:background="@drawable/bg_shadow_oval"
             android:alpha="0.35"
             android:elevation="0dp"
             app:layout_constraintTop_toBottomOf="@id/ivCuby"
             app:layout_constraintStart_toStartOf="@id/ivCuby"
             app:layout_constraintEnd_toEndOf="@id/ivCuby"
-            android:translationY="@dimen/cuby_shadow_translation_y" />
+            android:translationY="-55dp"/>
 
 
         <ImageView
             android:id="@+id/ivCuby"
-            android:layout_width="@dimen/cuby_home_size"
-            android:layout_height="@dimen/cuby_home_size"
-            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="100dp"
             android:elevation="4dp"
             android:src="@drawable/cuby_idle"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bottomBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.85" />
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- This section was replaced by the new menuStack -->
+        <LinearLayout
+            android:id="@+id/floatingActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="6dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- This empty LinearLayout was removed as per the instructions -->
+            <ImageButton
+                android:id="@+id/btnSettings"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_settings"
+                android:scaleType="fitCenter"
+                android:contentDescription="Settings"/>
 
-        <!-- BOTTOM BAR (Blue Background) -->
+            <ImageButton
+                android:id="@+id/btnAlarm"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Alarm"
+                android:paddingLeft="4dp"
+                android:paddingTop="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_clock" />
+
+            <ImageButton
+                android:id="@+id/btnChat"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Chat"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_chat" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </LinearLayout>
+
+        <!-- BOTTOM BAR -->
         <LinearLayout
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_bar_height"
+            android:layout_height="96dp"
             android:orientation="horizontal"
             android:gravity="center"
-            android:background="@color/mockup_blue"
+            android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <!-- LEFT: Notebook/Diary -->
+            <!-- LEFT: GARDEN -->
             <ImageButton
                 android:id="@+id/btnGarden"
-                android:layout_width="@dimen/icon_button_large_size"
-                android:layout_height="@dimen/icon_button_large_size"
-                android:background="@drawable/bg_transparent_ripple"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_garden"
-                android:scaleType="fitCenter"
-                android:padding="12dp"
                 android:contentDescription="Garden"
-                app:tint="@color/mockup_lime"
-                android:layout_marginEnd="@dimen/margin_standard" />
-
-            <!-- CENTER: FEED (White Pill Button) -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFeed"
-                android:layout_width="@dimen/feed_button_width"
-                android:layout_height="@dimen/feed_button_height"
-                android:text="FEED"
-                android:textSize="@dimen/text_subheading"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                app:backgroundTint="@color/white"
-                app:cornerRadius="32dp"
-                android:stateListAnimator="@null"
-                android:elevation="0dp" />
+                android:scaleType="fitCenter"
+                android:layout_marginEnd="6dp"/>
 
 
-            <!-- RIGHT: Plant -->
+            <!-- RIGHT: PLANT / SEED -->
             <ImageButton
                 android:id="@+id/btnPlant"
-                android:layout_width="@dimen/icon_button_large_size"
-                android:layout_height="@dimen/icon_button_large_size"
-                android:background="@drawable/bg_transparent_ripple"
-                android:src="@drawable/ic_seed"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:scaleType="fitCenter"
-                android:padding="12dp"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_diary"
                 android:contentDescription="Plant Seed"
-                app:tint="@color/mockup_lime"
-                android:layout_marginStart="@dimen/margin_standard" />
+                android:layout_marginEnd="6dp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFeed"
+                style="@style/PrimaryButton"
+                android:layout_width="160dp"
+                android:layout_height="48dp"
+                android:text="FEED"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="24dp" />
+
+            <ImageButton
+                android:id="@+id/btnMeditate"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_meditate"
+                android:contentDescription="Plant Seed"
+                android:layout_marginStart="6dp"/>
+
+            <ImageButton
+                android:id="@+id/btnProductive"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_productivity"
+                android:contentDescription="Productivity Tools"
+                android:layout_marginStart="6dp"/>
 
         </LinearLayout>
 

@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
         // New Side Navigation
         view.findViewById(R.id.btnSettings).setOnClickListener(v -> navigateWithAnimation(new SettingsFragment()));
         view.findViewById(R.id.btnChat).setOnClickListener(v -> navigateWithAnimation(new ChatFragment()));
-        view.findViewById(R.id.btnActivity).setOnClickListener(v -> navigateWithAnimation(new GardenFragment())); // Placeholder flow
+        //view.findViewById(R.id.btnActivity).setOnClickListener(v -> navigateWithAnimation(new GardenFragment())); // Placeholder flow
         // view.findViewById(R.id.btnTimer) // Not implemented yet
 
         

@@ -5,7 +5,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Primary palette - Calming Purple/Blue -->
-    <color name="primary">#FF6C63FF</color>
+    <color name="primary">#ECF5FB</color>
     <color name="primary_dark">#FF5A52E0</color>
     <color name="primary_light">#FF9D97FF</color>
     <color name="secondary">#FF00D9FF</color>
@@ -61,5 +61,9 @@
     <color name="mockup_blue">#42A5F5</color>
     <color name="mockup_lime">#CCFF90</color>
     <color name="mockup_text_blue">#0D47A1</color> <!-- Darker blue for contrast -->
+
+    <!-- Cuby Icon colors-->
+    <color name="cuby_green">#77DD77</color>
+
 
 </resources>
