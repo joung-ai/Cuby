@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cuby"
         tools:targetApi="31">
-        
+
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:exported="true"
@@ -30,11 +30,11 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="false" />
-            
+
         <activity
             android:name=".ui.drawing.DrawingActivity"
             android:exported="false" />
-            
+
         <!-- Keep MainActivity declaration logic if needed, but we start with Onboarding -->
     </application>
 
