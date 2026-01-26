@@ -66,6 +66,18 @@
                 app:tint="@color/mockup_lime"
                 android:contentDescription="Activity" />
 
+            <ImageButton
+                android:id="@+id/btnAlarm"
+                android:layout_width="@dimen/icon_button_size"
+                android:layout_height="@dimen/icon_button_size"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@drawable/bg_transparent_ripple"
+                android:src="@drawable/ic_garden"
+                android:scaleType="fitCenter"
+                android:padding="8dp"
+                app:tint="@color/mockup_lime"
+                android:contentDescription="Activity" />
+
             <!-- Timer (Placeholder using 'chat' for now until actual icon added) -->
             <ImageButton
                 android:id="@+id/btnTimer"
@@ -100,8 +112,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="@dimen/margin_medium" />
 
-        <!-- MOOD BUTTONS (TELL-TALE) -->
-        <!-- This section was removed as per the instructions -->
+        <!--  BUTTONS (TELL-TALE) -->
+        <!-- ThiMOODs section was removed as per the instructions -->
 
         <View
             android:id="@+id/cubyShadow"

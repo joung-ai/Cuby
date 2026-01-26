@@ -28,6 +28,7 @@ import com.example.cuby.ui.garden.GardenFragment;
 import com.example.cuby.ui.detox.DetoxFragment;
 import com.example.cuby.ui.settings.SettingsFragment;
 
+
 import java.time.LocalDate;
 
 public class HomeFragment extends Fragment {
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -96,6 +98,10 @@ public class HomeFragment extends Fragment {
             showHappyCuby();
             Toast.makeText(getContext(), "Yum! Cuby feels happy! 💕", Toast.LENGTH_SHORT).show();
         });
+
+        view.findViewById(R.id.btnAlarm).setOnClickListener(v ->
+                navigateWithAnimation(new com.example.cuby.alarm.AlarmFragment())
+        );
     }
 
     private void navigateWithAnimation(Fragment fragment) {
