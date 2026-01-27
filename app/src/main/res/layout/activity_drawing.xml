@@ -69,34 +69,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center_horizontal"
             android:layout_marginBottom="@dimen/margin_standard">
 
+            <!-- Happy Mood -->
             <RadioButton
                 android:id="@+id/rbHappy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Happy"
-                android:layout_marginEnd="@dimen/margin_small" />
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:button="@null"
+                android:background="@drawable/radio_mood_happy"
+                android:checked="true"
+                android:layout_marginEnd="16dp" />
 
+            <!-- Calm Mood -->
             <RadioButton
                 android:id="@+id/rbCalm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Calm"
-                android:layout_marginEnd="@dimen/margin_small" />
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:button="@null"
+                android:background="@drawable/radio_mood_calm"
+                android:layout_marginEnd="16dp" />
 
+            <!-- Anxious Mood -->
             <RadioButton
                 android:id="@+id/rbAnxious"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Anxious"
-                android:layout_marginEnd="@dimen/margin_small" />
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:button="@null"
+                android:background="@drawable/radio_mood_anxious"
+                android:layout_marginEnd="16dp" />
 
+            <!-- Sad Mood -->
             <RadioButton
                 android:id="@+id/rbSad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sad" />
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:button="@null"
+                android:background="@drawable/radio_mood_sad" />
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
