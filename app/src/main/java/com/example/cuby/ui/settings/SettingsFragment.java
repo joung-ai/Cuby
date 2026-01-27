@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.cuby.R;
 import com.google.android.material.materialswitch.MaterialSwitch;
+import android.widget.SeekBar;
+import com.example.cuby.audio.MusicManager;
+
 
 public class SettingsFragment extends Fragment {
 
@@ -25,7 +28,24 @@ public class SettingsFragment extends Fragment {
         
         MaterialSwitch switchNotifications = view.findViewById(R.id.switchNotifications);
         switchNotifications.setChecked(true);
-        
+
+        SeekBar seekBar = view.findViewById(R.id.seekMusicVolume);
+
+        float savedVolume = MusicManager.getSavedVolume(requireContext());
+        seekBar.setProgress((int) (savedVolume * 100));
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float volume = progress / 100f;
+                MusicManager.setVolume(requireContext(), volume);
+            }
+
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+
         view.findViewById(R.id.btnResetData).setOnClickListener(v -> {
             new AlertDialog.Builder(getContext())
                 .setTitle("Reset Data?")

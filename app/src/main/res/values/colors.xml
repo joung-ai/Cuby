@@ -4,7 +4,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Primary palette - Calming Purple/Blue -->
+    <!-- Primary palette -->
     <color name="primary">#ECF5FB</color>
     <color name="primary_dark">#FF5A52E0</color>
     <color name="primary_light">#FF9D97FF</color>

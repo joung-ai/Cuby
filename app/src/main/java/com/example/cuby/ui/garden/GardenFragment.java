@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.cuby.R;
+import com.example.cuby.audio.MusicManager;
 import com.example.cuby.model.DailyLog;
 
 import java.io.File;
@@ -34,6 +35,20 @@ public class GardenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_garden, container, false);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MusicManager.play(requireContext(), MusicManager.Track.GARDEN);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MusicManager.play(requireContext(), MusicManager.Track.HOME);
+    }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

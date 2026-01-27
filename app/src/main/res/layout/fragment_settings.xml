@@ -58,6 +58,52 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/surface"
+            app:rippleColor="@color/ripple">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <!-- ICON -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎵"
+                    android:textSize="24sp"
+                    android:layout_marginEnd="12dp"/>
+
+                <!-- LABEL -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Background Music"
+                    android:textSize="16sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginEnd="12dp"/>
+
+                <!-- SEEK BAR -->
+                <SeekBar
+                    android:id="@+id/seekMusicVolume"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:max="100"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+
         <!-- Disclaimer Card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardDisclaimer"

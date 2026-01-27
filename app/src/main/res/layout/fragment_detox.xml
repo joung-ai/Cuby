@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🧘 Detox &amp; Tasks"
+            android:text="Detox &amp; Tasks"
             style="@style/TitleText"
             android:layout_marginBottom="@dimen/margin_standard" />
 
@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🍎 Free Food!"
+                    android:text="Free Food!"
                     android:textSize="@dimen/text_subheading"
                     android:textStyle="bold"
                     android:textColor="@color/white"
@@ -59,9 +59,11 @@
                     android:layout_height="wrap_content"
                     android:text="Collect"
                     app:backgroundTint="@color/white"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/black"
                     app:cornerRadius="20dp" />
             </LinearLayout>
+
+
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Tasks Section -->

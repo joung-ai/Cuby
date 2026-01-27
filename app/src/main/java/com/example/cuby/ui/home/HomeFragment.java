@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.cuby.R;
+import com.example.cuby.alarm.AlarmFragment;
 import com.example.cuby.data.AppRepository;
 import com.example.cuby.logic.CubyMoodEngine;
 import com.example.cuby.ui.chat.ChatFragment;
@@ -58,7 +59,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        // tvGreeting = view.findViewById(R.id.tvGreeting); // Removed
+        //tvGreeting = view.findViewById(R.id.tvGreeting); // Removed
         //tvFoodCount = view.findViewById(R.id.tvFoodCount);
         ivCuby = view.findViewById(R.id.ivCuby);
 
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment {
 
 
         tvCubyBubble = view.findViewById(R.id.tvCubyBubble);
-        // layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons); // Removed
+        layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons); // Removed
 
         repository = AppRepository.getInstance(requireActivity().getApplication());
         cubyMoodEngine = new CubyMoodEngine(repository);
@@ -77,7 +78,28 @@ public class HomeFragment extends Fragment {
         observeData();
         startBreathingAnimation();
 
-        // Mood buttons removed in new UI
+        String today = LocalDate.now().toString();
+
+        repository.getDailyLog(today).observe(getViewLifecycleOwner(), log -> {
+
+            if (log == null || log.mood == null) {
+                tvCubyBubble.setText("Hey… how are you feeling today?");
+                tvCubyBubble.setVisibility(View.VISIBLE);
+                layoutMoodButtons.setVisibility(View.VISIBLE);
+
+            } else {
+                tvCubyBubble.setText(
+                        cubyMoodEngine.getCubyMessage(
+                                log.mood,
+                                false,
+                                log.seedUnlocked
+                        )
+                );
+                tvCubyBubble.setVisibility(View.VISIBLE);
+                layoutMoodButtons.setVisibility(View.GONE);
+            }
+        });
+
     }
 
 
@@ -85,13 +107,11 @@ public class HomeFragment extends Fragment {
         // New Side Navigation
         view.findViewById(R.id.btnSettings).setOnClickListener(v -> navigateWithAnimation(new SettingsFragment()));
         view.findViewById(R.id.btnChat).setOnClickListener(v -> navigateWithAnimation(new ChatFragment()));
-        //view.findViewById(R.id.btnActivity).setOnClickListener(v -> navigateWithAnimation(new GardenFragment())); // Placeholder flow
-        // view.findViewById(R.id.btnTimer) // Not implemented yet
-
+        view.findViewById(R.id.btnDiary).setOnClickListener(v -> navigateWithAnimation(new DiaryFragment()) );
         
         // Bottom Bar
         view.findViewById(R.id.btnGarden).setOnClickListener(v -> navigateWithAnimation(new GardenFragment())); // Diary/Garden
-        view.findViewById(R.id.btnPlant).setOnClickListener(v -> navigateWithAnimation(new DetoxFragment())); // Plant/Seed flow
+        //view.findViewById(R.id.btnPlant).setOnClickListener(v -> navigateWithAnimation(new DetoxFragment())); // Plant/Seed flow
 
         view.findViewById(R.id.btnFeed).setOnClickListener(v -> {
             viewModel.feedCuby();
@@ -99,10 +119,16 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), "Yum! Cuby feels happy! 💕", Toast.LENGTH_SHORT).show();
         });
 
-        view.findViewById(R.id.btnAlarm).setOnClickListener(v ->
-                navigateWithAnimation(new com.example.cuby.alarm.AlarmFragment())
-        );
+        view.findViewById(R.id.btnAlarm).setOnClickListener(v -> navigateWithAnimation(new com.example.cuby.alarm.AlarmFragment()));
+
+        setupMoodButton(view, R.id.btnCalm, "CALM");
+        setupMoodButton(view, R.id.btnOkay, "OKAY");
+        setupMoodButton(view, R.id.btnTired, "TIRED");
+        setupMoodButton(view, R.id.btnOverwhelmed, "OVERWHELMED");
+        setupMoodButton(view, R.id.btnHappy, "HAPPY");
+
     }
+
 
     private void navigateWithAnimation(Fragment fragment) {
         if (getActivity() instanceof HomeActivity) {
@@ -111,7 +137,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupCubyInteraction() {
-        // Tap to make Cuby bounce and wave
         ivCuby.setOnClickListener(v -> {
             Animation bounce = AnimationUtils.loadAnimation(getContext(), R.anim.bounce);
             ivCuby.startAnimation(bounce);
@@ -186,7 +211,21 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    // Mood buttons setup removed
+    private void setupMoodButton(View root, int id, String mood) {
+        root.findViewById(id).setOnClickListener(v -> {
+
+            String today = LocalDate.now().toString();
+
+            cubyMoodEngine.recordDailyMood(today, mood);
+
+            tvCubyBubble.setText(
+                    cubyMoodEngine.getCubyMessage(mood, false, false)
+            );
+
+            layoutMoodButtons.setVisibility(View.GONE);
+        });
+    }
+
 
     @Override
     public void onDestroyView() {
