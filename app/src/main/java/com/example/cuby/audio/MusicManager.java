@@ -21,7 +21,7 @@ public class MusicManager {
 
     public static void play(Context context, Track track) {
         if (track == currentTrack && mediaPlayer != null && mediaPlayer.isPlaying()) {
-            return; // ✅ Already playing correct music
+            return;
         }
 
         stopInternal();

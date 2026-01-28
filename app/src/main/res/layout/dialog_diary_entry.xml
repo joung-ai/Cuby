@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/bg_notebook">
@@ -37,13 +38,21 @@
         android:inputType="textMultiLine"
         android:background="@drawable/bg_notebook_lines"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="Delete"
         android:layout_gravity="end"
-        android:backgroundTint="#E57373"
+        android:layout_marginTop="12dp"
+        android:paddingHorizontal="16dp"
+
+        app:cornerRadius="20dp"
+        app:backgroundTint="@color/red_soft"
+        app:rippleColor="#33FFFFFF"
+
         android:textColor="@android:color/white"
-        android:layout_marginTop="12dp"/>
+        android:textSize="14sp"
+        android:elevation="2dp"/>
+
 </LinearLayout>

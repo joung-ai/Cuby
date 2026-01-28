@@ -6,9 +6,18 @@
 
     <!-- Primary palette -->
     <color name="primary">#ECF5FB</color>
-    <color name="primary_dark">#FF5A52E0</color>
-    <color name="primary_light">#FF9D97FF</color>
-    <color name="secondary">#FF00D9FF</color>
+
+    <!-- Darker version of primary (text, bars, emphasis) -->
+    <color name="primary_dark">#6B9ED6</color>
+
+    <!-- Soft accent, still blue-based (buttons, highlights) -->
+    <color name="primary_light">#CFE6F7</color>
+
+    <!-- Secondary accent (used sparingly) -->
+    <color name="secondary">#8FB8E8</color>
+
+    <color name="red_soft">#E57373</color>
+
 
     <!-- Background gradients -->
     <color name="bg_gradient_start">#FFE8E6FF</color>
