@@ -2,7 +2,9 @@ package com.example.cuby.alarm;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -18,6 +20,7 @@ import com.example.cuby.R;
 public class ReminderWorker extends Worker {
 
     public static final String CHANNEL_ID = "ALARM_SOUND_CHANNEL";
+    private static final int NOTIFICATION_ID = 1000;
 
     public ReminderWorker(
             @NonNull Context context,
@@ -60,6 +63,16 @@ public class ReminderWorker extends Worker {
             manager.createNotificationChannel(channel);
         }
 
+        // 🛑 CANCEL ACTION (THIS IS THE ONLY ADDITION)
+        Intent cancelIntent = new Intent(context, AlarmCancelReceiver.class);
+        PendingIntent cancelPendingIntent =
+                PendingIntent.getBroadcast(
+                        context,
+                        0,
+                        cancelIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                );
+
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.mipmap.ic_launcher)
@@ -67,9 +80,10 @@ public class ReminderWorker extends Worker {
                         .setContentText("Your alarm is ringing!")
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setDefaults(NotificationCompat.DEFAULT_ALL)
-                        .setAutoCancel(true);
+                        .setOngoing(true)
+                        .addAction(0, "CANCEL", cancelPendingIntent);
 
-        manager.notify(1000, builder.build());
+        manager.notify(NOTIFICATION_ID, builder.build());
 
         return Result.success();
     }
