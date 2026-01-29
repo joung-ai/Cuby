@@ -63,4 +63,12 @@
     <color name="mockup_lime">#CCFF90</color>
     <color name="mockup_text_blue">#0D47A1</color> <!-- Darker blue for contrast -->
 
+    <style name="BlueSwitchTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#246398</item>
+
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <item name="colorOutline">#FF87CEEB</item>
+    </style>
+
 </resources>
