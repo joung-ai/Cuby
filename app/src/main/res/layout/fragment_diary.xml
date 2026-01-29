@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="📔 My Diary"
+        android:text="📘 My Diary"
         style="@style/TitleText"
         android:layout_marginBottom="16dp" />
 
@@ -32,7 +32,7 @@
         android:layout_gravity="end|bottom"
         android:text="New Entry"
         app:icon="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/primary"
+        app:backgroundTint="#628ECB"
         android:textColor="@color/white"
         app:iconTint="@color/white" />
 </LinearLayout>

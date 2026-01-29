@@ -4,16 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="#F5FBFF">
 
     <TextView
         android:id="@+id/tvTaskTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Task"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvTaskDesc"
@@ -35,5 +36,6 @@
         android:id="@+id/btnCompleteTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Finish Task"/>
+        android:text="Finish Task"
+        android:backgroundTint="@color/btn_blue"/>
 </LinearLayout>

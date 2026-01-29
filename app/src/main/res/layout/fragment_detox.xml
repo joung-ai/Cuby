@@ -11,13 +11,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/margin_standard"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:background="#F5FBFF"
+        >
 
         <!-- Header -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detox and Tasks"
+            android:text="Detox"
             style="@style/TitleText"
             android:layout_marginBottom="@dimen/margin_standard"
             android:gravity="center"/>
@@ -62,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Collect"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/btn_blue"
                     app:backgroundTint="@color/white"
                     app:cornerRadius="12dp" />
             </LinearLayout>
@@ -130,7 +132,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/primary"/>
+                    app:tint="#246398"/>
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -187,7 +190,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@android:drawable/ic_media_play"
-                    app:tint="@color/primary"/>
+                    app:tint="#246398"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
