@@ -1,99 +1,140 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome!"
-        android:textSize="@dimen/text_display"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginBottom="@dimen/margin_small" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Let's get to know each other."
-        android:textSize="@dimen/text_subheading"
-        android:layout_marginBottom="@dimen/margin_large" />
-
-    <com.google.android.material.textfield.TextInputLayout
+    <!-- Background Vector -->
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Your Name"
-        android:layout_marginBottom="@dimen/margin_standard">
+        android:layout_height="match_parent"
+        android:src="@drawable/login_bg"
+        android:scaleType="centerCrop" /> <!-- Di mag-stretch, mag-zoom lang -->
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUsername"
+    <!-- Login Panel Centered -->
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/loginbg_glass"
+        android:elevation="2dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Cuby Image -->
+        <ImageView
+            android:id="@+id/ivCuby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:elevation="3dp"
+            android:src="@drawable/cuby_idle" />
+
+        <!-- Welcome Text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:text="Welcome!"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_display"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Let's get to know each other."
+            android:textSize="@dimen/text_subheading" />
+
+        <!-- Name Inputs -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginBottom="@dimen/margin_standard"
+            android:hint="Your Name"
+            app:boxBackgroundColor="@android:color/white"
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Cuby's Name"
-        android:layout_marginBottom="@dimen/margin_standard">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:padding="15dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etCubyName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginBottom="@dimen/margin_standard"
+            android:hint="Cuby's Name"
+            app:boxBackgroundColor="@android:color/white"
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Cuby's Skin"
-        android:textSize="@dimen/text_body"
-        android:layout_marginBottom="@dimen/margin_small" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCubyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:padding="15dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <RadioGroup
-        android:id="@+id/rgSkin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/margin_large">
-
-        <RadioButton
-            android:id="@+id/rbSkinDefault"
+        <!-- Skin Selection -->
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Default"
-            android:textSize="@dimen/text_body"
-            android:checked="true"
-            android:layout_marginEnd="@dimen/margin_standard" />
+            android:layout_marginBottom="@dimen/margin_small"
+            android:text="Choose Cuby's Skin"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
-        <RadioButton
-            android:id="@+id/rbSkinBlue"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/rgSkin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Blue"
-            android:textSize="@dimen/text_body"
-            android:layout_marginEnd="@dimen/margin_standard" />
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rbSkinPink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pink"
-            android:textSize="@dimen/text_body" />
+            <RadioButton
+                android:id="@+id/rbSkinBlue"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/radio_cuby_selector"
+                android:button="@null" />
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rbSkinPink"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/radio_cuby_selector"
+                android:button="@null" />
+        </RadioGroup>
 
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/margin_standard"
-        android:textSize="@dimen/text_subheading"
-        android:text="Start Journey" />
+        <!-- Start Journey Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStart"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="Start Journey"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_subheading"
+            app:backgroundTint="@color/btn_blue" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

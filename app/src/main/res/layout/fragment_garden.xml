@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_gradient_start"
+    android:background="#E5F3FD"
     android:padding="@dimen/margin_standard">
 
     <!-- Header -->
@@ -29,13 +29,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/margin_small"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:backgroundTint="#F5FBFF">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPrev"
                 android:layout_width="@dimen/icon_button_size"
                 android:layout_height="@dimen/icon_button_size"
                 android:text="◀"
+                android:backgroundTint="@color/btn_blue"
                 style="@style/Widget.Material3.Button.TextButton" />
 
             <TextView
@@ -54,6 +56,7 @@
                 android:layout_width="@dimen/icon_button_size"
                 android:layout_height="@dimen/icon_button_size"
                 android:text="▶"
+                android:backgroundTint="@color/btn_blue"
                 style="@style/Widget.Material3.Button.TextButton" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -72,6 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/margin_small"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:background="#F5FBFF"/>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

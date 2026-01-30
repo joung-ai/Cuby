@@ -1,0 +1,15 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Checked state: slightly bigger -->
+    <item android:state_checked="true">
+        <inset
+            android:drawable="@drawable/cuby_idle"
+            android:insetLeft="-4dp"
+            android:insetTop="-4dp"
+            android:insetRight="-4dp"
+            android:insetBottom="-4dp" />
+    </item>
+
+    <!-- Unchecked state: normal size -->
+    <item android:drawable="@drawable/cuby_idle" />
+</selector>

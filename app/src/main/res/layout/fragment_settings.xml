@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gradient_start">
+
+    android:background="#F5FBFF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:background="#F5FBFF">
 
         <!-- Header -->
         <TextView
@@ -31,30 +33,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#cfecf7"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
+                android:padding="16dp">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
                     android:text="🔔"
-                    android:textSize="24sp"
-                    android:layout_marginEnd="12dp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Daily Notifications"
-                    android:textSize="16sp"
-                    android:textColor="@color/text_primary" />
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp" />
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchNotifications"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:theme="@style/BlueSwitchTheme" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -122,7 +127,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:background="#cfecf7">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -194,7 +200,8 @@
             android:text="Reset App Data"
             style="@style/SecondaryButton"
             app:strokeColor="@color/mood_sad"
-            android:textColor="@color/mood_sad" />
+            android:textColor="@color/white"
+            android:backgroundTint="@color/btn_blue"/>
 
     </LinearLayout>
 </ScrollView>
