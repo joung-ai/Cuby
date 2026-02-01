@@ -1,19 +1,23 @@
 package com.example.cuby.ui.onboarding;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import com.example.cuby.R;
 import com.example.cuby.data.AppRepository;
 import com.example.cuby.model.UserProfile;
+import com.example.cuby.notification.InactivityNotificationWorker;
 import com.example.cuby.ui.home.HomeActivity;
 import com.example.cuby.utils.Constants;
 
@@ -28,8 +32,8 @@ public class OnboardingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        // Check if setup complete
+        markUserActive(); // Reset inactivity timer here
+
         SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
         if (prefs.getBoolean(Constants.KEY_USER_SETUP_COMPLETE, false)) {
             startActivity(new Intent(this, HomeActivity.class));
@@ -47,6 +51,12 @@ public class OnboardingActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btnStart);
 
         btnStart.setOnClickListener(v -> saveAndStart());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        markUserActive(); // Reset inactivity timer on resume
     }
 
     private void saveAndStart() {
@@ -88,5 +98,19 @@ public class OnboardingActivity extends AppCompatActivity {
         Toast.makeText(this, "Welcome to Cuby!", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, HomeActivity.class));
         finish();
+    }
+
+    private void markUserActive() {
+        SharedPreferences prefs = getSharedPreferences("inactivity_prefs", Context.MODE_PRIVATE);
+
+        prefs.edit()
+                .putLong("last_active_time", System.currentTimeMillis())
+                .apply();
+
+        OneTimeWorkRequest request =
+                new OneTimeWorkRequest.Builder(InactivityNotificationWorker.class)
+                        .build();
+
+        WorkManager.getInstance(this).enqueue(request);
     }
 }
