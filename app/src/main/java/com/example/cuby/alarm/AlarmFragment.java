@@ -14,12 +14,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.media.AudioAttributes;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.Settings;
 
 import androidx.annotation.NonNull;
@@ -31,20 +27,21 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.example.cuby.R;
-
-import com.example.cuby.alarm.ReminderWorker;
+import com.example.cuby.ui.home.HomeActivity;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class AlarmFragment extends Fragment {
+
     private static final String PREFS_NAME = "alarm_prefs";
     private static final String KEY_SOUND_WARNING_SHOWN = "sound_warning_shown";
 
-    TimePicker timePicker;
-    TextView txtAlarmStatus;
-    Button btnSetAlarm, btnCancelAlarm, btnTestAlarm;
-    OneTimeWorkRequest currentAlarm;
+    private TimePicker timePicker;
+    private TextView txtAlarmStatus;
+    private Button btnSetAlarm, btnCancelAlarm, btnViewAlarms;
+
+    private OneTimeWorkRequest currentAlarm;
 
     @Nullable
     @Override
@@ -54,29 +51,34 @@ public class AlarmFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
+
+        // ✅ LOAD SAVED ALARMS
+        AlarmStore.load(requireContext());
+
         requestPermission();
 
         timePicker = view.findViewById(R.id.timePicker);
         txtAlarmStatus = view.findViewById(R.id.txtAlarmStatus);
         btnSetAlarm = view.findViewById(R.id.btnSetAlarm);
-        btnCancelAlarm = view.findViewById(R.id.btnCancelAlarm);
-//        btnTestAlarm = view.findViewById(R.id.btnTestAlarm);
+//        btnCancelAlarm = view.findViewById(R.id.btnCancelAlarm);
+        btnViewAlarms = view.findViewById(R.id.btnViewAlarms);
 
         btnSetAlarm.setOnClickListener(v -> {
-
-            // Show warning ONLY ONCE
             if (!hasShownSoundWarning()) {
                 showSoundWarningDialog();
                 markSoundWarningShown();
                 return;
             }
-
-            setAlarm(); // your existing working logic
+            setAlarm();
         });
 
+//        btnCancelAlarm.setOnClickListener(v -> cancelAlarm());
 
-        btnCancelAlarm.setOnClickListener(v -> cancelAlarm());
-//        btnTestAlarm.setOnClickListener(v -> testAlarm());
+        // ✅ GO TO ALARM LIST PAGE
+        btnViewAlarms.setOnClickListener(v ->
+                ((HomeActivity) requireActivity())
+                        .navigateTo(new AlarmListFragment(), true)
+        );
 
         return view;
     }
@@ -122,7 +124,15 @@ public class AlarmFragment extends Fragment {
 
         WorkManager.getInstance(requireContext()).enqueue(currentAlarm);
 
-        txtAlarmStatus.setText("Alarm set for " + hour + ":" + String.format("%02d", minute));
+        String time = String.format("%02d:%02d", hour, minute);
+
+        // ✅ STORE ALARM + SAVE
+        AlarmStore.alarms.add(
+                new AlarmItem(time, currentAlarm.getId())
+        );
+        AlarmStore.save(requireContext());
+
+        txtAlarmStatus.setText("Alarm set for " + time);
         Toast.makeText(getContext(), "Alarm set", Toast.LENGTH_SHORT).show();
     }
 
@@ -134,32 +144,13 @@ public class AlarmFragment extends Fragment {
         }
     }
 
-    private void testAlarm() {
-        OneTimeWorkRequest test =
-                new OneTimeWorkRequest.Builder(ReminderWorker.class)
-                        .setInitialDelay(10, TimeUnit.SECONDS)
-                        .build();
-
-        WorkManager.getInstance(requireContext()).enqueue(test);
-        Toast.makeText(getContext(), "Test alarm in 10 seconds", Toast.LENGTH_SHORT).show();
-    }
-
-    private boolean isAlarmSoundEnabled() {
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return true; // Pre-O devices handle sound differently
-        }
-
-        NotificationManager manager =
-                (NotificationManager) requireContext()
-                        .getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationChannel channel = manager.getNotificationChannel("ALARM_CHANNEL");
-
-        if (channel == null) return false;
-
-        Uri sound = channel.getSound();
-        return sound != null && channel.getImportance() >= NotificationManager.IMPORTANCE_HIGH;
+    private void showSoundWarningDialog() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Enable Alarm Sound")
+                .setMessage("Please enable sound so your alarm will ring.")
+                .setPositiveButton("Open Settings", (d, w) -> openAlarmSoundSettings())
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
     private void openAlarmSoundSettings() {
@@ -168,22 +159,10 @@ public class AlarmFragment extends Fragment {
             intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().getPackageName());
             startActivity(intent);
         } catch (Exception e) {
-            // Fallback to app details page
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.parse("package:" + requireContext().getPackageName()));
             startActivity(intent);
         }
-    }
-
-
-    private void showSoundWarningDialog() {
-
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Enable Alarm Sound")
-                .setMessage("Alarm sound is currently disabled. Please enable sound so your alarm will ring.")
-                .setPositiveButton("Open Settings", (d, w) -> openAlarmSoundSettings())
-                .setNegativeButton("Cancel", null)
-                .show();
     }
 
     private boolean hasShownSoundWarning() {
@@ -191,6 +170,7 @@ public class AlarmFragment extends Fragment {
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 .getBoolean(KEY_SOUND_WARNING_SHOWN, false);
     }
+
     private void markSoundWarningShown() {
         requireContext()
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -198,10 +178,4 @@ public class AlarmFragment extends Fragment {
                 .putBoolean(KEY_SOUND_WARNING_SHOWN, true)
                 .apply();
     }
-
-
-
-
-
-
 }

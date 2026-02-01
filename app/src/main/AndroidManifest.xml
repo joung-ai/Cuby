@@ -35,6 +35,16 @@
             android:name=".ui.drawing.DrawingActivity"
             android:exported="false" />
 
+        <activity android:name=".BreathingTechniquesActivity" />
+
+        <activity android:name=".BoxBreathingActivity" />
+        <activity android:name=".Four78BreathingActivity" />
+
+
+        <receiver
+            android:name=".alarm.AlarmCancelReceiver"
+            android:exported="false" />
+
         <!-- Keep MainActivity declaration logic if needed, but we start with Onboarding -->
     </application>
 

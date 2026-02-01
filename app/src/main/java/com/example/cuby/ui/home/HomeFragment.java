@@ -3,6 +3,7 @@ package com.example.cuby.ui.home;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.content.Intent; // ✅ ADDED
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,14 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton; // ✅ ADDED
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.cuby.BreathingTechniquesActivity; // ✅ ADDED
 import com.example.cuby.R;
 import com.example.cuby.alarm.AlarmFragment;
 import com.example.cuby.data.AppRepository;
@@ -28,7 +33,6 @@ import com.example.cuby.ui.diary.DiaryFragment;
 import com.example.cuby.ui.garden.GardenFragment;
 import com.example.cuby.ui.detox.DetoxFragment;
 import com.example.cuby.ui.settings.SettingsFragment;
-
 
 import java.time.LocalDate;
 
@@ -65,13 +69,18 @@ public class HomeFragment extends Fragment {
 
         cubyShadow = view.findViewById(R.id.cubyShadow);
 
-
         tvCubyBubble = view.findViewById(R.id.tvCubyBubble);
         layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons); // Removed
 
         repository = AppRepository.getInstance(requireActivity().getApplication());
         cubyMoodEngine = new CubyMoodEngine(repository);
 
+        // ✅ ADDED: MEDITATE BUTTON HANDLER
+        ImageButton btnMeditate = view.findViewById(R.id.btnMeditate);
+        btnMeditate.setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), BreathingTechniquesActivity.class);
+            startActivity(intent);
+        });
 
         setupNavigation(view);
         setupCubyInteraction();
@@ -102,13 +111,12 @@ public class HomeFragment extends Fragment {
 
     }
 
-
     private void setupNavigation(View view) {
         // New Side Navigation
         view.findViewById(R.id.btnSettings).setOnClickListener(v -> navigateWithAnimation(new SettingsFragment()));
         view.findViewById(R.id.btnChat).setOnClickListener(v -> navigateWithAnimation(new ChatFragment()));
         view.findViewById(R.id.btnDiary).setOnClickListener(v -> navigateWithAnimation(new DiaryFragment()) );
-        
+
         // Bottom Bar
         view.findViewById(R.id.btnGarden).setOnClickListener(v -> navigateWithAnimation(new GardenFragment())); // Diary/Garden
         //view.findViewById(R.id.btnPlant).setOnClickListener(v -> navigateWithAnimation(new DetoxFragment())); // Plant/Seed flow
@@ -119,7 +127,7 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), "Yum! Cuby feels happy! 💕", Toast.LENGTH_SHORT).show();
         });
 
-        view.findViewById(R.id.btnAlarm).setOnClickListener(v -> navigateWithAnimation(new com.example.cuby.alarm.AlarmFragment()));
+        view.findViewById(R.id.btnAlarm).setOnClickListener(v -> navigateWithAnimation(new AlarmFragment()));
 
         setupMoodButton(view, R.id.btnCalm, "CALM");
         setupMoodButton(view, R.id.btnOkay, "OKAY");
@@ -128,7 +136,6 @@ public class HomeFragment extends Fragment {
         setupMoodButton(view, R.id.btnHappy, "HAPPY");
 
     }
-
 
     private void navigateWithAnimation(Fragment fragment) {
         if (getActivity() instanceof HomeActivity) {
@@ -192,7 +199,7 @@ public class HomeFragment extends Fragment {
         viewModel.getUserProfile().observe(getViewLifecycleOwner(), profile -> {
             if (profile != null) {
                 // tvGreeting.setText("Hi, " + profile.username + "! 👋"); // Removed
-                
+
                 // Update skin tint
                 if ("Pink".equals(profile.cubySkin)) {
                     ivCuby.setColorFilter(0x40FFC0CB);
@@ -225,7 +232,6 @@ public class HomeFragment extends Fragment {
             layoutMoodButtons.setVisibility(View.GONE);
         });
     }
-
 
     @Override
     public void onDestroyView() {
