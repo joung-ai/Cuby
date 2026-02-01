@@ -79,4 +79,19 @@
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:lineSpacingMultiplier">1.4</item>
     </style>
+
+    <style name="CubySwitch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <!-- Track -->
+        <item name="trackColor">@color/primary_light</item>
+
+        <!-- Thumb -->
+        <item name="thumbColor">@color/primary_dark</item>
+
+        <!-- Ripple -->
+        <item name="rippleColor">@color/ripple</item>
+
+        <!-- Size polish -->
+        <item name="useMaterialThemeColors">false</item>
+    </style>
+
 </resources>

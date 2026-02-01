@@ -14,12 +14,28 @@
         android:background="#F5FBFF">
 
         <!-- Header -->
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="⚙️ Settings"
-            style="@style/TitleText"
-            android:layout_marginBottom="20dp" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            >
+
+            <ImageView
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:src="@drawable/ic_settings"
+                android:layout_marginRight="6dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                style="@style/TitleText"
+                />
+        </LinearLayout>
+
 
         <!-- Notifications Card -->
         <com.google.android.material.card.MaterialCardView
@@ -33,7 +49,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#cfecf7"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="16dp">
@@ -59,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:theme="@style/BlueSwitchTheme" />
+                    android:theme="@style/CubySwitch" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -128,7 +143,7 @@
                 android:orientation="horizontal"
                 android:padding="16dp"
                 android:gravity="center_vertical"
-                android:background="#cfecf7">
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
