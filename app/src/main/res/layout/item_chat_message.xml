@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="Message"
                 android:textSize="15sp"
+                android:textColor="@color/white"
                 android:lineSpacingMultiplier="1.3" />
 
             <TextView
@@ -33,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="12:00 PM"
                 android:textSize="11sp"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/white"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

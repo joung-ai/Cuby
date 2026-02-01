@@ -61,25 +61,29 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
         public void bind(ChatMessage message) {
             tvMessage.setText(message.text);
-            
+
             // Format timestamp
             SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.getDefault());
             tvTime.setText(sdf.format(new Date(message.timestamp)));
-            
-            // Position based on sender
+
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) cardMessage.getLayoutParams();
+
             if (message.isFromUser) {
+                // User message → white bubble, right
                 params.gravity = Gravity.END;
-                cardMessage.setCardBackgroundColor(0xFF6C63FF); // Primary color
-                tvMessage.setTextColor(0xFFFFFFFF);
-                tvTime.setTextColor(0xCCFFFFFF);
+                cardMessage.setBackgroundResource(R.drawable.bg_message_user);
+                tvMessage.setTextColor(0xFF000000); // black text
+                tvTime.setTextColor(0xFF666666);    // dark gray time
             } else {
+                // Respondent message → blue bubble, left
                 params.gravity = Gravity.START;
-                cardMessage.setCardBackgroundColor(0xFFFFFFFF); // White
-                tvMessage.setTextColor(0xFF1A1A2E);
-                tvTime.setTextColor(0xFF6B6B8D);
+                cardMessage.setBackgroundResource(R.drawable.bg_message_respondent);
+                tvMessage.setTextColor(0xFFFFFFFF); // white text
+                tvTime.setTextColor(0xCCFFFFFF);    // slightly transparent white time
             }
+
             cardMessage.setLayoutParams(params);
         }
+
     }
 }

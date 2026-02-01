@@ -29,14 +29,16 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        
+
         recyclerView = view.findViewById(R.id.recyclerView);
         etMessage = view.findViewById(R.id.etMessage);
-        
+
+
+
         adapter = new ChatAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        
+
         view.findViewById(R.id.btnSend).setOnClickListener(v -> {
             String text = etMessage.getText().toString().trim();
             if (!text.isEmpty()) {
@@ -44,7 +46,7 @@ public class ChatFragment extends Fragment {
                 etMessage.setText("");
             }
         });
-        
+
         viewModel.getMessages().observe(getViewLifecycleOwner(), msgs -> {
             adapter.setMessages(msgs);
             if (!msgs.isEmpty()) {

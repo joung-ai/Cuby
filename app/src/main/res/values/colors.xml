@@ -18,6 +18,11 @@
 
     <color name="red_soft">#E57373</color>
 
+    <!-- Button's color -->
+    <color name="blue">#7BBDE8</color>
+
+
+
 
     <!-- Background gradients -->
     <color name="bg_gradient_start">#FFE8E6FF</color>
