@@ -60,7 +60,7 @@ public class AlarmFragment extends Fragment {
         timePicker = view.findViewById(R.id.timePicker);
         txtAlarmStatus = view.findViewById(R.id.txtAlarmStatus);
         btnSetAlarm = view.findViewById(R.id.btnSetAlarm);
-        btnCancelAlarm = view.findViewById(R.id.btnCancelAlarm);
+//        btnCancelAlarm = view.findViewById(R.id.btnCancelAlarm);
         btnViewAlarms = view.findViewById(R.id.btnViewAlarms);
 
         btnSetAlarm.setOnClickListener(v -> {
@@ -72,7 +72,7 @@ public class AlarmFragment extends Fragment {
             setAlarm();
         });
 
-        btnCancelAlarm.setOnClickListener(v -> cancelAlarm());
+//        btnCancelAlarm.setOnClickListener(v -> cancelAlarm());
 
         // ✅ GO TO ALARM LIST PAGE
         btnViewAlarms.setOnClickListener(v ->

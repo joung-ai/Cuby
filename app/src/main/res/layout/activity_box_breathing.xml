@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Instruction -->
+    <TextView
+        android:id="@+id/tvInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inhale"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="40dp" />
+
+    <!-- Count -->
+    <TextView
+        android:id="@+id/tvCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="@color/cuby_green"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+
+    <!-- Box container (CENTERED) -->
+    <FrameLayout
+        android:id="@+id/boxContainer"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center">
+
+        <!-- Moving Cuby -->
+        <ImageView
+            android:id="@+id/dot"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/cuby_idle"
+            android:scaleType="fitCenter" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="60dp" />
+
+    <TextView
+        android:id="@+id/tvCycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cycle 1 / 4"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="32dp" />
+
+</FrameLayout>

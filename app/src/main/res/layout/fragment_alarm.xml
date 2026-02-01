@@ -80,17 +80,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
-        <Button
-            android:id="@+id/btnCancelAlarm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Cancel Alarm"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/btnSetAlarm"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
+<!--        <Button-->
+<!--            android:id="@+id/btnCancelAlarm"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Cancel Alarm"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/btnSetAlarm"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:layout_marginTop="8dp" />-->
         <Button
             android:id="@+id/btnViewAlarms"
             android:layout_width="0dp"
@@ -98,7 +98,7 @@
             android:text="View Alarms"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/btnCancelAlarm"
+            app:layout_constraintTop_toBottomOf="@id/btnSetAlarm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"/>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <!-- Header -->
+    <TextView
+        android:id="@+id/tvBreathingHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Breathing Techniques"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Box Breathing Button -->
+    <Button
+        android:id="@+id/btnBoxBreathing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Box Breathing"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 4-7-8 Breathing Button -->
+    <Button
+        android:id="@+id/btn478Breathing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4-7-8 Breathing" />
+
+</LinearLayout>
