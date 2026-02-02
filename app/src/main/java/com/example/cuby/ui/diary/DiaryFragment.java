@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,23 @@ public class DiaryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TextView title = view.findViewById(R.id.toolbarTitleText);
+        ImageView icon = view.findViewById(R.id.toolbarIcon);
+        View backBtn = view.findViewById(R.id.btnBack);
+
+        title.setText("Diary");
+
+        icon.setImageResource(R.drawable.ic_diary);
+        icon.setVisibility(View.VISIBLE);
+
+        backBtn.findViewById(R.id.btnBack)
+                .setOnClickListener(v ->
+                        requireActivity()
+                                .getOnBackPressedDispatcher()
+                                .onBackPressed()
+                );
+
         viewModel = new ViewModelProvider(this).get(DiaryViewModel.class);
         
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);

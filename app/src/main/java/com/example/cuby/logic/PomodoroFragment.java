@@ -1,20 +1,23 @@
 package com.example.cuby.logic;
 
-
-import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.cuby.R;
 
 import java.util.Locale;
 
-public class Pomodoro extends AppCompatActivity {
+public class PomodoroFragment extends Fragment {
 
     private TextView tvTimer;
     private Button btnPomodoro, btnShortBreak, btnLongBreak, btnPause, btnResetTimer;
@@ -29,21 +32,28 @@ public class Pomodoro extends AppCompatActivity {
     private static final long SHORT_BREAK_TIME = 5 * 60 * 1000;
     private static final long LONG_BREAK_TIME = 15 * 60 * 1000;
 
-    @SuppressLint("MissingInflatedId")
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_pomodoro);
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState
+    ) {
+        return inflater.inflate(R.layout.fragment_pomodoro, container, false);
+    }
 
-        tvTimer = findViewById(R.id.tvTimer);
-        btnPomodoro = findViewById(R.id.btnPomodoro);
-        btnShortBreak = findViewById(R.id.btnShortBreak);
-        btnLongBreak = findViewById(R.id.btnLongBreak);
-        btnPause = findViewById(R.id.btnPause);
-        btnResetTimer = findViewById(R.id.btnResetTimer);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        // 🔔 Initialize alarm sound
-        mediaPlayer = MediaPlayer.create(this, R.raw.alarmtone);
+        tvTimer = view.findViewById(R.id.tvTimer);
+        btnPomodoro = view.findViewById(R.id.btnPomodoro);
+        btnShortBreak = view.findViewById(R.id.btnShortBreak);
+        btnLongBreak = view.findViewById(R.id.btnLongBreak);
+        btnPause = view.findViewById(R.id.btnPause);
+        btnResetTimer = view.findViewById(R.id.btnResetTimer);
+
+        mediaPlayer = MediaPlayer.create(requireContext(), R.raw.alarmtone);
 
         timeLeftInMillis = POMODORO_TIME;
         updateTimerText();
@@ -52,7 +62,6 @@ public class Pomodoro extends AppCompatActivity {
         btnShortBreak.setOnClickListener(v -> startNewTimer(SHORT_BREAK_TIME));
         btnLongBreak.setOnClickListener(v -> startNewTimer(LONG_BREAK_TIME));
 
-        // ⏸ Pause / ▶ Resume
         btnPause.setOnClickListener(v -> {
             if (isTimerRunning) {
                 pauseTimer();
@@ -66,7 +75,6 @@ public class Pomodoro extends AppCompatActivity {
         btnResetTimer.setOnClickListener(v -> resetTimer());
     }
 
-    // ▶ Start a NEW Pomodoro / Break
     private void startNewTimer(long duration) {
         pauseTimer();
         stopAlarm();
@@ -77,7 +85,6 @@ public class Pomodoro extends AppCompatActivity {
         lockModeButtons();
     }
 
-    // ▶ Start or Resume timer
     private void startTimer() {
         if (isTimerRunning) return;
 
@@ -91,15 +98,8 @@ public class Pomodoro extends AppCompatActivity {
             @Override
             public void onFinish() {
                 isTimerRunning = false;
-                timeLeftInMillis = 0;
-
-                // 🎉 Time's up message
                 tvTimer.setText("Time's up!");
-
-                // 🔔 Play alarm
                 playAlarm();
-
-                btnPause.setText("Pause");
                 unlockModeButtons();
             }
         }.start();
@@ -107,7 +107,6 @@ public class Pomodoro extends AppCompatActivity {
         isTimerRunning = true;
     }
 
-    // ⏸ Pause timer
     private void pauseTimer() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -116,7 +115,6 @@ public class Pomodoro extends AppCompatActivity {
         isTimerRunning = false;
     }
 
-    // 🔄 Reset timer
     private void resetTimer() {
         pauseTimer();
         timeLeftInMillis = POMODORO_TIME;
@@ -125,7 +123,6 @@ public class Pomodoro extends AppCompatActivity {
         unlockModeButtons();
     }
 
-    // ⏱ Update timer text
     private void updateTimerText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
@@ -138,14 +135,10 @@ public class Pomodoro extends AppCompatActivity {
         ));
     }
 
-    // 🔔 Play alarm sound
     private void playAlarm() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
+        if (mediaPlayer != null) mediaPlayer.start();
     }
 
-    // 🔕 Stop alarm sound
     private void stopAlarm() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
@@ -153,14 +146,12 @@ public class Pomodoro extends AppCompatActivity {
         }
     }
 
-    // 🔒 Disable Pomodoro / Break buttons
     private void lockModeButtons() {
         btnPomodoro.setEnabled(false);
         btnShortBreak.setEnabled(false);
         btnLongBreak.setEnabled(false);
     }
 
-    // 🔓 Enable Pomodoro / Break buttons
     private void unlockModeButtons() {
         btnPomodoro.setEnabled(true);
         btnShortBreak.setEnabled(true);
@@ -168,8 +159,8 @@ public class Pomodoro extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }

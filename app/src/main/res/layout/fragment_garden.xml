@@ -8,12 +8,7 @@
     android:padding="@dimen/margin_standard">
 
     <!-- Header -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🌱 Memory Garden"
-        style="@style/TitleText"
-        android:layout_marginBottom="@dimen/margin_small" />
+    <include layout="@layout/layout_back_toolbar"/>
 
     <!-- Month Navigation -->
     <com.google.android.material.card.MaterialCardView

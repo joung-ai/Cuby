@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.cuby.BreathingTechniquesActivity; // ✅ ADDED
+import com.example.cuby.ui.breathing.BreathingTechniquesFragment; // ✅ ADDED
 import com.example.cuby.R;
 import com.example.cuby.alarm.AlarmFragment;
 import com.example.cuby.data.AppRepository;
@@ -32,6 +32,7 @@ import com.example.cuby.ui.chat.ChatFragment;
 import com.example.cuby.ui.diary.DiaryFragment;
 import com.example.cuby.ui.garden.GardenFragment;
 import com.example.cuby.ui.detox.DetoxFragment;
+import com.example.cuby.ui.productivity.ProductivityFragment;
 import com.example.cuby.ui.settings.SettingsFragment;
 
 import java.time.LocalDate;
@@ -75,12 +76,6 @@ public class HomeFragment extends Fragment {
         repository = AppRepository.getInstance(requireActivity().getApplication());
         cubyMoodEngine = new CubyMoodEngine(repository);
 
-        // ✅ ADDED: MEDITATE BUTTON HANDLER
-        ImageButton btnMeditate = view.findViewById(R.id.btnMeditate);
-        btnMeditate.setOnClickListener(v -> {
-            Intent intent = new Intent(requireActivity(), BreathingTechniquesActivity.class);
-            startActivity(intent);
-        });
 
         setupNavigation(view);
         setupCubyInteraction();
@@ -118,9 +113,10 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.btnDiary).setOnClickListener(v -> navigateWithAnimation(new DiaryFragment()) );
 
         // Bottom Bar
+        view.findViewById(R.id.btnMeditate).setOnClickListener(v -> navigateWithAnimation(new BreathingTechniquesFragment()));
         view.findViewById(R.id.btnGarden).setOnClickListener(v -> navigateWithAnimation(new GardenFragment())); // Diary/Garden
-        //view.findViewById(R.id.btnPlant).setOnClickListener(v -> navigateWithAnimation(new DetoxFragment())); // Plant/Seed flow
-
+        view.findViewById(R.id.btnProductive).setOnClickListener(v -> navigateWithAnimation(new ProductivityFragment()));
+        view.findViewById(R.id.btnMeditate).setOnClickListener(v -> navigateWithAnimation(new BreathingTechniquesFragment()));
         view.findViewById(R.id.btnFeed).setOnClickListener(v -> {
             viewModel.feedCuby();
             showHappyCuby();

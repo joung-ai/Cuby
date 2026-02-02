@@ -53,6 +53,20 @@ public class GardenFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TextView title = view.findViewById(R.id.toolbarTitleText);
+        View backBtn = view.findViewById(R.id.btnBack);
+
+        title.setText("Memory Garden");
+
+
+        backBtn.findViewById(R.id.btnBack)
+                .setOnClickListener(v ->
+                        requireActivity()
+                                .getOnBackPressedDispatcher()
+                                .onBackPressed()
+                );
+
         viewModel = new ViewModelProvider(this).get(GardenViewModel.class);
         
         tvMonth = view.findViewById(R.id.tvMonth);

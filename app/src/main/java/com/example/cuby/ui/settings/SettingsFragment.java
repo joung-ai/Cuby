@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +27,26 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
+        TextView title = view.findViewById(R.id.toolbarTitleText);
+        ImageView icon = view.findViewById(R.id.toolbarIcon);
+        View backBtn = view.findViewById(R.id.btnBack);
+
+        title.setText("Settings");
+
+        icon.setImageResource(R.drawable.ic_settings);
+        icon.setVisibility(View.VISIBLE);
+
+        backBtn.findViewById(R.id.btnBack)
+                .setOnClickListener(v ->
+                        requireActivity()
+                                .getOnBackPressedDispatcher()
+                                .onBackPressed()
+                );
+
+
+
+
         MaterialSwitch switchNotifications = view.findViewById(R.id.switchNotifications);
         switchNotifications.setChecked(true);
 

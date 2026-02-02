@@ -12,31 +12,12 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="0dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/primary">
+        app:cardBackgroundColor="@color/blue">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/margin_standard"
-            android:gravity="center_vertical"
-            android:background="#5F84A2">
+            <include layout="@layout/layout_back_toolbar_chat"/>
 
-            <ImageView
-                android:layout_width="@dimen/chat_avatar_size"
-                android:layout_height="@dimen/chat_avatar_size"
-                android:src="@drawable/cuby_idle"
-                android:layout_marginEnd="@dimen/margin_small" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chat with Cuby"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_subheading"
-                android:textStyle="bold" />
-        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
 
     <!-- Messages RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView

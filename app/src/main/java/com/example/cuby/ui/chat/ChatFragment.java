@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -28,6 +31,23 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TextView title = view.findViewById(R.id.toolbarTitleText);
+        ImageView icon = view.findViewById(R.id.toolbarIcon);
+        View backBtn = view.findViewById(R.id.btnBack);
+
+        title.setText("Chat with Cuby");
+
+        icon.setImageResource(R.drawable.cuby_idle);
+        icon.setVisibility(View.VISIBLE);
+
+        backBtn.findViewById(R.id.btnBack)
+                .setOnClickListener(v ->
+                        requireActivity()
+                                .getOnBackPressedDispatcher()
+                                .onBackPressed()
+                );
+
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
 
         recyclerView = view.findViewById(R.id.recyclerView);

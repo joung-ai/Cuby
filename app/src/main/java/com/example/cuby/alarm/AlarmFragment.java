@@ -52,7 +52,7 @@ public class AlarmFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
 
-        // ✅ LOAD SAVED ALARMS
+        // LOAD SAVED ALARMS
         AlarmStore.load(requireContext());
 
         requestPermission();

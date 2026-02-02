@@ -37,34 +37,39 @@
         android:id="@+id/btnPomodoro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pomodoro (25 min)" />
+        android:text="Pomodoro (25 min)"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btnShortBreak"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Short Break (5 min)"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btnLongBreak"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Long Break (15 min)"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btnPause"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Pause"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btnResetTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Reset"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
 
 </LinearLayout>
