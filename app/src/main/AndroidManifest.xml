@@ -35,6 +35,8 @@
             android:name=".ui.drawing.DrawingActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.focus.FocusActivity" />
+
         <!-- Keep MainActivity declaration logic if needed, but we start with Onboarding -->
     </application>
 

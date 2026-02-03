@@ -73,4 +73,9 @@
     <string name="notification_channel_name">Daily Check-in</string>
     <string name="notification_title">Cuby misses you!</string>
     <string name="notification_message">Hey, are you okay today?</string>
+
+    <!-- Focus -->
+    <string name="focus_mode_title">FOCUS MODE</string>
+    <string name="stop_focus_mode">Stop Focus Mode</string>
+
 </resources>
