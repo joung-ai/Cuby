@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gradient_start">
+
+    <!-- Same animated background used by Cuby -->
+<!--    <com.example.cuby.ui.room.RoomBackgroundView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        android:background="#BDD5E7" >
+
+        <TextView
+            android:id="@+id/txtAlarmTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alarm"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginTop="125sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wake gently, on your time"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/txtAlarmTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:id="@+id/cardTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_alarm_time_card"
+            android:orientation="vertical"
+            android:layout_marginTop="32dp"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/txtAlarmTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:background="#F5FBFF"
+                />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txtAlarmStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alarm not set"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/cardTime"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnSetAlarm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Set Alarm"
+            android:backgroundTint="@color/cuby_blue"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/txtAlarmStatus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnCancelAlarm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel Alarm"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/btnSetAlarm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+<!--        <Button-->
+<!--            android:id="@+id/btnTestAlarm"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Test Alarm (10s)"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/btnCancelAlarm"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:layout_marginTop="8dp" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
