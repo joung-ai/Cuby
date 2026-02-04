@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:layout_marginBottom="15dp"
+    android:layout_marginBottom="16dp"
     android:background="@drawable/bg_alarm_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -19,7 +19,8 @@
     <Switch
         android:id="@+id/switchAlarm"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/btn_blue"/>
 
     <TextView
         android:id="@+id/btnDeleteAlarm"
