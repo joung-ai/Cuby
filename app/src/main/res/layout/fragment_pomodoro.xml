@@ -9,27 +9,28 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pomodoro Timer"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
 
     <!-- Circle container -->
+
     <FrameLayout
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:background="@drawable/circle_timer"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/square_pomodoro_frame"
+
         android:gravity="center">
 
         <TextView
             android:id="@+id/tvTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="25:00"
             android:textSize="50sp"
-            android:textStyle="bold"
-            android:layout_gravity="center" />
+            android:textStyle="bold" />
 
     </FrameLayout>
 
@@ -38,7 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Pomodoro (25 min)"
-        android:textColor="@color/black"/>
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btnShortBreak"
@@ -46,7 +48,8 @@
         android:layout_height="wrap_content"
         android:text="Short Break (5 min)"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"/>
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btnLongBreak"
@@ -54,7 +57,8 @@
         android:layout_height="wrap_content"
         android:text="Long Break (15 min)"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"/>
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btnPause"
@@ -62,7 +66,8 @@
         android:layout_height="wrap_content"
         android:text="Pause"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"/>
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btnResetTimer"
@@ -70,6 +75,7 @@
         android:layout_height="wrap_content"
         android:text="Reset"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"/>
+        android:backgroundTint="@color/red_soft"
+        android:textColor="@color/white"/>
 
 </LinearLayout>
