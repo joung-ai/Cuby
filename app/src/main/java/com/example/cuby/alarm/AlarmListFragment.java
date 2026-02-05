@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +18,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.example.cuby.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AlarmListFragment extends Fragment {
 
@@ -30,7 +31,6 @@ public class AlarmListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_alarm_list, container, false);
 
-        // ✅ LOAD SAVED ALARMS
         AlarmStore.load(requireContext());
 
         LinearLayout containerLayout = view.findViewById(R.id.alarmListContainer);
@@ -40,7 +40,6 @@ public class AlarmListFragment extends Fragment {
 
             View row = createAlarmRow(alarm);
 
-            // ✅ ADD SPACING BETWEEN ALARMS
             LinearLayout.LayoutParams params =
                     new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -57,6 +56,15 @@ public class AlarmListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton btnAddAlarm = view.findViewById(R.id.btnAddAlarm);
+        btnAddAlarm.setOnClickListener(v -> {
+            requireActivity().onBackPressed();
+        });
+    }
+
     private View createAlarmRow(AlarmItem alarm) {
 
         View row = LayoutInflater.from(getContext())
@@ -69,11 +77,9 @@ public class AlarmListFragment extends Fragment {
         txtTime.setText(alarm.time);
         switchAlarm.setChecked(alarm.enabled);
 
-        // 🔘 SLIDER LOGIC
         switchAlarm.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             if (isChecked) {
-                // 🔁 RE-ENABLE ALARM
                 String[] parts = alarm.time.split(":");
                 int hour = Integer.parseInt(parts[0]);
                 int minute = Integer.parseInt(parts[1]);
@@ -103,18 +109,14 @@ public class AlarmListFragment extends Fragment {
                 alarm.enabled = true;
 
             } else {
-                // ❌ DISABLE ALARM
                 WorkManager.getInstance(requireContext())
                         .cancelWorkById(alarm.workId);
 
                 alarm.enabled = false;
             }
-
-            // ✅ SAVE STATE AFTER TOGGLE
             AlarmStore.save(requireContext());
         });
 
-        // ❌ DELETE ALARM
         btnDelete.setOnClickListener(v -> {
 
             if (alarm.enabled) {
