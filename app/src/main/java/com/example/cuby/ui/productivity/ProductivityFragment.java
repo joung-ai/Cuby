@@ -1,5 +1,6 @@
 package com.example.cuby.ui.productivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.cuby.R;
-import com.example.cuby.logic.PomodoroFragment;
+import com.example.cuby.PomodoroActivity;
+import com.example.cuby.focus.FocusActivity;
 
 public class ProductivityFragment extends Fragment {
 
@@ -30,39 +32,32 @@ public class ProductivityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // ===== TOOLBAR =====
         TextView title = view.findViewById(R.id.toolbarTitleText);
         ImageView icon = view.findViewById(R.id.toolbarIcon);
         View backBtn = view.findViewById(R.id.btnBack);
 
         title.setText("Productivity");
-
         icon.setImageResource(R.drawable.ic_productivity);
         icon.setVisibility(View.VISIBLE);
 
-        backBtn.findViewById(R.id.btnBack)
-                .setOnClickListener(v ->
-                        requireActivity()
-                                .getOnBackPressedDispatcher()
-                                .onBackPressed()
-                );
+        backBtn.setOnClickListener(v ->
+                requireActivity()
+                        .getOnBackPressedDispatcher()
+                        .onBackPressed()
+        );
 
         // ===== BUTTONS =====
         View btnFocus = view.findViewById(R.id.btnFocus);
         View btnPomodoro = view.findViewById(R.id.btnPomodoro);
 
         btnFocus.setOnClickListener(v -> {
-            // TODO: navigate to Focus mode
-            // Example:
-            // navigateTo(new FocusFragment());
+            Intent intent = new Intent(requireContext(), FocusActivity.class);
+            startActivity(intent);
         });
 
         btnPomodoro.setOnClickListener(v -> {
-            getParentFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new PomodoroFragment())
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(requireContext(), PomodoroActivity.class);
+            startActivity(intent);
         });
     }
 }

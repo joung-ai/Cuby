@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#CC000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Focus Mode"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Cuby is protecting your focus.\nYou can stop anytime."
+            android:textColor="#DDFFFFFF"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnCancelFocus"
+            android:text="End Focus"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</FrameLayout>

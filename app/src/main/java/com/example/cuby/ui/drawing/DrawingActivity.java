@@ -1,14 +1,18 @@
 package com.example.cuby.ui.drawing;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cuby.R;
 import com.example.cuby.data.AppRepository;
 import com.example.cuby.model.DailyLog;
+import com.example.cuby.model.GardenItem;
 import com.example.cuby.ui.views.DrawingView;
 import com.example.cuby.utils.DateUtils;
 import com.example.cuby.utils.FileUtils;
@@ -24,7 +28,19 @@ public class DrawingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing);
-        
+
+        // 🔙 Custom toolbar (Drawing screen)
+        TextView title = findViewById(R.id.toolbarTitleText);
+        ImageView icon = findViewById(R.id.toolbarIcon);
+        View backBtn = findViewById(R.id.btnBack);
+
+        title.setText("Draw Your Plant");
+
+        icon.setVisibility(View.GONE); // or set a drawing icon if you want
+
+        backBtn.setOnClickListener(v -> finish()); // ⬅️ back to Garden
+
+
         repository = AppRepository.getInstance(getApplication());
         
         drawingView = findViewById(R.id.drawingView);
@@ -39,6 +55,11 @@ public class DrawingActivity extends AppCompatActivity {
         findViewById(R.id.btnColorGreen).setOnClickListener(v -> drawingView.setColor("#4CAF50"));
         findViewById(R.id.btnColorRed).setOnClickListener(v -> drawingView.setColor("#F44336"));
         findViewById(R.id.btnColorBlue).setOnClickListener(v -> drawingView.setColor("#2196F3"));
+
+        //save plant location
+        float plantX = getIntent().getFloatExtra("plant_x", 0.5f);
+        float plantY = getIntent().getFloatExtra("plant_y", 0.5f);
+
     }
 
     private void saveEntry() {
@@ -54,7 +75,13 @@ public class DrawingActivity extends AppCompatActivity {
         String date = DateUtils.getTodayDate();
         String filename = "plant_" + date + ".png";
         String path = FileUtils.saveBitmap(this, drawingView.getBitmap(), filename);
-        
+
+        GardenItem gardenItem = new GardenItem();
+        gardenItem.id = java.util.UUID.randomUUID().toString();
+        gardenItem.imagePath = path;
+        gardenItem.createdAt = System.currentTimeMillis();
+
+
         DailyLog log = new DailyLog(date);
         log.mood = mood;
         log.reflectionNote = reflection;

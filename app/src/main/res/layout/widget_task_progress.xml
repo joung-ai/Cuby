@@ -1,0 +1,81 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/taskWidget"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/bg_soft_card"
+    android:elevation="6dp">
+
+    <!-- HEADER (always visible) -->
+    <LinearLayout
+        android:id="@+id/taskHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvTaskTitle"
+            android:text="Today's Task"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/btnToggle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_task"
+            android:scaleType="centerInside"
+            android:contentDescription="Expand"/>
+    </LinearLayout>
+
+    <!-- CONTENT (collapsible) -->
+    <LinearLayout
+        android:id="@+id/taskContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/tvTaskDesc"
+            android:text="Task description"
+            android:textSize="13sp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ProgressBar
+            android:id="@+id/taskProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="180dp"
+            android:layout_height="8dp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="@color/btn_blue"
+            android:backgroundTint="#E0E0E0"/>
+
+        <TextView
+            android:id="@+id/tvTaskProgress"
+            android:text="0%"
+            android:textSize="12sp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnGoTask"
+            android:text="Go"
+            android:backgroundTint="@color/btn_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

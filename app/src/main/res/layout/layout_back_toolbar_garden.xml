@@ -2,9 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="12dp">
+    android:paddingBottom="20dp"
+    >
 
     <!-- Back button (LEFT) -->
     <ImageButton
@@ -44,9 +46,25 @@
         <TextView
             android:id="@+id/toolbarTitleText"
             style="@style/TitleText"
-            android:text="Title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Title" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnCalendar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Calendar"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_calendar"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

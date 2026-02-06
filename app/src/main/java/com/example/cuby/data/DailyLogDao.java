@@ -21,4 +21,5 @@ public interface DailyLogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(DailyLog log);
+
 }

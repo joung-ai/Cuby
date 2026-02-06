@@ -1,35 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
 
-    <!-- Book body -->
+    <!-- Seed body -->
     <path
-        android:fillColor="@color/cuby_green"
+        android:fillColor="#8D6E63"
         android:pathData="
-            M6,3
-            h11
-            c1.5,0 2.5,1.2 2.5,2.7
-            v12.6
-            c0,1.5 -1,2.7 -2.5,2.7
-            H6
-            c-1.5,0 -2.5,-1.2 -2.5,-2.7
-            V5.7
-            C3.5,4.2 4.5,3 6,3z"/>
+            M12,2
+            C7,2 4,7 4,12
+            C4,17 7,22 12,22
+            C17,22 20,17 20,12
+            C20,7 17,2 12,2 Z" />
 
-    <!-- Spine (cute divider) -->
+    <!-- Seed highlight -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M6,3 v18 h1.2 v-18z"/>
-
-    <!-- Small bookmark notch (zen detail) -->
-    <path
-        android:fillColor="@android:color/white"
+        android:fillColor="#A1887F"
         android:pathData="
-            M17,3
-            v5
-            l-1.5,-1
-            l-1.5,1
-            v-5z"/>
+            M10,6
+            C8,8 7.5,10.5 8,13
+            C8.3,14.5 9,16 10.5,17
+            C9,14 9,10 11,7 Z" />
+
 </vector>

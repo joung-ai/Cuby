@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
 
     <application
         android:name=".CubyApplication"
@@ -35,15 +37,29 @@
             android:name=".ui.drawing.DrawingActivity"
             android:exported="false" />
 
-        <activity android:name=".ui.breathing.BreathingTechniquesFragment" />
-
         <activity android:name=".BoxBreathingActivity" />
         <activity android:name=".Four78BreathingActivity" />
+
+        <activity
+            android:name=".PomodoroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".focus.FocusActivity"
+            android:exported="false" />
+
 
 
         <receiver
             android:name=".alarm.AlarmCancelReceiver"
             android:exported="false" />
+
+        <service
+            android:name=".FocusOverlayService"
+            android:permission="android.permission.SYSTEM_ALERT_WINDOW"
+            android:exported="false"/>
+
+
+
 
         <!-- Keep MainActivity declaration logic if needed, but we start with Onboarding -->
     </application>

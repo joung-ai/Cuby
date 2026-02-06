@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.example.cuby.CubyApplication;
+
+import com.example.cuby.logic.DailyTask;
 import com.example.cuby.model.DailyLog;
 import com.example.cuby.model.DiaryEntry;
 import com.example.cuby.model.Inventory;
@@ -18,7 +20,9 @@ public class AppRepository {
     private final DailyLogDao dailyLogDao;
     private final DiaryDao diaryDao;
     private final InventoryDao inventoryDao;
-    
+
+
+
     private final ExecutorService executor = Executors.newFixedThreadPool(4);
 
     private AppRepository(Application application) {
@@ -27,6 +31,7 @@ public class AppRepository {
         dailyLogDao = db.dailyLogDao();
         diaryDao = db.diaryDao();
         inventoryDao = db.inventoryDao();
+
     }
 
     public static synchronized AppRepository getInstance(Application application) {
@@ -125,4 +130,5 @@ public class AppRepository {
             }
         });
     }
+
 }

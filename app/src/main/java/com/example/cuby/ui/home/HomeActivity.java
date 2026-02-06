@@ -10,6 +10,20 @@ import androidx.fragment.app.Fragment;
 import com.example.cuby.R;
 import com.example.cuby.audio.MusicManager;
 
+import android.app.Activity;
+import android.content.Intent;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
+import com.example.cuby.data.AppRepository;
+import com.example.cuby.logic.DailyTask;
+import com.example.cuby.model.DailyLog;
+import com.example.cuby.utils.DateUtils;
+
+import java.util.List;
+
+
 public class HomeActivity extends AppCompatActivity {
 
     @Override
@@ -74,4 +88,5 @@ public class HomeActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E5F3FD"
+    android:padding="@dimen/margin_standard">
+
+    <!-- Header -->
+    <include layout="@layout/layout_back_toolbar"/>
+
+    <!-- Month Navigation -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/surface"
+        android:layout_marginBottom="@dimen/margin_standard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_small"
+            android:gravity="center_vertical"
+            android:backgroundTint="#F5FBFF">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPrev"
+                android:layout_width="@dimen/icon_button_size"
+                android:layout_height="@dimen/icon_button_size"
+                android:text="◀"
+                android:backgroundTint="@color/btn_blue"
+                style="@style/Widget.Material3.Button.TextButton" />
+
+            <TextView
+                android:id="@+id/tvMonth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="January 2026"
+                android:textSize="@dimen/text_subheading"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:gravity="center" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNext"
+                android:layout_width="@dimen/icon_button_size"
+                android:layout_height="@dimen/icon_button_size"
+                android:text="▶"
+                android:backgroundTint="@color/btn_blue"
+                style="@style/Widget.Material3.Button.TextButton" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Garden Grid -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="1dp"
+        app:cardBackgroundColor="@color/surface">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_small"
+            android:clipToPadding="false"
+            android:background="#F5FBFF"/>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

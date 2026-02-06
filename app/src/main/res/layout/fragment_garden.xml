@@ -1,76 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#E5F3FD"
-    android:padding="@dimen/margin_standard">
+    android:layout_height="match_parent">
 
-    <!-- Header -->
-    <include layout="@layout/layout_back_toolbar"/>
-
-    <!-- Month Navigation -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/surface"
-        android:layout_marginBottom="@dimen/margin_standard">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/margin_small"
-            android:gravity="center_vertical"
-            android:backgroundTint="#F5FBFF">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnPrev"
-                android:layout_width="@dimen/icon_button_size"
-                android:layout_height="@dimen/icon_button_size"
-                android:text="◀"
-                android:backgroundTint="@color/btn_blue"
-                style="@style/Widget.Material3.Button.TextButton" />
-
-            <TextView
-                android:id="@+id/tvMonth"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="January 2026"
-                android:textSize="@dimen/text_subheading"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
-                android:gravity="center" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnNext"
-                android:layout_width="@dimen/icon_button_size"
-                android:layout_height="@dimen/icon_button_size"
-                android:text="▶"
-                android:backgroundTint="@color/btn_blue"
-                style="@style/Widget.Material3.Button.TextButton" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Garden Grid -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+    <!-- 🌿 GARDEN WORLD (BACKGROUND) -->
+    <com.example.cuby.ui.garden.GardenBackgroundView
+        android:id="@+id/gardenBackground"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/surface">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/margin_small"
-            android:clipToPadding="false"
-            android:background="#F5FBFF"/>
-    </com.google.android.material.card.MaterialCardView>
-</LinearLayout>
+    <!-- 🔙 TOOLBAR -->
+    <include
+        layout="@layout/layout_back_toolbar_garden"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 🟫 PLOT (GROUND PATCH) -->
+
+    <!-- 🌰 SEED -->
+
+    <FrameLayout
+        android:id="@+id/plotArea"
+        android:layout_width="393dp"
+        android:layout_height="396dp"
+        android:background="@drawable/bg_plot"
+        android:elevation="0dp"
+        android:padding="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintWidth_percent="0.38" />
+
+    <ImageView
+        android:id="@+id/seedIcon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="68dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Seed"
+        android:src="@drawable/ic_seed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/plotArea" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

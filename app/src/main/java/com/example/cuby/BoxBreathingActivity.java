@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cuby.data.AppRepository;
+import com.example.cuby.logic.CubyMoodEngine;
+import com.example.cuby.utils.DateUtils;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BoxBreathingActivity extends AppCompatActivity {
@@ -30,10 +34,20 @@ public class BoxBreathingActivity extends AppCompatActivity {
 
     private float startX, endX, startY, endY;
 
+    private CubyMoodEngine cubyMoodEngine;
+    private Runnable progressRunnable;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_breathing);
+
+        cubyMoodEngine =
+                new CubyMoodEngine(
+                        AppRepository.getInstance(getApplication())
+                );
+
 
         // Views
         btnStart = findViewById(R.id.btnStart);
@@ -53,7 +67,10 @@ public class BoxBreathingActivity extends AppCompatActivity {
                 tvCycle.setVisibility(View.VISIBLE);
 
                 updateCycleText();
+                startProgressTracking();
                 startBoxBreathing();
+
+
             }
         });
     }
@@ -63,14 +80,7 @@ public class BoxBreathingActivity extends AppCompatActivity {
         if (!isRunning) return;
 
         if (currentCycle >= MAX_CYCLES) {
-            isRunning = false;
-
-            tvInstruction.setText("Done");
-            tvCount.setText("");
-
-            tvCycle.setVisibility(View.GONE);
-            btnStart.setVisibility(View.VISIBLE);
-
+            finishBreathing();
             return;
         }
 
@@ -131,4 +141,38 @@ public class BoxBreathingActivity extends AppCompatActivity {
             handler.postDelayed(() -> tvCount.setText("4"), 3000);
         }, delay);
     }
+
+    private void startProgressTracking() {
+        progressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (!isRunning) return;
+
+                cubyMoodEngine.addTaskProgress(
+                        DateUtils.getTodayDate(),
+                        1 // +1 second
+                );
+
+                handler.postDelayed(this, 1000);
+            }
+        };
+
+        handler.postDelayed(progressRunnable, 1000);
+    }
+
+    private void finishBreathing() {
+        isRunning = false;
+
+        handler.removeCallbacks(progressRunnable);
+
+        tvInstruction.setText("Done");
+        tvCount.setText("");
+        tvCycle.setVisibility(View.GONE);
+        btnStart.setVisibility(View.VISIBLE);
+
+        // notify HomeFragment
+        setResult(RESULT_OK);
+        finish();
+    }
+
 }

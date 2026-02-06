@@ -10,64 +10,97 @@ public class DailyTaskEngine {
 
         if (mood == null) return tasks;
 
-        switch (mood.toUpperCase()){
+        switch (mood.toUpperCase()) {
+
+            // OVERWHELMED — calm first, productivity last
             case "OVERWHELMED":
                 tasks.add(new DailyTask(
-                        "Let's Breathe with Cuby",
-                        "Use the 4-7-8 breathing method to calm ourselves.",
-                        DailyTask.TaskType.BREATHING
+                        "Breathe with Cuby",
+                        "4-7-8 breathing to calm your nervous system",
+                        DailyTask.TaskType.BREATHING_478,
+                        4 * (4 + 7 + 8)
                 ));
+
                 tasks.add(new DailyTask(
-                        "Let's take a break from Social Media.",
-                        "Detox from Social Media",
-                        DailyTask.TaskType.DETOX
+                        "Slow Box Breathing",
+                        "Stay grounded and steady",
+                        DailyTask.TaskType.BREATHING_BOX,
+                        4 * 16
                 ));
                 break;
 
+            // TIRED — restore energy, short effort only
             case "TIRED":
                 tasks.add(new DailyTask(
-                        "Gentle breathing",
-                        "Slow your breathing and relax.",
-                        DailyTask.TaskType.BREATHING
+                        "Box Breathing",
+                        "Reset your energy gently",
+                        DailyTask.TaskType.BREATHING_BOX,
+                        4 * 16
                 ));
+
                 tasks.add(new DailyTask(
-                        "Light focus",
-                        "Try one short Pomodoro session.",
-                        DailyTask.TaskType.POMODORO
+                        "Short Pomodoro",
+                        "A light focus session",
+                        DailyTask.TaskType.POMODORO,
+                        15 * 60
                 ));
                 break;
 
+            // OKAY — healthy momentum
             case "OKAY":
                 tasks.add(new DailyTask(
-                        "Focus session",
-                        "Complete one Pomodoro session.",
-                        DailyTask.TaskType.POMODORO
+                        "Pomodoro Focus",
+                        "25 minutes of focused work",
+                        DailyTask.TaskType.POMODORO,
+                        25 * 60
+                ));
+
+                tasks.add(new DailyTask(
+                        "Box Breathing",
+                        "Release tension after focusing",
+                        DailyTask.TaskType.BREATHING_BOX,
+                        3 * 16
+                ));
+
+                tasks.add(new DailyTask(
+                        "Second Focus Block",
+                        "One more focused session if you want",
+                        DailyTask.TaskType.POMODORO,
+                        20 * 60
                 ));
                 break;
 
+            // CALM — sustain balance
             case "CALM":
                 tasks.add(new DailyTask(
-                        "Focused momentum",
-                        "Do one Pomodoro session mindfully.",
-                        DailyTask.TaskType.POMODORO
+                        "Deep Focus",
+                        "Work calmly and steadily",
+                        DailyTask.TaskType.FOCUS,
+                        30 * 60
                 ));
+
                 tasks.add(new DailyTask(
-                        "Mindful pause",
-                        "Take a short detox break.",
-                        DailyTask.TaskType.DETOX
+                        "Box Breathing",
+                        "Maintain your calm state",
+                        DailyTask.TaskType.BREATHING_BOX,
+                        3 * 16
                 ));
                 break;
 
+            // HAPPY — use energy without draining
             case "HAPPY":
                 tasks.add(new DailyTask(
-                        "Channel your energy",
-                        "Use your energy in a Pomodoro session.",
-                        DailyTask.TaskType.POMODORO
+                        "Focused Momentum",
+                        "Use your positive energy",
+                        DailyTask.TaskType.FOCUS,
+                        30 * 60
                 ));
+
                 tasks.add(new DailyTask(
-                        "Balance and breathe",
-                        "Calm your body with breathing.",
-                        DailyTask.TaskType.BREATHING
+                        "Pomodoro Boost",
+                        "One focused sprint",
+                        DailyTask.TaskType.POMODORO,
+                        25 * 60
                 ));
                 break;
         }

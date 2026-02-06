@@ -18,6 +18,10 @@ public class CubyMoodEngine {
     // What Cuby says on the main screen
     public String getCubyMessage(String userMood, boolean isInactive, boolean seedPlanted) {
 
+        if (seedPlanted) {
+            return "I have a seed for you!\nYou earned it today.";
+        }
+
         if (isInactive) {
             return "Welcome back! I’m really happy to see you again.";
         }
@@ -30,17 +34,15 @@ public class CubyMoodEngine {
             case "CALM":
                 return "You seem calm today. Let’s keep that gentle pace.";
             case "OKAY":
-                return "Thanks for checking in. I’m here with you.";
+                return "Nice work today. I’m proud of you.";
             case "TIRED":
-                return "You’ve been doing a lot. It’s okay to slow down.";
+                return "You showed up even when tired. That matters.";
             case "OVERWHELMED":
-                return "That sounds heavy. Let’s take this one step at a time.";
+                return "You handled a tough day. I’m here.";
             case "HAPPY":
                 return "Your happiness makes today brighter!";
             default:
-                return seedPlanted
-                        ? "Look at our garden growing"
-                        : "I’m here for you, no matter what.";
+                return "I’m here for you.";
         }
     }
 
@@ -64,6 +66,75 @@ public class CubyMoodEngine {
             repository.insertDailyLog(log);
         });
     }
+
+    public DailyTask getCurrentTaskFromLog(DailyLog log) {
+
+        if (log == null || log.mood == null || log.taskCompleted) {
+            return null;
+        }
+
+        List<DailyTask> tasks =
+                DailyTaskEngine.generateTaskSequence(log.mood);
+
+        if (tasks.isEmpty()) return null;
+
+        int index = log.currentTaskIndex;
+
+        if (index < 0 || index >= tasks.size()) {
+            index = 0;
+        }
+
+        return tasks.get(index);
+    }
+
+    public void completeCurrentTask(String date) {
+
+        repository.getExecutor().execute(() -> {
+
+            DailyLog log = repository.getDailyLogSync(date);
+            if (log == null) return;
+
+            List<DailyTask> tasks =
+                    DailyTaskEngine.generateTaskSequence(log.mood);
+
+            log.currentTaskIndex++;
+
+            if (log.currentTaskIndex >= tasks.size()) {
+                // 🎉 All tasks done
+                log.taskCompleted = true;
+                log.seedUnlocked = true;
+            }
+
+            log.lastUpdated = System.currentTimeMillis();
+            repository.insertDailyLog(log);
+        });
+    }
+
+
+    public void addTaskProgress(String date, int seconds) {
+        repository.getExecutor().execute(() -> {
+
+            DailyLog log = repository.getDailyLogSync(date);
+            if (log == null || log.taskCompleted || log.mood == null) return;
+
+            // Get current task
+            DailyTask task = getCurrentTaskFromLog(log);
+            if (task == null) return;
+
+            // Add progress safely
+            log.taskProgressSeconds =
+                    Math.min(
+                            log.taskProgressSeconds + seconds,
+                            task.durationSeconds
+                    );
+
+            log.lastUpdated = System.currentTimeMillis();
+            repository.insertDailyLog(log);
+        });
+    }
+
+
+
 
 
     // Independent daily quote
