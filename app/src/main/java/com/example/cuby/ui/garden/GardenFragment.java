@@ -1,7 +1,6 @@
 package com.example.cuby.ui.garden;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+
+import com.example.cuby.data.AppRepository;
+import com.example.cuby.model.GardenPlant;
 import com.example.cuby.ui.drawing.DrawingActivity;
 
 import com.example.cuby.R;
@@ -23,11 +25,15 @@ import com.example.cuby.audio.MusicManager;
 
 public class GardenFragment extends Fragment {
 
-    private View plotArea;
+    private ViewGroup plotArea;
     private ImageView seedIcon;
 
     private float dX, dY;
     private float seedStartX, seedStartY;
+
+    private static final int REQ_DRAW_PLANT = 101;
+    private float pendingPlantX, pendingPlantY;
+
 
     @Override
     public View onCreateView(
@@ -80,14 +86,21 @@ public class GardenFragment extends Fragment {
         plotArea = view.findViewById(R.id.plotArea);
         seedIcon = view.findViewById(R.id.seedIcon);
 
+        checkSeedAvailability();
+
         // Save original seed position (for reset)
         seedIcon.post(() -> {
             seedStartX = seedIcon.getX();
             seedStartY = seedIcon.getY();
-            restoreSeedPosition();
         });
 
         makeSeedDraggable();
+
+        String yearMonth =
+                com.example.cuby.utils.DateUtils.getMonthPattern(new java.util.Date());
+
+        loadPlantsForMonth(yearMonth);
+
     }
 
     // 🌰 DRAG LOGIC
@@ -130,28 +143,70 @@ public class GardenFragment extends Fragment {
 
     // 🌱 SNAP + SAVE POSITION
     private void snapAndSave(View seed) {
+
         float centerX = seed.getX() + seed.getWidth() / 2f;
         float centerY = seed.getY() + seed.getHeight() / 2f;
 
-        float plotX = plotArea.getX();
-        float plotY = plotArea.getY();
+        pendingPlantX = centerX / plotArea.getWidth();
+        pendingPlantY = centerY / plotArea.getHeight();
 
-        float relX = (centerX - plotX) / plotArea.getWidth();
-        float relY = (centerY - plotY) / plotArea.getHeight();
+        pendingPlantX = Math.max(0f, Math.min(1f, pendingPlantX));
+        pendingPlantY = Math.max(0f, Math.min(1f, pendingPlantY));
 
-        // Clamp safety
-        relX = Math.max(0f, Math.min(1f, relX));
-        relY = Math.max(0f, Math.min(1f, relY));
+        Intent intent = new Intent(requireContext(), DrawingActivity.class);
+        startActivityForResult(intent, REQ_DRAW_PLANT);
+    }
 
-        // 💾 Save planted position
-        saveSeedPosition(relX, relY);
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        // 🌱 Snap seed visually
-        seed.setX(plotX + relX * plotArea.getWidth() - seed.getWidth() / 2f);
-        seed.setY(plotY + relY * plotArea.getHeight() - seed.getHeight() / 2f);
+        if (requestCode != REQ_DRAW_PLANT) return;
+        if (resultCode != Activity.RESULT_OK) return;
+        if (data == null) return;
 
-        // 🚀 Launch Drawing Activity
-        launchDrawingActivity(relX, relY);
+        final String imagePath = data.getStringExtra("drawing_path");
+        if (imagePath == null) return;
+
+        final AppRepository repo =
+                AppRepository.getInstance(requireActivity().getApplication());
+
+        final String yearMonth =
+                com.example.cuby.utils.DateUtils.getMonthPattern(new java.util.Date());
+
+        repo.getExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                GardenPlant plant = new GardenPlant();
+                plant.yearMonth = yearMonth;
+                plant.posX = pendingPlantX;
+                plant.posY = pendingPlantY;
+                plant.imagePath = imagePath;
+                plant.plantType = "drawing";
+                plant.plantedAt = System.currentTimeMillis();
+
+                repo.gardenPlantDao().insert(plant);
+
+                String today = com.example.cuby.utils.DateUtils.getTodayDate();
+                com.example.cuby.model.DailyLog log =
+                        repo.getDailyLogSync(today);
+
+                if (log != null) {
+                    log.seedPlanted = true;
+                    repo.insertDailyLog(log);
+                }
+
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        seedIcon.setVisibility(View.GONE);
+                        loadPlantsForMonth(yearMonth);
+                    }
+                });
+            }
+        });
     }
 
 
@@ -165,15 +220,6 @@ public class GardenFragment extends Fragment {
     }
 
     //  SAVE (relative position)
-    private void saveSeedPosition(float x, float y) {
-        SharedPreferences prefs = requireContext()
-                .getSharedPreferences("garden", Context.MODE_PRIVATE);
-
-        prefs.edit()
-                .putFloat("seed_x", x)
-                .putFloat("seed_y", y)
-                .apply();
-    }
 
     //open drawing activity
     private void launchDrawingActivity(float relX, float relY) {
@@ -186,23 +232,85 @@ public class GardenFragment extends Fragment {
         startActivity(intent);
     }
 
+    private void placePlantView(GardenPlant plant) {
 
-    //  RESTORE ON REOPEN
-    private void restoreSeedPosition() {
-        SharedPreferences prefs = requireContext()
-                .getSharedPreferences("garden", Context.MODE_PRIVATE);
+        ImageView flower = new ImageView(requireContext());
 
-        if (!prefs.contains("seed_x")) return;
+        // 🌸 THIS is the plant in the garden
+        flower.setImageResource(R.drawable.ic_plant);
 
-        float relX = prefs.getFloat("seed_x", 0.5f);
-        float relY = prefs.getFloat("seed_y", 0.5f);
+        ViewGroup.LayoutParams params =
+                new ViewGroup.LayoutParams(120, 120);
+        flower.setLayoutParams(params);
 
-        plotArea.post(() -> {
-            float x = plotArea.getX() + relX * plotArea.getWidth();
-            float y = plotArea.getY() + relY * plotArea.getHeight();
+        plotArea.addView(flower);
 
-            seedIcon.setX(x - seedIcon.getWidth() / 2f);
-            seedIcon.setY(y - seedIcon.getHeight() / 2f);
+        flower.post(() -> {
+            float x = plant.posX * plotArea.getWidth();
+            float y = plant.posY * plotArea.getHeight();
+
+            flower.setX(x - flower.getWidth() / 2f);
+            flower.setY(y - flower.getHeight() / 2f);
         });
     }
+
+    private void checkSeedAvailability() {
+        AppRepository repo =
+                AppRepository.getInstance(requireActivity().getApplication());
+
+        String today = com.example.cuby.utils.DateUtils.getTodayDate();
+
+        repo.getExecutor().execute(() -> {
+            com.example.cuby.model.DailyLog log =
+                    repo.getDailyLogSync(today);
+
+            if (log == null) return;
+
+            requireActivity().runOnUiThread(() -> {
+
+                // 🌱 Show seed ONLY if unlocked and NOT planted
+                if (log.seedUnlocked && !log.seedPlanted) {
+                    seedIcon.setVisibility(View.VISIBLE);
+                } else {
+                    seedIcon.setVisibility(View.GONE);
+                }
+            });
+        });
+    }
+    private void markSeedAsPlanted() {
+        AppRepository repo =
+                AppRepository.getInstance(requireActivity().getApplication());
+
+        String today = com.example.cuby.utils.DateUtils.getTodayDate();
+
+        repo.getExecutor().execute(() -> {
+            com.example.cuby.model.DailyLog log =
+                    repo.getDailyLogSync(today);
+
+            if (log == null) return;
+
+            log.seedPlanted = true;
+            repo.insertDailyLog(log);
+        });
+    }
+
+    private void loadPlantsForMonth(String yearMonth) {
+        AppRepository repo =
+                AppRepository.getInstance(requireActivity().getApplication());
+
+        repo.getExecutor().execute(() -> {
+            java.util.List<GardenPlant> plants =
+                    repo.gardenPlantDao().getPlantsForMonth(yearMonth);
+
+            requireActivity().runOnUiThread(() -> {
+                plotArea.removeAllViews();
+                for (GardenPlant plant : plants) {
+                    placePlantView(plant);
+                }
+            });
+        });
+    }
+
+
+
 }

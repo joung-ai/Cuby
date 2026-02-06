@@ -9,9 +9,10 @@ import com.example.cuby.model.*;
                 UserProfile.class,
                 DailyLog.class,
                 DiaryEntry.class,
-                Inventory.class
+                Inventory.class,
+                GardenPlant.class
         },
-        version = 3,
+        version = 4,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -19,5 +20,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract DailyLogDao dailyLogDao();
     public abstract DiaryDao diaryDao();
     public abstract InventoryDao inventoryDao();
+    public abstract GardenPlantDao gardenPlantDao();
+
 }
 

@@ -92,7 +92,7 @@ public class CubyMoodEngine {
         repository.getExecutor().execute(() -> {
 
             DailyLog log = repository.getDailyLogSync(date);
-            if (log == null) return;
+            if (log == null || log.taskCompleted) return;
 
             List<DailyTask> tasks =
                     DailyTaskEngine.generateTaskSequence(log.mood);
@@ -100,9 +100,11 @@ public class CubyMoodEngine {
             log.currentTaskIndex++;
 
             if (log.currentTaskIndex >= tasks.size()) {
-                // 🎉 All tasks done
                 log.taskCompleted = true;
-                log.seedUnlocked = true;
+
+                if (!log.seedUnlocked) {
+                    log.seedUnlocked = true; // 🌱 unlock ONCE
+                }
             }
 
             log.lastUpdated = System.currentTimeMillis();

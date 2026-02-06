@@ -12,6 +12,7 @@ import com.example.cuby.model.DailyLog;
 import com.example.cuby.model.DiaryEntry;
 import com.example.cuby.model.Inventory;
 import com.example.cuby.model.UserProfile;
+import com.example.cuby.model.GardenPlant;
 
 public class AppRepository {
     private static AppRepository instance;
@@ -20,6 +21,8 @@ public class AppRepository {
     private final DailyLogDao dailyLogDao;
     private final DiaryDao diaryDao;
     private final InventoryDao inventoryDao;
+    private final GardenPlantDao gardenPlantDao;
+
 
 
 
@@ -31,6 +34,8 @@ public class AppRepository {
         dailyLogDao = db.dailyLogDao();
         diaryDao = db.diaryDao();
         inventoryDao = db.inventoryDao();
+        gardenPlantDao = db.gardenPlantDao();
+
 
     }
 
@@ -130,5 +135,9 @@ public class AppRepository {
             }
         });
     }
+    public GardenPlantDao gardenPlantDao() {
+        return gardenPlantDao;
+    }
+
 
 }

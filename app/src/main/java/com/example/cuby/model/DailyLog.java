@@ -22,6 +22,8 @@ public class DailyLog {
     public boolean seedUnlocked;
     public String taskId; // refference to daily task
     public int taskProgressSeconds;
+    public boolean seedShown;
+
 
 
     public DailyLog(@NonNull String date) {

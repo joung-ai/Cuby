@@ -374,26 +374,39 @@ public class HomeFragment extends Fragment {
 
             DailyTask task = cubyMoodEngine.getCurrentTaskFromLog(log);
 
+            // 🟢 ACTIVE TASK
             if (task != null) {
                 tvCubyBubble.setText(
                         "Today’s task 🌱\n" +
                                 task.title + " • " + (task.durationSeconds / 60) + " min\n\n" +
                                 task.description
                 );
-            } else if (log.taskCompleted && log.seedUnlocked) {
+                return;
+            }
+
+            // 🌱 SEED MESSAGE — SHOW ONCE
+            if (log.taskCompleted && log.seedUnlocked && !log.seedShown) {
                 tvCubyBubble.setText(
                         "🌱 You did it!\nI have a seed for you.\nGo check the garden!"
                 );
-            } else {
-                tvCubyBubble.setText(
-                        cubyMoodEngine.getCubyMessage(
-                                log.mood,
-                                false,
-                                log.seedUnlocked
-                        )
-                );
+
+                // mark as shown (background thread)
+                repository.getExecutor().execute(() -> {
+                    log.seedShown = true;
+                    repository.insertDailyLog(log);
+                });
+
+                return;
             }
 
+            // 💬 NORMAL CUBY MESSAGE
+            tvCubyBubble.setText(
+                    cubyMoodEngine.getCubyMessage(
+                            log.mood,
+                            false,
+                            log.seedUnlocked
+                    )
+            );
         });
     }
 

@@ -1,5 +1,6 @@
 package com.example.cuby.ui.drawing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,8 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cuby.R;
 import com.example.cuby.data.AppRepository;
-import com.example.cuby.model.DailyLog;
-import com.example.cuby.model.GardenItem;
 import com.example.cuby.ui.views.DrawingView;
 import com.example.cuby.utils.DateUtils;
 import com.example.cuby.utils.FileUtils;
@@ -56,42 +55,31 @@ public class DrawingActivity extends AppCompatActivity {
         findViewById(R.id.btnColorRed).setOnClickListener(v -> drawingView.setColor("#F44336"));
         findViewById(R.id.btnColorBlue).setOnClickListener(v -> drawingView.setColor("#2196F3"));
 
-        //save plant location
-        float plantX = getIntent().getFloatExtra("plant_x", 0.5f);
-        float plantY = getIntent().getFloatExtra("plant_y", 0.5f);
-
     }
 
     private void saveEntry() {
         String reflection = etReflection.getText().toString().trim();
-        String mood = "Okay"; // Default
-        int moodId = rgMood.getCheckedRadioButtonId();
-        
-        if (moodId == R.id.rbHappy) mood = "Happy";
-        else if (moodId == R.id.rbSad) mood = "Sad";
-        else if (moodId == R.id.rbCalm) mood = "Calm";
-        else if (moodId == R.id.rbAnxious) mood = "Anxious";
 
         String date = DateUtils.getTodayDate();
-        String filename = "plant_" + date + ".png";
-        String path = FileUtils.saveBitmap(this, drawingView.getBitmap(), filename);
+        String filename = "plant_" + date + "_" + System.currentTimeMillis() + ".png";
 
-        GardenItem gardenItem = new GardenItem();
-        gardenItem.id = java.util.UUID.randomUUID().toString();
-        gardenItem.imagePath = path;
-        gardenItem.createdAt = System.currentTimeMillis();
+        String path = FileUtils.saveBitmap(
+                this,
+                drawingView.getBitmap(),
+                filename
+        );
 
+        if (path == null) {
+            Toast.makeText(this, "Failed to save drawing", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        DailyLog log = new DailyLog(date);
-        log.mood = mood;
-        log.reflectionNote = reflection;
-        log.seedPlanted = true;
-        log.drawingPath = path;
-        log.lastUpdated = System.currentTimeMillis();
-        
-        repository.insertDailyLog(log);
-        
-        Toast.makeText(this, "Seed planted successfully!", Toast.LENGTH_SHORT).show();
+        // 🌸 RETURN RESULT TO GARDEN
+        Intent result = new Intent();
+        result.putExtra("drawing_path", path);
+        setResult(RESULT_OK, result);
+
+        Toast.makeText(this, "Your plant is ready 🌱", Toast.LENGTH_SHORT).show();
         finish();
     }
 }
