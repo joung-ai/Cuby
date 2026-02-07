@@ -36,6 +36,9 @@
             android:name=".ui.drawing.DrawingActivity"
             android:exported="false" />
 
+        <activity android:name="com.example.memorygame.MemoryGame" />
+
+
         <!-- Keep MainActivity declaration logic if needed, but we start with Onboarding -->
     </application>
 

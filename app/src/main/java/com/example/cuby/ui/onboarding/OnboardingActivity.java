@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
@@ -20,6 +21,8 @@ import com.example.cuby.model.UserProfile;
 import com.example.cuby.notification.InactivityNotificationWorker;
 import com.example.cuby.ui.home.HomeActivity;
 import com.example.cuby.utils.Constants;
+
+import java.util.concurrent.TimeUnit;
 
 public class OnboardingActivity extends AppCompatActivity {
 
@@ -32,9 +35,12 @@ public class OnboardingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        markUserActive(); // Reset inactivity timer here
 
-        SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
+        markUserActive();
+
+        SharedPreferences prefs =
+                getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
+
         if (prefs.getBoolean(Constants.KEY_USER_SETUP_COMPLETE, false)) {
             startActivity(new Intent(this, HomeActivity.class));
             finish();
@@ -56,7 +62,7 @@ public class OnboardingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        markUserActive(); // Reset inactivity timer on resume
+        markUserActive();
     }
 
     private void saveAndStart() {
@@ -75,11 +81,9 @@ public class OnboardingActivity extends AppCompatActivity {
 
         int selectedSkinId = rgSkin.getCheckedRadioButtonId();
         String skin = "Default";
-        if (selectedSkinId == R.id.rbSkinBlue) {
-            skin = "Blue";
-        } else if (selectedSkinId == R.id.rbSkinPink) {
-            skin = "Pink";
-        }
+
+        if (selectedSkinId == R.id.rbSkinBlue) skin = "Blue";
+        else if (selectedSkinId == R.id.rbSkinPink) skin = "Pink";
 
         UserProfile profile = new UserProfile();
         profile.id = 1;
@@ -101,7 +105,9 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void markUserActive() {
-        SharedPreferences prefs = getSharedPreferences("inactivity_prefs", Context.MODE_PRIVATE);
+
+        SharedPreferences prefs =
+                getSharedPreferences("inactivity_prefs", Context.MODE_PRIVATE);
 
         prefs.edit()
                 .putLong("last_active_time", System.currentTimeMillis())
@@ -109,8 +115,14 @@ public class OnboardingActivity extends AppCompatActivity {
 
         OneTimeWorkRequest request =
                 new OneTimeWorkRequest.Builder(InactivityNotificationWorker.class)
+                        .setInitialDelay(8, TimeUnit.HOURS)
                         .build();
 
-        WorkManager.getInstance(this).enqueue(request);
+        WorkManager.getInstance(this)
+                .enqueueUniqueWork(
+                        "INACTIVITY_WORK",
+                        ExistingWorkPolicy.REPLACE,
+                        request
+                );
     }
 }

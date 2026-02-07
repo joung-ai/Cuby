@@ -1,5 +1,6 @@
 package com.example.cuby.ui.home;
 
+import android.content.Intent;  // ADDED
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
@@ -11,14 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;   // ADDED
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.cuby.R;
 import com.example.cuby.alarm.AlarmFragment;
 import com.example.cuby.data.AppRepository;
@@ -29,6 +33,7 @@ import com.example.cuby.ui.garden.GardenFragment;
 import com.example.cuby.ui.detox.DetoxFragment;
 import com.example.cuby.ui.settings.SettingsFragment;
 
+import com.example.memorygame.MemoryGame;  // ADDED
 
 import java.time.LocalDate;
 
@@ -48,6 +53,9 @@ public class HomeFragment extends Fragment {
 
     private Handler animationHandler = new Handler(Looper.getMainLooper());
 
+    // 🔹 ADDED: Memory Game button reference
+    private ImageButton btnMemoryGame;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -59,19 +67,21 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        //tvGreeting = view.findViewById(R.id.tvGreeting); // Removed
-        //tvFoodCount = view.findViewById(R.id.tvFoodCount);
         ivCuby = view.findViewById(R.id.ivCuby);
-
         cubyShadow = view.findViewById(R.id.cubyShadow);
 
-
         tvCubyBubble = view.findViewById(R.id.tvCubyBubble);
-        layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons); // Removed
+        layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons);
+
+        // 🔹 ADDED: Initialize Memory Game button and set click listener
+        btnMemoryGame = view.findViewById(R.id.btnMemoryGame);
+        btnMemoryGame.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), MemoryGame.class);
+            startActivity(intent);
+        });
 
         repository = AppRepository.getInstance(requireActivity().getApplication());
         cubyMoodEngine = new CubyMoodEngine(repository);
-
 
         setupNavigation(view);
         setupCubyInteraction();
@@ -102,13 +112,12 @@ public class HomeFragment extends Fragment {
 
     }
 
-
     private void setupNavigation(View view) {
         // New Side Navigation
         view.findViewById(R.id.btnSettings).setOnClickListener(v -> navigateWithAnimation(new SettingsFragment()));
         view.findViewById(R.id.btnChat).setOnClickListener(v -> navigateWithAnimation(new ChatFragment()));
         view.findViewById(R.id.btnDiary).setOnClickListener(v -> navigateWithAnimation(new DiaryFragment()) );
-        
+
         // Bottom Bar
         view.findViewById(R.id.btnGarden).setOnClickListener(v -> navigateWithAnimation(new GardenFragment())); // Diary/Garden
         //view.findViewById(R.id.btnPlant).setOnClickListener(v -> navigateWithAnimation(new DetoxFragment())); // Plant/Seed flow
@@ -192,7 +201,7 @@ public class HomeFragment extends Fragment {
         viewModel.getUserProfile().observe(getViewLifecycleOwner(), profile -> {
             if (profile != null) {
                 // tvGreeting.setText("Hi, " + profile.username + "! 👋"); // Removed
-                
+
                 // Update skin tint
                 if ("Pink".equals(profile.cubySkin)) {
                     ivCuby.setColorFilter(0x40FFC0CB);

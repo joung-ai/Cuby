@@ -16,6 +16,9 @@
     <string name="feed_cuby">Feed Cuby</string>
     <string name="yum_message">Yum! Cuby feels happy!</string>
 
+    <string name="memory_game_button">Open Memory Game</string>
+
+
     <!-- Navigation -->
     <string name="chat">Chat</string>
     <string name="diary">Diary</string>

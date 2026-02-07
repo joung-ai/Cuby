@@ -6,16 +6,16 @@
     android:layout_height="match_parent">
 
     <!-- ROOM BACKGROUND (STATIC) -->
-        <com.example.cuby.ui.room.RoomBackgroundView
-            android:id="@+id/roomBackground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+    <com.example.cuby.ui.room.RoomBackgroundView
+        android:id="@+id/roomBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <!-- FOREGROUND UI -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,94 +24,94 @@
             app:layout_constraintBottom_toTopOf="@id/ivCuby"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-        <!-- SPEECH BUBBLE -->
-        <TextView
-            android:id="@+id/tvCubyBubble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_speech_bubble"
-            android:padding="12dp"
-            android:text="Hello!"
-            android:textSize="14sp"
-            android:textColor="@color/text_primary"
-            android:visibility="gone"
-            android:layout_marginBottom="6dp" />
 
+            <!-- SPEECH BUBBLE -->
+            <TextView
+                android:id="@+id/tvCubyBubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_speech_bubble"
+                android:padding="12dp"
+                android:text="Hello!"
+                android:textSize="14sp"
+                android:textColor="@color/text_primary"
+                android:visibility="gone"
+                android:layout_marginBottom="6dp" />
 
-        <!-- MOOD BUTTONS (TELL-TALE) -->
-        <LinearLayout
-            android:id="@+id/layoutMoodButtons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvCubyBubble"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp">
-
-            <!-- Layer 1 -->
+            <!-- MOOD BUTTONS (TELL-TALE) -->
             <LinearLayout
+                android:id="@+id/layoutMoodButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tvCubyBubble"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCalm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Calm"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/black"
-                android:layout_marginHorizontal="3dp"/>
+                <!-- Layer 1 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOkay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Okay"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/black"
-                android:layout_marginHorizontal="3dp"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCalm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Calm"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="3dp"/>
 
-        </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOkay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Okay"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="3dp"/>
 
-            <!-- Layer 2 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnTired"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tired"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/black"
-                android:layout_marginHorizontal="3dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOverwhelmed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Overwhelmed"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/black"
-                android:layout_marginHorizontal="3dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnHappy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Happy"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/black"
-                android:layout_marginHorizontal="3dp"/>
                 </LinearLayout>
 
-        </LinearLayout>
+                <!-- Layer 2 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTired"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tired"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="3dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOverwhelmed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Overwhelmed"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="3dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnHappy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Happy"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="3dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -126,7 +126,6 @@
             app:layout_constraintStart_toStartOf="@id/ivCuby"
             app:layout_constraintEnd_toEndOf="@id/ivCuby"
             android:translationY="-55dp"/>
-
 
         <ImageView
             android:id="@+id/ivCuby"
@@ -181,6 +180,17 @@
                 android:contentDescription="Chat"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_chat" />
+
+            <ImageButton
+                android:id="@+id/btnMemoryGame"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/memory_game_button"
+                android:src="@drawable/ic_memory_game"
+                app:layout_constraintTop_toBottomOf="@id/btnChat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/btnChat" />
 
 
         </LinearLayout>
@@ -283,6 +293,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

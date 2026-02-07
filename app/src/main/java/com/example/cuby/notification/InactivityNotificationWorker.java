@@ -28,19 +28,20 @@ public class InactivityNotificationWorker extends Worker {
     private static final String KEY_LAST_ACTIVE = "last_active_time";
     private static final String WORK_NAME = "INACTIVITY_WORK";
 
-    // 8 hours in milliseconds
-    private static final long INACTIVITY_TIME_MILLIS = TimeUnit.HOURS.toMillis(8);
+    // EXACTLY 8 HOURS
+    private static final long INACTIVITY_TIME =
+            TimeUnit.HOURS.toMillis(8);
 
     public InactivityNotificationWorker(
             @NonNull Context context,
-            @NonNull WorkerParameters params
-    ) {
+            @NonNull WorkerParameters params) {
         super(context, params);
     }
 
     @NonNull
     @Override
     public Result doWork() {
+
         Context context = getApplicationContext();
         SharedPreferences prefs =
                 context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
@@ -48,11 +49,13 @@ public class InactivityNotificationWorker extends Worker {
         long lastActive = prefs.getLong(KEY_LAST_ACTIVE, 0);
         long now = System.currentTimeMillis();
 
-        if (lastActive == 0 || now - lastActive < INACTIVITY_TIME_MILLIS) {
+        // If user is still active, do nothing
+        if (lastActive == 0 || now - lastActive < INACTIVITY_TIME) {
             scheduleNext();
             return Result.success();
         }
 
+        // Open app when notification is clicked
         Intent intent = new Intent(context, OnboardingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
@@ -86,6 +89,7 @@ public class InactivityNotificationWorker extends Worker {
 
         manager.notify(1, builder.build());
 
+        // Schedule next inactivity check
         scheduleNext();
         return Result.success();
     }
@@ -93,7 +97,7 @@ public class InactivityNotificationWorker extends Worker {
     private void scheduleNext() {
         OneTimeWorkRequest request =
                 new OneTimeWorkRequest.Builder(InactivityNotificationWorker.class)
-                        .setInitialDelay(INACTIVITY_TIME_MILLIS, TimeUnit.MILLISECONDS)
+                        .setInitialDelay(INACTIVITY_TIME, TimeUnit.MILLISECONDS)
                         .build();
 
         WorkManager.getInstance(getApplicationContext())
