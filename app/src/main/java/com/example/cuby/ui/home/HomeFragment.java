@@ -51,6 +51,9 @@ import com.example.cuby.PomodoroActivity;
 import java.time.LocalDate;
 import java.util.List;
 
+// ADD THIS IMPORT for your memory game
+import com.example.cuby.memorygame.MemoryGame;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel viewModel;
@@ -81,12 +84,8 @@ public class HomeFragment extends Fragment {
 
     private ActivityResultLauncher<Intent> taskLauncher;
 
-
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -122,8 +121,6 @@ public class HomeFragment extends Fragment {
                         }
                 );
 
-
-
         setupNavigation(view);
         setupCubyInteraction();
         observeData();
@@ -131,13 +128,21 @@ public class HomeFragment extends Fragment {
         setupTaskWidget(view);
         observeTodayLog();
 
+        // <<< ADD MEMORY GAME BUTTON LISTENER HERE >>>
+        View btnMemoryGame = view.findViewById(R.id.btnMemoryGame);
+        if (btnMemoryGame != null) {
+            btnMemoryGame.setOnClickListener(v -> {
+                Intent intent = new Intent(requireActivity(), MemoryGame.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setupNavigation(View view) {
         // New Side Navigation
         view.findViewById(R.id.btnSettings).setOnClickListener(v -> navigateWithAnimation(new SettingsFragment()));
         view.findViewById(R.id.btnChat).setOnClickListener(v -> navigateWithAnimation(new ChatFragment()));
-        view.findViewById(R.id.btnDiary).setOnClickListener(v -> navigateWithAnimation(new DiaryFragment()) );
+        view.findViewById(R.id.btnDiary).setOnClickListener(v -> navigateWithAnimation(new DiaryFragment()));
 
         // Bottom Bar
         view.findViewById(R.id.btnMeditate).setOnClickListener(v -> navigateWithAnimation(new BreathingTechniquesFragment()));
@@ -157,7 +162,6 @@ public class HomeFragment extends Fragment {
         setupMoodButton(view, R.id.btnTired, "TIRED");
         setupMoodButton(view, R.id.btnOverwhelmed, "OVERWHELMED");
         setupMoodButton(view, R.id.btnHappy, "HAPPY");
-
     }
 
     private void navigateWithAnimation(Fragment fragment) {
@@ -348,8 +352,6 @@ public class HomeFragment extends Fragment {
                         intent = new Intent(requireContext(), FocusActivity.class);
                         break;
 
-
-
                     default:
                         return; // no task to launch
                 }
@@ -410,14 +412,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
         today = DateUtils.getTodayDate();
     }
-
-
 
     @Override
     public void onDestroyView() {
