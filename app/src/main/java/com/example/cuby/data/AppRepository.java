@@ -139,5 +139,10 @@ public class AppRepository {
         return gardenPlantDao;
     }
 
+    public LiveData<List<GardenPlant>> getPlantsForMonthLive(String yearMonth) {
+        return gardenPlantDao.getPlantsForMonthLive(yearMonth);
+    }
+
+
 
 }

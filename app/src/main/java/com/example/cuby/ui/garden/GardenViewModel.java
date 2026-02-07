@@ -12,6 +12,7 @@ import com.example.cuby.utils.DateUtils;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import com.example.cuby.model.GardenPlant;
 
 public class GardenViewModel extends AndroidViewModel {
     
@@ -28,6 +29,14 @@ public class GardenViewModel extends AndroidViewModel {
         monthlyLogs = Transformations.switchMap(currentMonth, calendar -> {
             String monthPattern = DateUtils.getMonthPattern(calendar.getTime());
             return repository.getMonthlyLogs(monthPattern);
+        });
+
+    }
+
+    public LiveData<List<GardenPlant>> getPlantsForMonth() {
+        return Transformations.switchMap(currentMonth, calendar -> {
+            String ym = DateUtils.getMonthPattern(calendar.getTime());
+            return repository.getPlantsForMonthLive(ym);
         });
     }
 

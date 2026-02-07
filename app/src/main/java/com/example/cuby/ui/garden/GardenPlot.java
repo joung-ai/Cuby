@@ -1,15 +1,17 @@
 package com.example.cuby.ui.garden;
 
 import com.example.cuby.model.DailyLog;
+import com.example.cuby.model.GardenPlant;
 
 public class GardenPlot {
-    public int dayWithType; // 0=Empty, 1=DayCell
+
     public int dayNumber;
-    public DailyLog log; // Can be null
-    
-    public GardenPlot(int dayNumber, DailyLog log) {
-        this.dayWithType = 1;
+    public DailyLog log;
+    public GardenPlant plant;
+
+    public GardenPlot(int dayNumber, DailyLog log, GardenPlant plant) {
         this.dayNumber = dayNumber;
         this.log = log;
+        this.plant = plant;
     }
 }

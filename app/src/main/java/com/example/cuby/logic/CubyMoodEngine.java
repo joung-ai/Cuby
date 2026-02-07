@@ -92,19 +92,19 @@ public class CubyMoodEngine {
         repository.getExecutor().execute(() -> {
 
             DailyLog log = repository.getDailyLogSync(date);
-            if (log == null || log.taskCompleted) return;
+            if (log == null) return;
 
             List<DailyTask> tasks =
                     DailyTaskEngine.generateTaskSequence(log.mood);
 
+            log.taskProgressSeconds = 0;
+
             log.currentTaskIndex++;
 
             if (log.currentTaskIndex >= tasks.size()) {
+                // 🎉 All tasks done
                 log.taskCompleted = true;
-
-                if (!log.seedUnlocked) {
-                    log.seedUnlocked = true; // 🌱 unlock ONCE
-                }
+                log.seedUnlocked = true;
             }
 
             log.lastUpdated = System.currentTimeMillis();
@@ -119,16 +119,23 @@ public class CubyMoodEngine {
             DailyLog log = repository.getDailyLogSync(date);
             if (log == null || log.taskCompleted || log.mood == null) return;
 
-            // Get current task
             DailyTask task = getCurrentTaskFromLog(log);
             if (task == null) return;
 
-            // Add progress safely
-            log.taskProgressSeconds =
-                    Math.min(
-                            log.taskProgressSeconds + seconds,
-                            task.durationSeconds
-                    );
+            // Add progress
+            log.taskProgressSeconds += seconds;
+
+            // ✅ AUTO-COMPLETE when finished
+            if (log.taskProgressSeconds >= task.durationSeconds) {
+                log.taskProgressSeconds = 0;
+                log.currentTaskIndex++;
+
+                if (log.currentTaskIndex >=
+                        DailyTaskEngine.generateTaskSequence(log.mood).size()) {
+                    log.taskCompleted = true;
+                    log.seedUnlocked = true;
+                }
+            }
 
             log.lastUpdated = System.currentTimeMillis();
             repository.insertDailyLog(log);

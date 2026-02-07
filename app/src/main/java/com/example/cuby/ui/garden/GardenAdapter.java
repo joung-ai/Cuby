@@ -1,5 +1,6 @@
 package com.example.cuby.ui.garden;
 
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.cuby.R;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,20 +65,30 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
 
         public void bind(GardenPlot plot, OnPlotClickListener listener) {
             tvDay.setText(String.valueOf(plot.dayNumber));
-            
-            if (plot.log != null && plot.log.seedPlanted) {
-                ivPlant.setVisibility(View.VISIBLE);
-                ivPlant.setImageResource(android.R.drawable.star_big_on); 
-                viewMoodDot.setVisibility(plot.log.mood != null ? View.VISIBLE : View.GONE);
-            } else {
-                ivPlant.setVisibility(View.GONE);
-                viewMoodDot.setVisibility(View.GONE);
+
+            ivPlant.setVisibility(View.GONE);
+            viewMoodDot.setVisibility(View.GONE);
+
+            // 🌸 SHOW USER DRAWING IF PLANT EXISTS
+            if (plot.plant != null && plot.plant.imagePath != null) {
+                File file = new File(plot.plant.imagePath);
+                if (file.exists()) {
+                    ivPlant.setImageBitmap(
+                            BitmapFactory.decodeFile(file.getAbsolutePath())
+                    );
+                    ivPlant.setVisibility(View.VISIBLE);
+                }
             }
-            
+
+            // 🔵 Mood dot (optional)
+            if (plot.log != null && plot.log.mood != null) {
+                viewMoodDot.setVisibility(View.VISIBLE);
+            }
+
             itemView.setOnClickListener(v -> listener.onPlotClick(plot));
         }
     }
-    
+
     private static class GardenDiffCallback extends DiffUtil.Callback {
         private final List<GardenPlot> oldList;
         private final List<GardenPlot> newList;
@@ -100,9 +113,21 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
         public boolean areContentsTheSame(int oldPos, int newPos) {
             GardenPlot o = oldList.get(oldPos);
             GardenPlot n = newList.get(newPos);
+
+            // seed state
             boolean oldPlanted = o.log != null && o.log.seedPlanted;
             boolean newPlanted = n.log != null && n.log.seedPlanted;
-            return oldPlanted == newPlanted;
+
+            // plant image presence
+            String oldImage = o.plant != null ? o.plant.imagePath : null;
+            String newImage = n.plant != null ? n.plant.imagePath : null;
+
+            if (oldPlanted != newPlanted) return false;
+
+            if (oldImage == null && newImage == null) return true;
+            if (oldImage == null || newImage == null) return false;
+
+            return oldImage.equals(newImage);
         }
     }
 }

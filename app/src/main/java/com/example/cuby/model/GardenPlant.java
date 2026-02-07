@@ -9,15 +9,16 @@ public class GardenPlant {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    // yyyy-MM-dd  ← REQUIRED
+    public String date;
+
+    // yyyy-MM
     public String yearMonth;
 
-    // relative position (0..1)
     public float posX;
     public float posY;
 
-    // 🌸 PATH TO USER DRAWING
     public String imagePath;
-
     public String plantType;
     public long plantedAt;
 }

@@ -147,8 +147,11 @@ public class GardenFragment extends Fragment {
         float centerX = seed.getX() + seed.getWidth() / 2f;
         float centerY = seed.getY() + seed.getHeight() / 2f;
 
-        pendingPlantX = centerX / plotArea.getWidth();
-        pendingPlantY = centerY / plotArea.getHeight();
+        float plotX = plotArea.getX();
+        float plotY = plotArea.getY();
+
+        pendingPlantX = (centerX - plotX) / plotArea.getWidth();
+        pendingPlantY = (centerY - plotY) / plotArea.getHeight();
 
         pendingPlantX = Math.max(0f, Math.min(1f, pendingPlantX));
         pendingPlantY = Math.max(0f, Math.min(1f, pendingPlantY));
@@ -179,7 +182,10 @@ public class GardenFragment extends Fragment {
             @Override
             public void run() {
 
+                String today = com.example.cuby.utils.DateUtils.getTodayDate();
+
                 GardenPlant plant = new GardenPlant();
+                plant.date = today;               // ⭐ THIS FIXES CALENDAR
                 plant.yearMonth = yearMonth;
                 plant.posX = pendingPlantX;
                 plant.posY = pendingPlantY;
@@ -188,8 +194,7 @@ public class GardenFragment extends Fragment {
                 plant.plantedAt = System.currentTimeMillis();
 
                 repo.gardenPlantDao().insert(plant);
-
-                String today = com.example.cuby.utils.DateUtils.getTodayDate();
+                
                 com.example.cuby.model.DailyLog log =
                         repo.getDailyLogSync(today);
 
@@ -236,15 +241,20 @@ public class GardenFragment extends Fragment {
 
         ImageView flower = new ImageView(requireContext());
 
-        // 🌸 THIS is the plant in the garden
-        flower.setImageResource(R.drawable.ic_plant);
+        // 🌸 Use the USER'S DRAWING, not a static icon
+        flower.setImageURI(android.net.Uri.parse(plant.imagePath));
+
+        // ✅ Size in DP, not PX
+        int sizeDp = 64;
+        int sizePx = (int) (sizeDp * getResources().getDisplayMetrics().density);
 
         ViewGroup.LayoutParams params =
-                new ViewGroup.LayoutParams(120, 120);
+                new ViewGroup.LayoutParams(sizePx, sizePx);
         flower.setLayoutParams(params);
 
         plotArea.addView(flower);
 
+        // ✅ Position INSIDE the plot
         flower.post(() -> {
             float x = plant.posX * plotArea.getWidth();
             float y = plant.posY * plotArea.getHeight();
@@ -268,8 +278,14 @@ public class GardenFragment extends Fragment {
 
             requireActivity().runOnUiThread(() -> {
 
-                // 🌱 Show seed ONLY if unlocked and NOT planted
-                if (log.seedUnlocked && !log.seedPlanted) {
+                //  If already planted today → no seed
+                if (log.seedPlanted) {
+                    seedIcon.setVisibility(View.GONE);
+                    return;
+                }
+
+                //  Show seed ONLY if unlocked and not planted
+                if (log.seedUnlocked) {
                     seedIcon.setVisibility(View.VISIBLE);
                 } else {
                     seedIcon.setVisibility(View.GONE);

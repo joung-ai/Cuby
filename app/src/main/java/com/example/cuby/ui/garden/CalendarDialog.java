@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cuby.R;
 import com.example.cuby.model.DailyLog;
+import com.example.cuby.model.GardenPlant;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -31,6 +32,8 @@ public class CalendarDialog extends DialogFragment {
     private GardenViewModel viewModel;
     private GardenAdapter adapter;
     private TextView tvMonth;
+    private List<GardenPlant> cachedPlants = new ArrayList<>();
+
 
     @Nullable
     @Override
@@ -54,12 +57,7 @@ public class CalendarDialog extends DialogFragment {
 
         title.setText("Memories");
 
-
-
         view.findViewById(R.id.btnBack).setOnClickListener(v -> dismiss());
-
-
-
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -87,6 +85,13 @@ public class CalendarDialog extends DialogFragment {
         viewModel.getMonthlyLogs().observe(getViewLifecycleOwner(), logs -> {
             updateGrid(viewModel.getCurrentMonth().getValue(), logs);
         });
+
+        viewModel.getPlantsForMonth().observe(getViewLifecycleOwner(), plants -> {
+            cachedPlants = plants;
+            updateGrid(viewModel.getCurrentMonth().getValue(),
+                    viewModel.getMonthlyLogs().getValue());
+        });
+
     }
 
     private void updateGrid(Calendar currentMonth, List<DailyLog> logs) {
@@ -95,23 +100,45 @@ public class CalendarDialog extends DialogFragment {
         List<GardenPlot> plots = new ArrayList<>();
         Calendar cal = (Calendar) currentMonth.clone();
         cal.set(Calendar.DAY_OF_MONTH, 1);
+
         int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         for (int i = 1; i <= daysInMonth; i++) {
-            String dayStr = String.format(Locale.getDefault(), "%02d", i);
-            DailyLog log = null;
+            cal.set(Calendar.DAY_OF_MONTH, i);
+            String dateStr = sdf.format(cal.getTime());
 
+            DailyLog matchedLog = null;
             for (DailyLog l : logs) {
-                if (l.date.endsWith("-" + dayStr)) {
-                    log = l;
+                if (dateStr.equals(l.date)) {
+                    matchedLog = l;
                     break;
                 }
             }
-            plots.add(new GardenPlot(i, log));
+
+            GardenPlant matchedPlant = null;
+            for (GardenPlant p : cachedPlants) {
+                if (isSameDay(p.plantedAt, dateStr)) {
+                    matchedPlant = p;
+                    break;
+                }
+            }
+
+
+            plots.add(new GardenPlot(i, matchedLog, matchedPlant));
+
         }
 
         adapter.setPlots(plots);
     }
+    private boolean isSameDay(long timeMillis, String dateStr) {
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String plantDate = sdf.format(new java.util.Date(timeMillis));
+        return plantDate.equals(dateStr);
+    }
+
 
     private void showPlotDetail(GardenPlot plot) {
         if (plot.log == null || !plot.log.seedPlanted) return;
@@ -130,14 +157,21 @@ public class CalendarDialog extends DialogFragment {
                 .setText(plot.log.reflectionNote);
 
         ImageView iv = view.findViewById(R.id.ivDrawing);
-        if (plot.log.drawingPath != null) {
-            File f = new File(plot.log.drawingPath);
+
+        if (plot.plant != null && plot.plant.imagePath != null) {
+            File f = new File(plot.plant.imagePath);
             if (f.exists()) {
                 iv.setImageBitmap(
                         BitmapFactory.decodeFile(f.getAbsolutePath())
                 );
+                iv.setVisibility(View.VISIBLE);
+            } else {
+                iv.setVisibility(View.GONE);
             }
+        } else {
+            iv.setVisibility(View.GONE);
         }
+
 
         builder.setView(view)
                 .setPositiveButton("Close", null)
