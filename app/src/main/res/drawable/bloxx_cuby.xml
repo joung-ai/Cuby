@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="200dp"
+    android:height="120dp"
+    android:viewportWidth="200"
+    android:viewportHeight="120">
+
+    <!-- BODY -->
+    <path
+        android:pathData="M40,20 Q40,0 60,0 L140,0 Q160,0 160,20 L160,100 Q160,120 140,120 L60,120 Q40,120 40,100 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="100"
+                android:startY="0"
+                android:endX="100"
+                android:endY="120">
+                <item android:offset="0.0" android:color="#42A5F5" />
+                <item android:offset="1.0" android:color="#1976D2" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- HIGHLIGHT -->
+    <path
+        android:pathData="M50,20 Q50,10 60,10 L120,10 Q60,10 50,50 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="50"
+                android:startY="10"
+                android:endX="90"
+                android:endY="50">
+                <item android:offset="0.0" android:color="#80FFFFFF" />
+                <item android:offset="1.0" android:color="#00FFFFFF" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- LEFT EYE -->
+    <path
+        android:fillColor="#0D47A1"
+        android:pathData="M70,50 m-15,0 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M65,45 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+
+    <!-- RIGHT EYE -->
+    <path
+        android:fillColor="#0D47A1"
+        android:pathData="M130,50 m-15,0 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M125,45 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+
+    <!-- MOUTH -->
+    <path
+        android:fillColor="#0D47A1"
+        android:pathData="M60,75 Q100,115 140,75 Q100,75 60,75 Z" />
+
+    <!-- TONGUE -->
+    <path
+        android:fillColor="#EF5350"
+        android:pathData="M80,92 Q100,108 120,92 Q100,88 80,92" />
+</vector>

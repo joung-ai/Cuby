@@ -232,6 +232,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginStart="8dp"/>
+                <!-- CUBY BLOXX BUTTON (ABOVE FEED) -->
 
                 <!-- FEED -->
                 <com.google.android.material.button.MaterialButton
@@ -283,6 +284,21 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCubyBloxx"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/white"
+            android:text="PLAY"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="20dp"
+
+            app:elevation="3dp"
+            tools:layout_editor_absoluteX="150dp"
+            tools:layout_editor_absoluteY="591dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
