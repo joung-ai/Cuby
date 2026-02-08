@@ -31,12 +31,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🎯"
-            android:textSize="26sp"
-            android:gravity="center"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:src="@drawable/ic_focus"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,12 +71,10 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⏳"
-                android:textSize="26sp"
-                android:gravity="center"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_pomodoro" />
 
             <TextView
                 android:layout_width="wrap_content"
