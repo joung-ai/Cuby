@@ -39,6 +39,9 @@
 
         <activity android:name=".BoxBreathingActivity" />
         <activity android:name=".Four78BreathingActivity" />
+        <activity
+            android:name=".BloxxGame"
+            android:exported="false" />
 
         <activity
             android:name=".PomodoroActivity"
