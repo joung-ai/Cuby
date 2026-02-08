@@ -191,6 +191,16 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_chat" />
 
+            <ImageButton
+                android:id="@+id/btnMemoryGame"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Memory Game"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_seed" />
+
 
         </LinearLayout>
 

@@ -23,6 +23,8 @@ import com.example.cuby.utils.DateUtils;
 
 import java.util.List;
 
+import android.widget.ImageButton;  // Added import for button
+import com.example.cuby.memorygame.MemoryGame;  // Added import for MemoryGame
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -32,8 +34,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         MusicManager.play(this, MusicManager.Track.HOME);
-
-
 
         View root = findViewById(android.R.id.content);
         ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
@@ -54,9 +54,18 @@ public class HomeActivity extends AppCompatActivity {
                     .commit();
         }
 
-
+        // ----------- ADDED CODE ----------------
+        ImageButton btnMemoryGame = findViewById(R.id.btnMemoryGame);
+        if (btnMemoryGame != null) {
+            btnMemoryGame.setOnClickListener(v -> {
+                Intent intent = new Intent(HomeActivity.this, MemoryGame.class);
+                startActivity(intent);
+            });
+        }
+        // --------------------------------------
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -75,7 +84,6 @@ public class HomeActivity extends AppCompatActivity {
         MusicManager.release();
     }
 
-
     public void navigateTo(Fragment fragment, boolean addToBackStack) {
         if (addToBackStack) {
             getSupportFragmentManager().beginTransaction()
@@ -88,5 +96,4 @@ public class HomeActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
 }
