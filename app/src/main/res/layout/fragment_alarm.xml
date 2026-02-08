@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="24dp">
+        android:padding="24dp"
+        android:background="#BDD5E7" >
 
         <TextView
             android:id="@+id/txtAlarmTitle"
@@ -54,7 +55,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner"
-                android:theme="@style/ThemeOverlay.AppCompat.Light" />
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:background="#F5FBFF"
+                />
         </LinearLayout>
 
 
@@ -73,35 +76,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Set Alarm"
-            android:backgroundTint="@color/mockup_lime"
+            android:backgroundTint="@color/cuby_blue"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/txtAlarmStatus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
-<!--        <Button-->
-<!--            android:id="@+id/btnCancelAlarm"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Cancel Alarm"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:textColor="@color/black"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/btnSetAlarm"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginTop="8dp" />-->
         <Button
-            android:id="@+id/btnViewAlarms"
+            android:id="@+id/btnCancelAlarm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="View Alarms"
+            android:text="Cancel Alarm"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/btnSetAlarm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp" />
 
 <!--        <Button-->
 <!--            android:id="@+id/btnTestAlarm"-->
