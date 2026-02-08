@@ -365,20 +365,22 @@ public class HomeFragment extends Fragment {
             updateTaskWidget(log);
 
             if (log == null || log.mood == null) {
+                tvCubyBubble.setVisibility(View.VISIBLE);
                 tvCubyBubble.setText("Hey… how are you feeling today?");
                 layoutMoodButtons.setVisibility(View.VISIBLE);
                 return;
             }
 
-            layoutMoodButtons.setVisibility(View.GONE);
+            layoutMoodButtons
+                    .setVisibility(View.GONE);
 
             DailyTask task = cubyMoodEngine.getCurrentTaskFromLog(log);
 
             // 🟢 ACTIVE TASK
             if (task != null) {
                 tvCubyBubble.setText(
-                        "Today’s task 🌱\n" +
-                                task.title + " • " + (task.durationSeconds / 60) + " min\n\n" +
+                        "Today’s task \n" +
+                                task.title + " \n\n " +
                                 task.description
                 );
                 return;
@@ -399,7 +401,9 @@ public class HomeFragment extends Fragment {
                 return;
             }
 
-            // 💬 NORMAL CUBY MESSAGE
+
+            // NORMAL CUBY MESSAGE
+            tvCubyBubble.setVisibility(View.VISIBLE);
             tvCubyBubble.setText(
                     cubyMoodEngine.getCubyMessage(
                             log.mood,
