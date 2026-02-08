@@ -1,7 +1,6 @@
 package com.example.cuby.ui.home;
 
 import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent; // ✅ ADDED
@@ -14,9 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton; // ✅ ADDED
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +29,6 @@ import com.example.cuby.BoxBreathingActivity;
 import com.example.cuby.Four78BreathingActivity;
 import com.example.cuby.focus.FocusActivity;
 import com.example.cuby.logic.DailyTask;
-import com.example.cuby.logic.PomodoroFragment;
 import com.example.cuby.model.DailyLog;
 import com.example.cuby.ui.breathing.BreathingTechniquesFragment; // ✅ ADDED
 import com.example.cuby.R;
@@ -42,14 +38,10 @@ import com.example.cuby.logic.CubyMoodEngine;
 import com.example.cuby.ui.chat.ChatFragment;
 import com.example.cuby.ui.diary.DiaryFragment;
 import com.example.cuby.ui.garden.GardenFragment;
-import com.example.cuby.ui.detox.DetoxFragment;
 import com.example.cuby.ui.productivity.ProductivityFragment;
 import com.example.cuby.ui.settings.SettingsFragment;
 import com.example.cuby.utils.DateUtils;
 import com.example.cuby.PomodoroActivity;
-
-import java.time.LocalDate;
-import java.util.List;
 
 // ADD THIS IMPORT for your memory game
 import com.example.cuby.memorygame.MemoryGame;
