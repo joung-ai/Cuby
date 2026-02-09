@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#EAF4FB">
 
     <!-- Instruction -->
     <TextView
@@ -10,52 +10,84 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Inhale"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="#1F2D3D"
         android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="48dp" />
 
-    <!-- CUBY (background layer) -->
-    <ImageView
-        android:id="@+id/ivCuby"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/cuby_idle"
+    <!-- Breathing Circles Layer 3 (largest, back) -->
+    <View
+        android:id="@+id/breathCircle3"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:layout_gravity="center"
-        android:scaleType="fitCenter" />
+        android:background="@drawable/bg_breath_circle"
+        android:alpha="0.2" />
 
-    <!-- COUNT (ON TOP OF CUBY) -->
+    <!-- Breathing Circles Layer 2 -->
+    <View
+        android:id="@+id/breathCircle2"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_breath_circle"
+        android:alpha="0.35" />
 
-    <!-- Start Button -->
+    <!-- Breathing Circles Layer 1 (smallest, front) -->
+    <View
+        android:id="@+id/breathCircle1"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_breath_circle"
+        android:alpha="0.5" />
+
+    <!-- Countdown (above Cuby) -->
     <TextView
         android:id="@+id/tvCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="1"
-        android:layout_marginBottom="175dp"
-        android:textColor="@android:color/black"
-        android:textSize="48sp"
-        android:textStyle="bold" />
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginBottom="120dp"
+        android:text="4"
+        android:textColor="#1F2D3D"
+        android:textSize="64sp"
+        android:textStyle="bold"
+        android:gravity="center" />
 
+    <!-- CUBY -->
+    <ImageView
+        android:id="@+id/ivCuby"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/cuby_idle"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter" />
+
+    <!-- Start Button -->
     <Button
         android:id="@+id/btnStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="48dp"
         android:text="Start"
+        android:textAllCaps="false"
+        android:backgroundTint="#246398"
+        android:textColor="@android:color/white"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="32dp" />
+        android:layout_marginBottom="36dp" />
 
+    <!-- Cycle -->
     <TextView
         android:id="@+id/tvCycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cycle 1 / 4"
         android:textSize="16sp"
+        android:textColor="#1F2D3D"
         android:textStyle="bold"
         android:visibility="gone"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="32dp" />
-
+        android:layout_marginBottom="96dp" />
 
 </FrameLayout>

@@ -1,65 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FAFAFA"> <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="top|center_horizontal"
+    android:layout_marginTop="60dp">
 
-    <!-- Instruction -->
     <TextView
         android:id="@+id/tvInstruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Inhale"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="40dp" />
+        android:textSize="32sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#1F2D3D"
+        android:letterSpacing="0.05"/>
 
-    <!-- Count -->
     <TextView
-        android:id="@+id/tvCount"
+        android:id="@+id/tvSubInstruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1"
-        android:textColor="@color/cuby_green"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        android:layout_gravity="center" />
+        android:text="Follow Cuby"
+        android:textSize="14sp"
+        android:textColor="#1F2D3D"
+        android:alpha="0.6"
+        android:layout_marginTop="4dp"/>
+</LinearLayout>
 
-    <!-- Box container (CENTERED) -->
     <FrameLayout
         android:id="@+id/boxContainer"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
         android:layout_gravity="center">
 
-        <!-- Moving Cuby -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_breathing_track"
+            android:layout_margin="35dp" />
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:textColor="#1F2D3D"
+            android:textSize="60sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center" />
+
         <ImageView
             android:id="@+id/dot"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/cuby_idle"
-            android:scaleType="fitCenter" />
-
+            android:elevation="4dp"
+            android:layout_gravity="top|left"/>
     </FrameLayout>
 
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="60dp" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp">
 
-    <TextView
-        android:id="@+id/tvCycle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cycle 1 / 4"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="32dp" />
+        <TextView
+            android:id="@+id/tvCycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cycle 1 / 4"
+            android:textSize="14sp"
+            android:letterSpacing="0.1"
+            android:textAllCaps="true"
+            android:visibility="visible"
+            android:layout_marginBottom="24dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:minWidth="200dp"
+            android:text="Start Breathing"
+            app:cornerRadius="30dp"
+            android:textSize="16sp"
+            android:backgroundTint="#246398"
+            android:fontFamily="sans-serif-medium"/>
+
+    </LinearLayout>
 
 </FrameLayout>
