@@ -253,6 +253,21 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- FEED -->
+
+                <TextView
+                    android:id="@+id/tvFoodCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🍎 0"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toTopOf="@id/btnFeed"
+                    app:layout_constraintStart_toStartOf="@id/btnFeed"
+                    app:layout_constraintEnd_toEndOf="@id/btnFeed"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"/>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFeed"
                     android:layout_width="0dp"

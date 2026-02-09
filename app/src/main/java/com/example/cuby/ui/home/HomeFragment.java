@@ -25,11 +25,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.cuby.BloxxGame;
 import com.example.cuby.BoxBreathingActivity;
 import com.example.cuby.Four78BreathingActivity;
 import com.example.cuby.focus.FocusActivity;
 import com.example.cuby.logic.DailyTask;
 import com.example.cuby.model.DailyLog;
+import com.example.cuby.model.Inventory;
 import com.example.cuby.ui.breathing.BreathingTechniquesFragment; // ✅ ADDED
 import com.example.cuby.R;
 import com.example.cuby.alarm.AlarmFragment;
@@ -93,6 +95,9 @@ public class HomeFragment extends Fragment {
         tvCubyBubble = view.findViewById(R.id.tvCubyBubble);
         layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons);
 
+        tvFoodCount = view.findViewById(R.id.tvFoodCount);
+
+
         repository = AppRepository.getInstance(requireActivity().getApplication());
 
         cubyMoodEngine = new CubyMoodEngine(repository);
@@ -102,11 +107,20 @@ public class HomeFragment extends Fragment {
                         new ActivityResultContracts.StartActivityForResult(),
                         result -> {
                             if (result.getResultCode() == Activity.RESULT_OK) {
+
+                                // Complete task
                                 cubyMoodEngine.completeCurrentTask(today);
+
+                                // Reward Bloxy Food
+                                repository.addFood(3);
+
+                                // Feedback
+                                tvCubyBubble.setVisibility(View.VISIBLE);
+                                tvCubyBubble.setText("🎁 You earned Bloxy Food!\nCuby is proud of you 💕");
 
                                 Toast.makeText(
                                         requireContext(),
-                                        "🌱 You earned a seed!",
+                                        "Seed +  Bloxy Food earned!",
                                         Toast.LENGTH_LONG
                                 ).show();
                             }
@@ -124,7 +138,7 @@ public class HomeFragment extends Fragment {
         View btnMemoryGame = view.findViewById(R.id.btnMemoryGame);
         if (btnMemoryGame != null) {
             btnMemoryGame.setOnClickListener(v -> {
-                Intent intent = new Intent(requireActivity(), MemoryGame.class);
+                Intent intent = new Intent(requireActivity(), BloxxGame.class);
                 startActivity(intent);
             });
         }
@@ -142,10 +156,38 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.btnProductive).setOnClickListener(v -> navigateWithAnimation(new ProductivityFragment()));
         view.findViewById(R.id.btnMeditate).setOnClickListener(v -> navigateWithAnimation(new BreathingTechniquesFragment()));
         view.findViewById(R.id.btnFeed).setOnClickListener(v -> {
-            viewModel.feedCuby();
-            showHappyCuby();
-            Toast.makeText(getContext(), "Yum! Cuby feels happy! 💕", Toast.LENGTH_SHORT).show();
+
+            repository.getExecutor().execute(() -> {
+
+                // Get current inventory
+                final Inventory inventory = repository.getInventorySync();
+
+
+                requireActivity().runOnUiThread(() -> {
+
+                    // ❌ NO FOOD
+                    if (inventory == null || inventory.bloxyFoodCount <= 0) {
+                        tvCubyBubble.setVisibility(View.VISIBLE);
+                        tvCubyBubble.setText("😿 I’m out of Bloxy Food...");
+                        Toast.makeText(getContext(),
+                                "No Bloxy Food left!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    // CONSUME FOOD
+                    repository.consumeFood(1);
+
+                    showHappyCuby();
+
+                    tvCubyBubble.setVisibility(View.VISIBLE);
+                    tvCubyBubble.setText("Yum! Thank you 💕");
+
+                    Toast.makeText(getContext(),
+                            "Cuby enjoyed the food!", Toast.LENGTH_SHORT).show();
+                });
+            });
         });
+
 
         view.findViewById(R.id.btnAlarm).setOnClickListener(v -> navigateWithAnimation(new AlarmFragment()));
 
@@ -232,7 +274,7 @@ public class HomeFragment extends Fragment {
 
         viewModel.getInventory().observe(getViewLifecycleOwner(), inventory -> {
             if (inventory != null) {
-                // tvFoodCount.setText("🍎 Bloxy Food: " + inventory.bloxyFoodCount);
+                tvFoodCount.setText("🍎 " + inventory.bloxyFoodCount);
             }
         });
     }
