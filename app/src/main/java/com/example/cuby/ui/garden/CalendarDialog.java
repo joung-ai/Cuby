@@ -34,6 +34,19 @@ public class CalendarDialog extends DialogFragment {
     private TextView tvMonth;
     private List<GardenPlant> cachedPlants = new ArrayList<>();
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+            );
+        }
+    }
+
+
 
     @Nullable
     @Override
@@ -51,9 +64,8 @@ public class CalendarDialog extends DialogFragment {
             @Nullable Bundle savedInstanceState
     ) {
 
-        TextView title = view.findViewById(R.id.toolbarTitleText);
 
-        View backBtn = view.findViewById(R.id.btnBack);
+        TextView title = view.findViewById(R.id.toolbarTitleText);
 
         title.setText("Memories");
 
@@ -70,43 +82,83 @@ public class CalendarDialog extends DialogFragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
         recyclerView.setAdapter(adapter);
 
+        recyclerView.post(() -> {
+            RecyclerView.LayoutManager lm = recyclerView.getLayoutManager();
+            if (lm instanceof GridLayoutManager) {
+                ((GridLayoutManager) lm).requestLayout();
+            }
+        });
+
+
         view.findViewById(R.id.btnPrev).setOnClickListener(v -> viewModel.prevMonth());
         view.findViewById(R.id.btnNext).setOnClickListener(v -> viewModel.nextMonth());
 
         observeData();
+        recyclerView.setItemViewCacheSize(0);
+
+
     }
 
     private void observeData() {
+
         viewModel.getCurrentMonth().observe(getViewLifecycleOwner(), cal -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
             tvMonth.setText(sdf.format(cal.getTime()));
         });
 
         viewModel.getMonthlyLogs().observe(getViewLifecycleOwner(), logs -> {
-            updateGrid(viewModel.getCurrentMonth().getValue(), logs);
+            if (logs == null || cachedPlants == null) return;
+
+            updateGrid(
+                    viewModel.getCurrentMonth().getValue(),
+                    logs
+            );
         });
 
         viewModel.getPlantsForMonth().observe(getViewLifecycleOwner(), plants -> {
-            cachedPlants = plants;
-            updateGrid(viewModel.getCurrentMonth().getValue(),
-                    viewModel.getMonthlyLogs().getValue());
-        });
+            if (plants == null) return;
 
+            cachedPlants = plants;
+
+            List<DailyLog> logs = viewModel.getMonthlyLogs().getValue();
+            if (logs == null) return;
+
+            updateGrid(
+                    viewModel.getCurrentMonth().getValue(),
+                    logs
+            );
+        });
     }
 
     private void updateGrid(Calendar currentMonth, List<DailyLog> logs) {
         if (currentMonth == null) return;
 
+        if (logs == null) logs = new ArrayList<>();
+        if (cachedPlants == null) cachedPlants = new ArrayList<>();
+
         List<GardenPlot> plots = new ArrayList<>();
+
         Calendar cal = (Calendar) currentMonth.clone();
         cal.set(Calendar.DAY_OF_MONTH, 1);
+
+        int firstDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+        // Sunday = 1, Saturday = 7
+
+        int leadingEmptyCells = firstDayOfWeek - Calendar.SUNDAY;
+        if (leadingEmptyCells < 0) leadingEmptyCells += 7;
+
+        // 🟦 ADD EMPTY CELLS FIRST
+        for (int i = 0; i < leadingEmptyCells; i++) {
+            plots.add(GardenPlot.empty());
+        }
 
         int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         SimpleDateFormat sdf =
                 new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-        for (int i = 1; i <= daysInMonth; i++) {
-            cal.set(Calendar.DAY_OF_MONTH, i);
+        for (int day = 1; day <= daysInMonth; day++) {
+            cal.set(Calendar.DAY_OF_MONTH, day);
             String dateStr = sdf.format(cal.getTime());
 
             DailyLog matchedLog = null;
@@ -125,12 +177,14 @@ public class CalendarDialog extends DialogFragment {
                 }
             }
 
-
-            plots.add(new GardenPlot(i, matchedLog, matchedPlant));
-
+            plots.add(new GardenPlot(day, matchedLog, matchedPlant));
         }
 
         adapter.setPlots(plots);
+
+        RecyclerView recyclerView = getView().findViewById(R.id.recyclerView);
+        recyclerView.post(recyclerView::requestLayout);
+
     }
     private boolean isSameDay(long timeMillis, String dateStr) {
         SimpleDateFormat sdf =

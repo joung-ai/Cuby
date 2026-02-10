@@ -1,0 +1,21 @@
+<LinearLayout android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSlot"
+        android:text="Press Spin"
+        android:textSize="32sp"/>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/btnSpin"
+        android:backgroundTint="@color/btn_blue"
+        android:text="Spin"/>
+</LinearLayout>

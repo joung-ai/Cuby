@@ -23,6 +23,8 @@ public class DailyLog {
     public String taskId; // refference to daily task
     public int taskProgressSeconds;
     public boolean seedShown;
+    public int feedCount;
+    public boolean askedToPlay;
 
 
 

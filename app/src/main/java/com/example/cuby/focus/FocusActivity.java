@@ -15,6 +15,8 @@ import com.example.cuby.FocusOverlayService;
 import com.example.cuby.R;
 import com.example.cuby.data.AppRepository;
 import com.example.cuby.logic.CubyMoodEngine;
+import com.example.cuby.logic.DailyTask;
+import com.example.cuby.model.DailyLog;
 import com.example.cuby.utils.DateUtils;
 
 public class FocusActivity extends AppCompatActivity {
@@ -90,25 +92,22 @@ public class FocusActivity extends AppCompatActivity {
                 handler.postDelayed(this, 1000);
             }
         };
+
         handler.postDelayed(progressRunnable, 1000);
     }
 
     private void finishFocus(boolean completed) {
+        if (!isRunning) return;
+
         isRunning = false;
+
         stopService(new Intent(this, FocusOverlayService.class));
         handler.removeCallbacks(progressRunnable);
 
         if (completed) {
-            cubyMoodEngine.completeCurrentTask(DateUtils.getTodayDate());
             setResult(RESULT_OK);
         }
 
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        finishFocus(false);
     }
 }

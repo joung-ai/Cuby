@@ -3,6 +3,7 @@ package com.example.cuby.ui.home;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent; // ✅ ADDED
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -38,6 +40,7 @@ import com.example.cuby.alarm.AlarmFragment;
 import com.example.cuby.data.AppRepository;
 import com.example.cuby.logic.CubyMoodEngine;
 import com.example.cuby.ui.chat.ChatFragment;
+import com.example.cuby.ui.cuby.CubyAnimationController;
 import com.example.cuby.ui.diary.DiaryFragment;
 import com.example.cuby.ui.garden.GardenFragment;
 import com.example.cuby.ui.productivity.ProductivityFragment;
@@ -58,11 +61,17 @@ public class HomeFragment extends Fragment {
     private AppRepository repository;
     private CubyMoodEngine cubyMoodEngine;
     private TextView tvFoodCount;
-    private ImageView ivCuby;
-    private ObjectAnimator breathingAnimator;
-    private View cubyShadow;
+    //cuby
+    private View cubyAvatar;
+    private ImageView cubyBase;
+    private ImageView cubyCosmetic;
+    // animation
+    private ValueAnimator breathingAnimator;
 
-    private Handler animationHandler = new Handler(Looper.getMainLooper());
+    private CubyAnimationController cubyController;
+
+
+    private View cubyShadow;
 
     String today = DateUtils.getTodayDate();
 
@@ -73,6 +82,11 @@ public class HomeFragment extends Fragment {
     private ProgressBar taskProgressBar;
     private ImageView btnToggle;
     private Button btnGoTask;
+
+    //for launching the game
+    private View layoutPlayChoice;
+    private Button btnPlayYes, btnPlayNo;
+
 
     private boolean isTaskExpanded = false;
 
@@ -88,7 +102,21 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        ivCuby = view.findViewById(R.id.ivCuby);
+        cubyAvatar = view.findViewById(R.id.cubyAvatar);
+        cubyBase = cubyAvatar.findViewById(R.id.cubyBase);
+        cubyCosmetic = cubyAvatar.findViewById(R.id.cubyCosmetic);
+
+        cubyController = new CubyAnimationController(
+                cubyBase,
+                cubyCosmetic,
+                this::getCubyColor
+        );
+
+;
+
+
+        cubyCosmetic = cubyAvatar.findViewById(R.id.cubyCosmetic);
+
 
         cubyShadow = view.findViewById(R.id.cubyShadow);
 
@@ -96,6 +124,11 @@ public class HomeFragment extends Fragment {
         layoutMoodButtons = view.findViewById(R.id.layoutMoodButtons);
 
         tvFoodCount = view.findViewById(R.id.tvFoodCount);
+
+        layoutPlayChoice = view.findViewById(R.id.layoutPlayChoice);
+        btnPlayYes = view.findViewById(R.id.btnPlayYes);
+        btnPlayNo = view.findViewById(R.id.btnPlayNo);
+
 
 
         repository = AppRepository.getInstance(requireActivity().getApplication());
@@ -106,24 +139,8 @@ public class HomeFragment extends Fragment {
                 registerForActivityResult(
                         new ActivityResultContracts.StartActivityForResult(),
                         result -> {
-                            if (result.getResultCode() == Activity.RESULT_OK) {
-
-                                // Complete task
-                                cubyMoodEngine.completeCurrentTask(today);
-
-                                // Reward Bloxy Food
-                                repository.addFood(3);
-
-                                // Feedback
-                                tvCubyBubble.setVisibility(View.VISIBLE);
-                                tvCubyBubble.setText("🎁 You earned Bloxy Food!\nCuby is proud of you 💕");
-
-                                Toast.makeText(
-                                        requireContext(),
-                                        "Seed +  Bloxy Food earned!",
-                                        Toast.LENGTH_LONG
-                                ).show();
-                            }
+                            // 🔒 DO NOTHING HERE
+                            // Task completion is manual via COMPLETE button
                         }
                 );
 
@@ -134,14 +151,23 @@ public class HomeFragment extends Fragment {
         setupTaskWidget(view);
         observeTodayLog();
 
-        // <<< ADD MEMORY GAME BUTTON LISTENER HERE >>>
-        View btnMemoryGame = view.findViewById(R.id.btnMemoryGame);
-        if (btnMemoryGame != null) {
-            btnMemoryGame.setOnClickListener(v -> {
-                Intent intent = new Intent(requireActivity(), BloxxGame.class);
-                startActivity(intent);
-            });
-        }
+        btnPlayYes.setOnClickListener(v -> {
+            layoutPlayChoice.setVisibility(View.GONE);
+            showSlotMachine();
+        });
+
+
+        btnPlayNo.setOnClickListener(v -> {
+            layoutPlayChoice.setVisibility(View.GONE);
+            tvCubyBubble.setText("Okay~ maybe later 💙");
+        });
+
+        view.findViewById(R.id.btnHanger).setOnClickListener(v -> {
+            cubyController.showHappy();
+            showWardrobePicker();
+        });
+
+
     }
 
     private void setupNavigation(View view) {
@@ -159,35 +185,63 @@ public class HomeFragment extends Fragment {
 
             repository.getExecutor().execute(() -> {
 
-                // Get current inventory
-                final Inventory inventory = repository.getInventorySync();
+                Inventory inventory = repository.getInventorySync();
+                DailyLog log = repository.getDailyLogSync(today);
 
+                if (inventory == null || inventory.bloxyFoodCount <= 0) {
+                    requireActivity().runOnUiThread(() -> {
+                        tvCubyBubble.setVisibility(View.VISIBLE);
+                        tvCubyBubble.setText("😿 I’m out of Bloxy Food...");
+                        Toast.makeText(
+                                getContext(),
+                                "No Bloxy Food left!",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    });
+                    return;
+                }
+
+                // 🍎 Consume food
+                repository.consumeFood(1);
+
+                boolean shouldAskToPlay = false;
+
+                if (log != null) {
+                    log.feedCount++;
+
+                    // 🎮 EVERY 3 FEEDS
+                    if (log.feedCount % 3 == 0) {
+                        shouldAskToPlay = true;
+                    }
+
+                    repository.insertDailyLog(log);
+                }
+
+                boolean finalShouldAskToPlay = shouldAskToPlay;
 
                 requireActivity().runOnUiThread(() -> {
 
-                    // ❌ NO FOOD
-                    if (inventory == null || inventory.bloxyFoodCount <= 0) {
-                        tvCubyBubble.setVisibility(View.VISIBLE);
-                        tvCubyBubble.setText("😿 I’m out of Bloxy Food...");
-                        Toast.makeText(getContext(),
-                                "No Bloxy Food left!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    // CONSUME FOOD
-                    repository.consumeFood(1);
-
-                    showHappyCuby();
+                    cubyController.showHappy();
 
                     tvCubyBubble.setVisibility(View.VISIBLE);
-                    tvCubyBubble.setText("Yum! Thank you 💕");
 
-                    Toast.makeText(getContext(),
-                            "Cuby enjoyed the food!", Toast.LENGTH_SHORT).show();
+                    if (finalShouldAskToPlay) {
+                        tvCubyBubble.setText(
+                                "🎮 I’m full again!\nWanna play with me?"
+                        );
+                        layoutPlayChoice.setVisibility(View.VISIBLE);
+                    } else {
+                        tvCubyBubble.setText("Yum! Thank you 💕");
+                    }
+
+                    Toast.makeText(
+                            getContext(),
+                            "Cuby enjoyed the food!",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 });
             });
         });
-
 
         view.findViewById(R.id.btnAlarm).setOnClickListener(v -> navigateWithAnimation(new AlarmFragment()));
 
@@ -205,72 +259,64 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupCubyInteraction() {
-        ivCuby.setOnClickListener(v -> {
+        cubyAvatar.setOnClickListener(v -> {
             Animation bounce = AnimationUtils.loadAnimation(getContext(), R.anim.bounce);
-            ivCuby.startAnimation(bounce);
-            showHappyCuby();
+            cubyAvatar.startAnimation(bounce);
+            cubyController.showHappy();
+
         });
+
     }
 
-    private void showHappyCuby() {
-        ivCuby.setImageResource(R.drawable.cuby_happy);
-        // Return to idle after 2 seconds
-        animationHandler.postDelayed(() -> {
-            if (isAdded()) {
-                ivCuby.setImageResource(R.drawable.cuby_idle);
-            }
-        }, 2000);
-    }
 
     private void startBreathingAnimation() {
 
-        ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
-        animator.setDuration(2200);
-        animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setRepeatMode(ValueAnimator.REVERSE);
-        animator.setInterpolator(new android.view.animation.LinearInterpolator());
+        breathingAnimator = ValueAnimator.ofFloat(0f, 1f);
+        breathingAnimator.setDuration(2200);
+        breathingAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        breathingAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        breathingAnimator.setInterpolator(new android.view.animation.LinearInterpolator());
 
-        animator.addUpdateListener(animation -> {
+        breathingAnimator.addUpdateListener(animation -> {
             float t = (float) animation.getAnimatedValue();
 
             // ---- CUBY ----
             float cubyScale = 1.0f + (0.05f * t);
-            ivCuby.setScaleX(cubyScale);
-            ivCuby.setScaleY(cubyScale);
+            cubyAvatar.setScaleX(cubyScale);
+            cubyAvatar.setScaleY(cubyScale);
 
-            // ---- SHADOW ----
             if (cubyShadow != null) {
 
-                // Larger visible change
-                float shadowScaleX = 1.0f + (0.08f * t);
-                float shadowScaleY = 1.0f + (0.04f * t);
+                // Shadow grows as Cuby "presses" the ground
+                float shadowScaleX = 1.0f + (0.12f * t);
+                float shadowScaleY = 1.0f + (0.06f * t);
 
                 cubyShadow.setScaleX(shadowScaleX);
                 cubyShadow.setScaleY(shadowScaleY);
 
-                // Stronger alpha contrast
-                cubyShadow.setAlpha(0.25f + (0.25f * t));
+                // Darker when closer to ground
+                cubyShadow.setAlpha(0.22f + (0.18f * t));
+
+                // Push shadow slightly DOWN as Cuby grows
+                cubyShadow.setTranslationY(-55f + (2f * t));
             }
+
         });
 
-        animator.start();
+        breathingAnimator.start();
     }
 
     private void observeData() {
         viewModel.getUserProfile().observe(getViewLifecycleOwner(), profile -> {
-            if (profile != null) {
-                // tvGreeting.setText("Hi, " + profile.username + "! 👋"); // Removed
+            if (profile != null && cubyController != null) {
+                cubyController.startIdle();
 
-                // Update skin tint
-                if ("Pink".equals(profile.cubySkin)) {
-                    ivCuby.setColorFilter(0x40FFC0CB);
-                } else if ("Blue".equals(profile.cubySkin)) {
-                    ivCuby.setColorFilter(0x4087CEEB);
-                } else {
-                    ivCuby.clearColorFilter();
+                if (profile.cubyCosmetic != null && !profile.cubyCosmetic.isEmpty()) {
+                    cubyController.setCosmetic(profile.cubyCosmetic);
                 }
             }
         });
+
 
         viewModel.getInventory().observe(getViewLifecycleOwner(), inventory -> {
             if (inventory != null) {
@@ -311,7 +357,45 @@ public class HomeFragment extends Fragment {
 
         btnToggle.setOnClickListener(v -> toggleTaskWidget());
 
-        btnGoTask.setOnClickListener(v -> launchCurrentTask());
+        btnGoTask.setOnClickListener(v -> {
+
+            repository.getExecutor().execute(() -> {
+
+                DailyLog log = repository.getDailyLogSync(today);
+                if (log == null) return;
+
+                DailyTask task = cubyMoodEngine.getCurrentTaskFromLog(log);
+                if (task == null) return;
+
+                int percent =
+                        (int) ((log.taskProgressSeconds / (float) task.durationSeconds) * 100);
+
+                requireActivity().runOnUiThread(() -> {
+
+                    if (percent >= 100) {
+                        // ✅ USER-CONFIRMED COMPLETION
+                        cubyMoodEngine.completeCurrentTask(today);
+                        repository.addFood(3);
+
+                        tvCubyBubble.setVisibility(View.VISIBLE);
+                        tvCubyBubble.setText(
+                                "✨ Task completed!\nYou earned Bloxy Food 💕"
+                        );
+
+                        Toast.makeText(
+                                getContext(),
+                                "Task completed!",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                    } else {
+                        // ▶ Start task
+                        launchCurrentTask();
+                    }
+                });
+            });
+        });
+
     }
 
     private void toggleTaskWidget() {
@@ -333,7 +417,6 @@ public class HomeFragment extends Fragment {
         }
 
         DailyTask task = cubyMoodEngine.getCurrentTaskFromLog(log);
-
         if (task == null) {
             taskWidget.setVisibility(View.GONE);
             return;
@@ -352,6 +435,15 @@ public class HomeFragment extends Fragment {
 
         taskProgressBar.setProgress(percent);
         tvTaskProgress.setText(percent + "%");
+
+        // 🔒 LOCK COMPLETE STATE
+        if (percent >= 100) {
+            btnGoTask.setText("COMPLETE");
+            btnGoTask.setEnabled(true);
+        } else {
+            btnGoTask.setText("GO");
+            btnGoTask.setEnabled(true);
+        }
     }
 
     private void launchCurrentTask() {
@@ -387,7 +479,7 @@ public class HomeFragment extends Fragment {
                         break;
 
                     default:
-                        return; // no task to launch
+                        return;
                 }
 
                 taskLauncher.launch(intent);
@@ -423,7 +515,8 @@ public class HomeFragment extends Fragment {
             }
 
             // 🌱 SEED MESSAGE — SHOW ONCE
-            if (log.taskCompleted && log.seedUnlocked && !log.seedShown) {
+            if (log.taskCompleted && log.seedUnlocked && !log.seedShown
+                    && cubyMoodEngine.getCurrentTaskFromLog(log) == null) {
                 tvCubyBubble.setText(
                         "🌱 You did it!\nI have a seed for you.\nGo check the garden!"
                 );
@@ -450,18 +543,148 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void showSlotMachine() {
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext()).create();
+        View view = LayoutInflater.from(getContext())
+                .inflate(R.layout.dialog_game_slot, null);
+
+        TextView tvSlot = view.findViewById(R.id.tvSlot);
+        Button btnSpin = view.findViewById(R.id.btnSpin);
+
+        String[] games = {
+                "Memory Game",
+                "Bloxx Game"
+        };
+
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        btnSpin.setOnClickListener(v -> {
+            btnSpin.setEnabled(false);
+
+            java.util.Random random = new java.util.Random();
+
+            Runnable spinner = new Runnable() {
+                int spins = 0;
+
+                @Override
+                public void run() {
+                    // purely visual spin
+                    int visualIndex = random.nextInt(games.length);
+                    tvSlot.setText(games[visualIndex]);
+                    spins++;
+
+                    if (spins < 16) {
+                        handler.postDelayed(this, 120);
+                    } else {
+                        dialog.dismiss();
+
+                        // 🎯 REAL RANDOM PICK (FINAL)
+                        int finalIndex = random.nextInt(games.length);
+                        launchGame(games[finalIndex]);
+                    }
+                }
+            };
+
+            handler.post(spinner);
+        });
+
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    private void launchGame(String game) {
+
+        Intent intent;
+
+        switch (game) {
+            case "Memory Game":
+                intent = new Intent(requireContext(), MemoryGame.class);
+                break;
+
+            default: // 🟩Bloxx Game
+                intent = new Intent(requireContext(), BloxxGame.class);
+                break;
+        }
+
+        startActivity(intent);
+    }
+
+    private String getCubyColor() {
+        if (viewModel.getUserProfile().getValue() != null) {
+            String skin = viewModel.getUserProfile().getValue().cubySkin;
+
+            if ("Pink".equalsIgnoreCase(skin)) return "pink";
+            if ("Blue".equalsIgnoreCase(skin)) return "blue";
+        }
+        return "blue"; // safe fallback
+    }
+
+    private void showWardrobePicker() {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+        View view = LayoutInflater.from(getContext())
+                .inflate(R.layout.bottomsheet_wardrobe, null);
+
+        view.findViewById(R.id.btnCosmeticCat).setOnClickListener(v -> {
+            cubyController.setCosmetic("cat");
+            repository.updateCubyCosmetic("cat");
+            tvCubyBubble.setText("Meow~ ");
+            dialog.dismiss();
+        });
+
+        view.findViewById(R.id.btnCosmeticDog).setOnClickListener(v -> {
+            cubyController.setCosmetic("dog");
+            repository.updateCubyCosmetic("dog");
+            tvCubyBubble.setText("Woof! ");
+            dialog.dismiss();
+        });
+
+        view.findViewById(R.id.btnCosmeticGlasses).setOnClickListener(v -> {
+            cubyController.setCosmetic("glasses");
+            repository.updateCubyCosmetic("glasses");
+            tvCubyBubble.setText("I look smart ");
+            dialog.dismiss();
+        });
+
+        view.findViewById(R.id.btnCosmeticEmployed).setOnClickListener(v -> {
+            cubyController.setCosmetic("employed");
+            repository.updateCubyCosmetic("employed");
+            tvCubyBubble.setText("I have a job now ");
+            dialog.dismiss();
+        });
+
+        view.findViewById(R.id.btnCosmeticNone).setOnClickListener(v -> {
+            cubyController.clearCosmetic();
+            tvCubyBubble.setText("All comfy again ✨");
+
+            // 💾 Save to DB
+            repository.updateCubyCosmetic(null);
+
+            dialog.dismiss();
+        });
+
+
+        dialog.setContentView(view);
+        dialog.show();
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();
         today = DateUtils.getTodayDate();
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (breathingAnimator != null) {
-            breathingAnimator.cancel();
+
+        if (breathingAnimator != null) breathingAnimator.cancel();
+
+        if (cubyController != null) {
+            cubyController.stop();
+            cubyController = null;
         }
-        animationHandler.removeCallbacksAndMessages(null);
     }
 }

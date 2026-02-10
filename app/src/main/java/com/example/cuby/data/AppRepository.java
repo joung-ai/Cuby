@@ -143,6 +143,9 @@ public class AppRepository {
         return gardenPlantDao.getPlantsForMonthLive(yearMonth);
     }
 
+    public void updateCubyCosmetic(String cosmetic) {
+        executor.execute(() -> userDao.updateCosmetic(cosmetic));
+    }
 
 
 }

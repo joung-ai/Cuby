@@ -22,7 +22,7 @@
         android:layout_gravity="center"
         android:visibility="gone"
         android:src="@android:drawable/star_on"/>
-        
+
     <View
         android:id="@+id/viewMoodDot"
         android:layout_width="8dp"

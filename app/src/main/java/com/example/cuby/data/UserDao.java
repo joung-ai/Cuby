@@ -17,4 +17,8 @@ public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(UserProfile userProfile);
+
+    @Query("UPDATE user_profile SET cubyCosmetic = :cosmetic WHERE id = 1")
+    void updateCosmetic(String cosmetic);
+
 }

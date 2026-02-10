@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:text="Cuby's Wardrobe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@color/black"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:alignmentMode="alignMargins"
+        android:useDefaultMargins="true">
+
+        <ImageButton
+            android:id="@+id/btnCosmeticCat"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:background="@drawable/bg_wardrobe_item"
+            android:scaleType="centerInside"
+            android:src="@drawable/cuby_cosmetic_cat" />
+
+        <ImageButton
+            android:id="@+id/btnCosmeticDog"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:background="@drawable/bg_wardrobe_item"
+            android:scaleType="centerInside"
+            android:src="@drawable/cuby_cosmetic_dog" />
+
+        <ImageButton
+            android:id="@+id/btnCosmeticGlasses"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:background="@drawable/bg_wardrobe_item"
+            android:scaleType="centerInside"
+            android:src="@drawable/cuby_cosmetic_glasses" />
+
+        <ImageButton
+            android:id="@+id/btnCosmeticEmployed"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:background="@drawable/bg_wardrobe_item"
+            android:scaleType="centerInside"
+            android:src="@drawable/cuby_cosmetic_employed" />
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btnCosmeticNone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Unequip"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/red_soft"
+        android:textColor="@android:color/white"/>
+
+
+</LinearLayout>

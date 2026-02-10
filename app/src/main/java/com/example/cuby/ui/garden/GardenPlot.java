@@ -14,4 +14,8 @@ public class GardenPlot {
         this.log = log;
         this.plant = plant;
     }
+
+    public static GardenPlot empty() {
+        return new GardenPlot(-1, null, null);
+    }
 }

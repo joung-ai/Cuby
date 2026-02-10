@@ -10,4 +10,7 @@ public class Inventory {
 
     public int bloxyFoodCount;
     public long lastFreeFoodAt;
+    public int feedCountToday;
+
+
 }

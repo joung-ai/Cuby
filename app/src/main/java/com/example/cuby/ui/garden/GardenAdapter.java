@@ -34,6 +34,7 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
         result.dispatchUpdatesTo(this);
     }
 
+
     @NonNull
     @Override
     public PlotViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,12 +65,20 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
         }
 
         public void bind(GardenPlot plot, OnPlotClickListener listener) {
+
+            if (plot.dayNumber == -1) {
+                tvDay.setText("");
+                ivPlant.setVisibility(View.GONE);
+                viewMoodDot.setVisibility(View.GONE);
+                itemView.setOnClickListener(null);
+                return;
+            }
+
             tvDay.setText(String.valueOf(plot.dayNumber));
 
             ivPlant.setVisibility(View.GONE);
             viewMoodDot.setVisibility(View.GONE);
 
-            // SHOW USER DRAWING IF PLANT EXISTS
             if (plot.plant != null && plot.plant.imagePath != null) {
                 File file = new File(plot.plant.imagePath);
                 if (file.exists()) {
@@ -80,7 +89,6 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
                 }
             }
 
-            // Mood dot (optional)
             if (plot.log != null && plot.log.mood != null) {
                 viewMoodDot.setVisibility(View.VISIBLE);
             }
@@ -106,7 +114,15 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
 
         @Override
         public boolean areItemsTheSame(int oldPos, int newPos) {
-            return oldList.get(oldPos).dayNumber == newList.get(newPos).dayNumber;
+            GardenPlot oldItem = oldList.get(oldPos);
+            GardenPlot newItem = newList.get(newPos);
+
+            // Empty cells are position-based
+            if (oldItem.dayNumber == 0 && newItem.dayNumber == 0) {
+                return oldPos == newPos;
+            }
+
+            return oldItem.dayNumber == newItem.dayNumber;
         }
 
         @Override

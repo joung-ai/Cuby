@@ -92,13 +92,12 @@ public class CubyMoodEngine {
         repository.getExecutor().execute(() -> {
 
             DailyLog log = repository.getDailyLogSync(date);
-            if (log == null) return;
+            if (log == null || log.taskCompleted) return;
 
             List<DailyTask> tasks =
                     DailyTaskEngine.generateTaskSequence(log.mood);
 
             log.taskProgressSeconds = 0;
-
             log.currentTaskIndex++;
 
             if (log.currentTaskIndex >= tasks.size()) {
@@ -122,19 +121,12 @@ public class CubyMoodEngine {
             DailyTask task = getCurrentTaskFromLog(log);
             if (task == null) return;
 
-            // Add progress
+            // ➕ Add progress
             log.taskProgressSeconds += seconds;
 
-            // ✅ AUTO-COMPLETE when finished
+            // 🛑 HARD STOP — NO AUTO ADVANCE
             if (log.taskProgressSeconds >= task.durationSeconds) {
-                log.taskProgressSeconds = 0;
-                log.currentTaskIndex++;
-
-                if (log.currentTaskIndex >=
-                        DailyTaskEngine.generateTaskSequence(log.mood).size()) {
-                    log.taskCompleted = true;
-                    log.seedUnlocked = true;
-                }
+                log.taskProgressSeconds = task.durationSeconds;
             }
 
             log.lastUpdated = System.currentTimeMillis();

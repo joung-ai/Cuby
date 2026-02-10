@@ -18,12 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Four78BreathingActivity extends AppCompatActivity {
 
+    private View breathCircle1, breathCircle2, breathCircle3;
     private ImageView ivCuby;
     private TextView tvInstruction, tvCount, tvCycle;
     private Button btnStart;
 
     private static final int MAX_CYCLES = 4;
-
     private int currentCycle = 0;
     private boolean isRunning = false;
 
@@ -36,20 +36,26 @@ public class Four78BreathingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_478_breathing);
 
-        ivCuby = findViewById(R.id.ivCuby);
-        tvInstruction = findViewById(R.id.tvInstruction);
-        tvCount = findViewById(R.id.tvCount);
-        tvCycle = findViewById(R.id.tvCycle);
-        btnStart = findViewById(R.id.btnStart);
         cubyMoodEngine =
                 new CubyMoodEngine(
                         AppRepository.getInstance(getApplication())
                 );
 
 
-        // Ensure counter stays on top of Cuby
+        setContentView(R.layout.activity_478_breathing);
+
+        // Initialize Views
+        breathCircle1 = findViewById(R.id.breathCircle1);
+        breathCircle2 = findViewById(R.id.breathCircle2);
+        breathCircle3 = findViewById(R.id.breathCircle3);
+        ivCuby = findViewById(R.id.ivCuby);
+        tvInstruction = findViewById(R.id.tvInstruction);
+        tvCount = findViewById(R.id.tvCount);
+        tvCycle = findViewById(R.id.tvCycle);
+        btnStart = findViewById(R.id.btnStart);
+
+        // Keep count text on top
         tvCount.bringToFront();
 
         btnStart.setOnClickListener(v -> {
@@ -62,46 +68,43 @@ public class Four78BreathingActivity extends AppCompatActivity {
 
                 updateCycleText();
                 startCycle();
-                startProgressTracking();
-
+                startProgressTracking(); // ✅ ADD
             }
         });
     }
 
     private void startCycle() {
-
         if (!isRunning) return;
 
         if (currentCycle >= MAX_CYCLES) {
             finishBreathing();
-
             return;
         }
 
         currentCycle++;
         updateCycleText();
 
-        // INHALE (4s)
-        startPhase("Breathe in Through the Nose", 4);
-        animateScale(1f, 2f, 4000);
+        // --- INHALE (4s) ---
+        startPhase("Inhale", 4);
+        animateScale(ivCuby, 1f, 2f, 4000);
+        animateScale(breathCircle1, 1f, 1.4f, 4000);
+        animateScale(breathCircle2, 1f, 1.3f, 4000);
+        animateScale(breathCircle3, 1f, 1.2f, 4000);
 
-        // HOLD (7s)
-        handler.postDelayed(
-                () -> startPhase("Hold", 7),
-                4000
-        );
+        // --- HOLD (7s) ---
+        handler.postDelayed(() -> startPhase("Hold", 7), 4000);
 
-        // EXHALE (8s)
+        // --- EXHALE (8s) ---
         handler.postDelayed(() -> {
-            startPhase("Breathe out Through the Mouth", 8);
-            animateScale(2f, 1f, 8000);
+            startPhase("Exhale", 8);
+            animateScale(ivCuby, 2f, 1f, 8000);
+            animateScale(breathCircle1, 1.4f, 1f, 8000);
+            animateScale(breathCircle2, 1.3f, 1f, 8000);
+            animateScale(breathCircle3, 1.2f, 1f, 8000);
         }, 4000 + 7000);
 
-        // NEXT CYCLE
-        handler.postDelayed(
-                this::startCycle,
-                4000 + 7000 + 8000
-        );
+        // --- Next cycle ---
+        handler.postDelayed(this::startCycle, 4000 + 7000 + 8000);
     }
 
     private void startPhase(String label, int seconds) {
@@ -110,22 +113,15 @@ public class Four78BreathingActivity extends AppCompatActivity {
 
         for (int i = 2; i <= seconds; i++) {
             int value = i;
-            handler.postDelayed(
-                    () -> tvCount.setText(String.valueOf(value)),
-                    (i - 1) * 1000L
-            );
+            handler.postDelayed(() -> tvCount.setText(String.valueOf(value)), (i - 1) * 1000L);
         }
     }
 
-    private void animateScale(float from, float to, int duration) {
-        ObjectAnimator scaleX =
-                ObjectAnimator.ofFloat(ivCuby, "scaleX", from, to);
-        ObjectAnimator scaleY =
-                ObjectAnimator.ofFloat(ivCuby, "scaleY", from, to);
-
+    private void animateScale(View view, float from, float to, int duration) {
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", from, to);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", from, to);
         scaleX.setDuration(duration);
         scaleY.setDuration(duration);
-
         scaleX.start();
         scaleY.start();
     }
@@ -137,15 +133,16 @@ public class Four78BreathingActivity extends AppCompatActivity {
     private void finishBreathing() {
         isRunning = false;
 
-        tvInstruction.setText("Done 🌱");
+        tvInstruction.setText("Done");
         tvCount.setText("");
         tvCycle.setVisibility(View.GONE);
         btnStart.setVisibility(View.VISIBLE);
 
-        setResult(RESULT_OK);
-
+        // Stop task progress
         handler.removeCallbacks(progressRunnable);
 
+        // Notify HomeFragment (this triggers rewards)
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -166,5 +163,6 @@ public class Four78BreathingActivity extends AppCompatActivity {
 
         handler.postDelayed(progressRunnable, 1000);
     }
+
 
 }

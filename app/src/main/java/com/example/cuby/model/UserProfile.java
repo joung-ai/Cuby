@@ -12,4 +12,6 @@ public class UserProfile {
     public String cubyName;
     public String cubySkin;
     public long createdAt;
+
+    public String cubyCosmetic;
 }

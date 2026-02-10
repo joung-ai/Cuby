@@ -30,9 +30,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/ivCuby"
+            app:layout_constraintBottom_toTopOf="@id/cubyAvatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
+
             <!-- SPEECH BUBBLE -->
             <TextView
                 android:id="@+id/tvCubyBubble"
@@ -46,6 +47,27 @@
                 android:textSize="14sp"
                 android:visibility="gone" />
 
+            <LinearLayout
+                android:id="@+id/layoutPlayChoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btnPlayYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"/>
+
+                <Button
+                    android:id="@+id/btnPlayNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
 
             <!-- MOOD BUTTONS (TELL-TALE) -->
             <LinearLayout
@@ -126,28 +148,27 @@
 
         <View
             android:id="@+id/cubyShadow"
-            android:layout_width="140dp"
-            android:layout_height="28dp"
+            android:layout_width="160dp"
+            android:layout_height="32dp"
             android:alpha="0.35"
+
             android:background="@drawable/bg_shadow_oval"
             android:elevation="0dp"
-            android:translationY="-55dp"
-            app:layout_constraintEnd_toEndOf="@id/ivCuby"
-            app:layout_constraintStart_toStartOf="@id/ivCuby"
-            app:layout_constraintTop_toBottomOf="@id/ivCuby" />
+            app:layout_constraintTop_toBottomOf="@id/cubyAvatar"
+            app:layout_constraintStart_toStartOf="@id/cubyAvatar"
+            app:layout_constraintEnd_toEndOf="@id/cubyAvatar"/>
 
 
-        <ImageView
-            android:id="@+id/ivCuby"
+        <include
+            android:id="@+id/cubyAvatar"
+            layout="@layout/view_cuby_avatar"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginBottom="100dp"
-            android:elevation="4dp"
-            android:src="@drawable/cuby_idle"
             app:layout_constraintBottom_toTopOf="@id/bottomBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.497" />
 
         <LinearLayout
             android:id="@+id/floatingActions"
@@ -192,14 +213,19 @@
                 android:src="@drawable/ic_chat" />
 
             <ImageButton
-                android:id="@+id/btnMemoryGame"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:id="@+id/btnHanger"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:src="@drawable/ic_hanger"
+                android:tint="#64bce5"
                 android:background="@android:color/transparent"
-                android:contentDescription="Memory Game"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Wardrobe"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_diary" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                tools:ignore="UseAppTint" />
+
+
+
 
 
         </LinearLayout>

@@ -54,15 +54,6 @@ public class HomeActivity extends AppCompatActivity {
                     .commit();
         }
 
-        // ----------- ADDED CODE ----------------
-        ImageButton btnMemoryGame = findViewById(R.id.btnMemoryGame);
-        if (btnMemoryGame != null) {
-            btnMemoryGame.setOnClickListener(v -> {
-                Intent intent = new Intent(HomeActivity.this, MemoryGame.class);
-                startActivity(intent);
-            });
-        }
-        // --------------------------------------
 
     }
 
