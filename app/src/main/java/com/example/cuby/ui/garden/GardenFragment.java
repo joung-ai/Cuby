@@ -170,6 +170,9 @@ public class GardenFragment extends Fragment {
         if (data == null) return;
 
         final String imagePath = data.getStringExtra("drawing_path");
+        final String mood = data.getStringExtra("drawing_mood");
+        final String reflection = data.getStringExtra("drawing_reflection");
+
         if (imagePath == null) return;
 
         final AppRepository repo =
@@ -199,7 +202,19 @@ public class GardenFragment extends Fragment {
                         repo.getDailyLogSync(today);
 
                 if (log != null) {
-                    log.seedPlanted = true;
+                    log.seedPlanted = true;      // 🌱 planted
+                    log.seedUnlocked = false;    // ❗ seed consumed
+                    log.seedShown = true;        // ❗ prevent future messages
+
+                    // ✅ SAVE DRAWING DATA
+                    if (mood != null) {
+                        log.mood = mood;
+                    }
+
+                    if (reflection != null && !reflection.isEmpty()) {
+                        log.reflectionNote = reflection;
+                    }
+
                     repo.insertDailyLog(log);
                 }
 

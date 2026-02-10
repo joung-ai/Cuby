@@ -101,6 +101,7 @@ public class PomodoroActivity extends AppCompatActivity {
     private void startTimer() {
         if (isTimerRunning) return;
 
+        stopTaskProgressTracking();
         startTaskProgressTracking(); // ✅ ADD THIS
 
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
@@ -212,6 +213,34 @@ public class PomodoroActivity extends AppCompatActivity {
             progressHandler.removeCallbacks(progressRunnable);
         }
     }
+
+    private void stopAllProgress() {
+        stopTaskProgressTracking();
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+
+        isTimerRunning = false;
+        isFocusSession = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopAllProgress();
+        stopAlarm();
+    }
+
+    @Override
+    public void onBackPressed() {
+        stopAllProgress();
+        stopAlarm();
+        setResult(Activity.RESULT_CANCELED);
+        finish();
+    }
+
 
 
     @Override

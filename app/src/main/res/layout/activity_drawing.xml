@@ -51,12 +51,31 @@
                 android:layout_height="@dimen/color_button_size"
                 android:backgroundTint="#2196F3"
                 android:layout_margin="@dimen/margin_tiny" />
+            <Button
+                android:id="@+id/btnColorPicker"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="🎨"
+                android:layout_margin="@dimen/margin_tiny"
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+            <Button
+                android:id="@+id/btnEraser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eraser"
+                android:textColor="@color/black"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginStart="8dp"/>
+
+
 
             <Button
                 android:id="@+id/btnClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Clear"
+                android:textColor="@color/black"
                 style="@style/Widget.MaterialComponents.Button.TextButton" />
         </LinearLayout>
 
@@ -71,45 +90,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:layout_marginBottom="@dimen/margin_standard">
 
-            <!-- Happy Mood -->
             <RadioButton
                 android:id="@+id/rbHappy"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:button="@null"
-                android:background="@drawable/radio_mood_happy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Happy"
+                android:textSize="14sp"
                 android:checked="true"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginEnd="12dp" />
 
-            <!-- Calm Mood -->
             <RadioButton
                 android:id="@+id/rbCalm"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:button="@null"
-                android:background="@drawable/radio_mood_calm"
-                android:layout_marginEnd="16dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calm"
+                android:textSize="14sp"
+                android:layout_marginEnd="12dp" />
 
-            <!-- Anxious Mood -->
             <RadioButton
                 android:id="@+id/rbAnxious"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:button="@null"
-                android:background="@drawable/radio_mood_anxious"
-                android:layout_marginEnd="16dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anxious"
+                android:textSize="14sp"
+                android:layout_marginEnd="12dp" />
 
-            <!-- Sad Mood -->
             <RadioButton
                 android:id="@+id/rbSad"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:button="@null"
-                android:background="@drawable/radio_mood_sad" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sad"
+                android:textSize="14sp" />
         </RadioGroup>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -129,6 +145,7 @@
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/btn_blue"
             android:text="Plant Seed" />
 
     </LinearLayout>

@@ -13,12 +13,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cuby.ui.home.HomeActivity;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class BloxxGame extends AppCompatActivity {
+
+    private String cubyColor = "blue"; // default
 
     private FrameLayout gameArea;
     private FrameLayout overlayContainer;
@@ -41,6 +44,9 @@ public class BloxxGame extends AppCompatActivity {
 
     private final int blockWidth = 260;
     private final int blockHeight = 140;
+    private static final int MAX_STACK = 8;
+    private boolean hasWon = false;
+
 
     private float cameraTriggerY;
 
@@ -68,7 +74,9 @@ public class BloxxGame extends AppCompatActivity {
 
         overlayContainer.setClickable(false);
 
-        btnTryAgain.setOnClickListener(v -> restartGame());
+        btnTryAgain.setOnClickListener(v -> {
+            goHome();
+        });
 
         gameArea.post(() -> {
             cameraTriggerY = gameArea.getHeight() / 2f;
@@ -76,10 +84,14 @@ public class BloxxGame extends AppCompatActivity {
             handler.post(gameLoop);
         });
 
+
         gameArea.setOnTouchListener((v, e) -> {
             if (!isGameOver && e.getAction() == MotionEvent.ACTION_DOWN && moving) {
                 moving = false;
                 dropping = true;
+
+                ImageView cuby = (ImageView) currentBlock.getTag();
+                setCubyFace(cuby, "idle_blink");
             }
             return true;
         });
@@ -142,16 +154,31 @@ public class BloxxGame extends AppCompatActivity {
         float topLeft = top.getX();
         float topRight = topLeft + top.getWidth();
 
+        // ❌ MISS = LOSE
         if (centerX <= topLeft || centerX >= topRight) {
-            showMotivationAndStop();
+            showLose();
             return;
         }
 
+        // ✅ LAND SUCCESS
         currentBlock.setY(top.getY() - currentBlock.getHeight());
         blocks.add(currentBlock);
+
+// 😀 happy when stacked correctly
+        ImageView cuby = (ImageView) currentBlock.getTag();
+        setCubyFace(cuby, "happy");
+
+
+        // 🏆 WIN CONDITION
+        if (blocks.size() >= MAX_STACK) {
+            showWin();
+            return;
+        }
+
         adjustCameraIfNeeded();
         spawnMovingBlock();
     }
+
 
     // ================= CAMERA =================
 
@@ -195,10 +222,13 @@ public class BloxxGame extends AppCompatActivity {
                 new FrameLayout.LayoutParams(blockWidth, blockHeight);
         card.setLayoutParams(params);
 
+        // 🧊 CUBY IMAGE
         ImageView cuby = new ImageView(this);
-        cuby.setImageResource(R.drawable.bloxx_cuby);
         cuby.setScaleType(ImageView.ScaleType.FIT_CENTER);
         cuby.setAdjustViewBounds(true);
+
+        // default face
+        setCubyFace(cuby, "idle");
 
         card.addView(
                 cuby,
@@ -208,17 +238,31 @@ public class BloxxGame extends AppCompatActivity {
                 )
         );
 
+        // store reference for later face changes
+        card.setTag(cuby);
+
         return card;
     }
 
     // ================= MOTIVATION =================
+    private void showWin() {
+        isGameOver = true;
+        hasWon = true;
+        handler.removeCallbacks(gameLoop);
 
-    private void showMotivationAndStop() {
+        tvMotivation.setText("🎉 You stacked 8!\nCuby is proud 💙");
+        gameOverOverlay.setVisibility(View.VISIBLE);
+        overlayContainer.setClickable(true);
+    }
+
+
+    private void showLose() {
         isGameOver = true;
         handler.removeCallbacks(gameLoop);
 
-        // Pick random phrase
-        String phrase = motivationalPhrases[new Random().nextInt(motivationalPhrases.length)];
+        String phrase = motivationalPhrases[
+                new Random().nextInt(motivationalPhrases.length)
+                ];
         tvMotivation.setText(phrase);
 
         gameOverOverlay.setVisibility(View.VISIBLE);
@@ -235,4 +279,25 @@ public class BloxxGame extends AppCompatActivity {
     private float getGroundY() {
         return gameArea.getHeight() - blockHeight;
     }
+    private void setCubyFace(ImageView cuby, String expression) {
+        String resName = "cuby_base_" + cubyColor + "_" + expression;
+
+        int resId = getResources().getIdentifier(
+                resName,
+                "drawable",
+                getPackageName()
+        );
+
+        if (resId != 0) {
+            cuby.setImageResource(resId);
+        }
+    }
+    private void goHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+
 }

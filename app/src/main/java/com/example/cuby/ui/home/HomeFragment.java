@@ -410,9 +410,20 @@ public class HomeFragment extends Fragment {
                 requireActivity().runOnUiThread(() -> {
 
                     if (percent >= 100) {
-                        // ✅ USER-CONFIRMED COMPLETION
+
                         cubyMoodEngine.completeCurrentTask(today);
                         repository.addFood(3);
+
+                        // 🌱 UNLOCK SEED PROPERLY
+                        repository.getExecutor().execute(() -> {
+                            DailyLog freshLog = repository.getDailyLogSync(today);
+                            if (freshLog != null) {
+                                freshLog.taskCompleted = true;   // ✅ guaranteed
+                                freshLog.seedUnlocked = true;
+                                freshLog.seedShown = false;      // allow message ONCE
+                                repository.insertDailyLog(freshLog);
+                            }
+                        });
 
                         tvCubyBubble.setVisibility(View.VISIBLE);
                         tvCubyBubble.setText(
@@ -551,21 +562,20 @@ public class HomeFragment extends Fragment {
                 return;
             }
 
-            // 🌱 SEED MESSAGE — SHOW ONCE
-            if (log.taskCompleted && log.seedUnlocked && !log.seedShown
-                    && cubyMoodEngine.getCurrentTaskFromLog(log) == null) {
+// 🌱 SEED MESSAGE — SHOW ONCE (HARD GUARANTEE)
+            if (log.taskCompleted && log.seedUnlocked && !log.seedShown) {
+
+                // ✅ mark as shown IMMEDIATELY
+                log.seedShown = true;
+                repository.getExecutor().execute(() -> {
+                    repository.insertDailyLog(log);
+                });
+
                 showCubyMessage(
                         "🌱 You did it!\nI have a seed for you.\nGo check the garden!",
                         BubblePriority.SYSTEM,
                         4000
                 );
-
-
-                // mark as shown (background thread)
-                repository.getExecutor().execute(() -> {
-                    log.seedShown = true;
-                    repository.insertDailyLog(log);
-                });
 
                 return;
             }

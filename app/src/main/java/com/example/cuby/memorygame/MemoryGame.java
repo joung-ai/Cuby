@@ -59,14 +59,19 @@ public class MemoryGame extends AppCompatActivity {
 
     private void calculateCardSize() {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
+
         int screenWidth = metrics.widthPixels;
         int screenHeight = metrics.heightPixels;
 
-        // Adjust available height by subtracting header and padding (tweak as needed)
-        int availableHeight = screenHeight - (int) (280 * metrics.density);
+        // Leave space for system UI + dialog-safe padding
+        int safeHeight = screenHeight
+                - (int) (120 * metrics.density); // much safer than 280dp
 
-        int cardWidth = (screenWidth - margin * 8) / NUM_COLUMNS;
-        int cardHeight = (availableHeight - margin * 10) / NUM_ROWS;
+        int cardWidth =
+                (screenWidth - margin * (NUM_COLUMNS + 1)) / NUM_COLUMNS;
+
+        int cardHeight =
+                (safeHeight - margin * (NUM_ROWS + 1)) / NUM_ROWS;
 
         cardSize = Math.min(cardWidth, cardHeight);
     }
@@ -145,28 +150,40 @@ public class MemoryGame extends AppCompatActivity {
     }
 
     private void showGreatJobDialog() {
+
+        String message =
+                farewellMessages[
+                        new java.util.Random().nextInt(farewellMessages.length)
+                        ];
+
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("🎉 Great Job!")
-                .setMessage("You matched all the cards!\nPlay again?")
+                .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton("Yes", (dialogInterface, which) -> restartGame())
-                .setNegativeButton("Back", (dialogInterface, which) -> {
-                    Intent intent = new Intent(MemoryGame.this, HomeActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
+                .setPositiveButton("Back", (dialogInterface, which) -> {
+                    goHome();
                 })
                 .create();
 
         dialog.show();
 
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.black));
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.black));
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(getResources().getColor(android.R.color.black));
     }
 
-    private void restartGame() {
-        matchedPairs = 0;
-        shuffleImages();
-        createBoard();
+    // 🧸 CUBY FAREWELL MESSAGES
+    private final String[] farewellMessages = {
+            "You did amazing 🌱",
+            "Your focus paid off 💙",
+            "Great effort — be proud ✨",
+            "Let’s rest your mind now 😊",
+            "One step at a time 🌈"
+    };
+
+    private void goHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 }

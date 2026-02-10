@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +19,9 @@ public class DrawingView extends View {
     private Paint canvasPaint;
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
+
     private int paintColor = 0xFF4CAF50; // default green
+    private boolean isEraser = false;
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -26,13 +30,15 @@ public class DrawingView extends View {
 
     private void setupDrawing() {
         drawPath = new Path();
+
         drawPaint = new Paint();
-        drawPaint.setColor(paintColor);
         drawPaint.setAntiAlias(true);
         drawPaint.setStrokeWidth(20);
         drawPaint.setStyle(Paint.Style.STROKE);
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        drawPaint.setColor(paintColor);
+
         canvasPaint = new Paint(Paint.DITHER_FLAG);
     }
 
@@ -51,36 +57,47 @@ public class DrawingView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float touchX = event.getX();
-        float touchY = event.getY();
+        float x = event.getX();
+        float y = event.getY();
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                drawPath.moveTo(touchX, touchY);
+                drawPath.moveTo(x, y);
                 break;
+
             case MotionEvent.ACTION_MOVE:
-                drawPath.lineTo(touchX, touchY);
+                drawPath.lineTo(x, y);
                 break;
+
             case MotionEvent.ACTION_UP:
                 drawCanvas.drawPath(drawPath, drawPaint);
                 drawPath.reset();
                 break;
-            default:
-                return false;
         }
+
         invalidate();
         return true;
     }
 
-    public void startNew() {
-        drawCanvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
-        invalidate();
-    }
-    
-    public void setColor(String newColor) {
-        invalidate();
-        paintColor = Color.parseColor(newColor);
+    // 🎨 NORMAL DRAW MODE
+    public void setColor(String color) {
+        isEraser = false;
+        paintColor = Color.parseColor(color);
         drawPaint.setColor(paintColor);
+        drawPaint.setXfermode(null);
+    }
+
+    // 🧽 ERASER MODE
+    public void enableEraser() {
+        isEraser = true;
+        drawPaint.setXfermode(
+                new PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        );
+    }
+
+    public void startNew() {
+        drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        invalidate();
     }
 
     public Bitmap getBitmap() {

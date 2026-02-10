@@ -101,9 +101,32 @@ public class DiaryFragment extends Fragment {
         if (entry != null) {
             etContent.setText(entry.content);
             btnDelete.setVisibility(View.VISIBLE);
+
             btnDelete.setOnClickListener(v -> {
-                viewModel.delete(entry);
+
+                AlertDialog confirmDialog =
+                        new AlertDialog.Builder(requireContext())
+                                .setTitle("Delete entry?")
+                                .setMessage("This action cannot be undone.")
+                                .setNegativeButton("Delete", (dialog, which) -> {
+                                    viewModel.delete(entry);
+                                    dialog.dismiss();
+                                })
+                                .setPositiveButton("Cancel", (dialog, which) -> dialog.dismiss())
+                                .create();
+
+                confirmDialog.show();
+
+                // 🖤 Force black buttons
+                confirmDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                        .setTextColor(Color.BLACK);
+                confirmDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                        .setTextColor(Color.BLACK);
+
+                confirmDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setAllCaps(false);
+                confirmDialog.getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);
             });
+
         } else {
             btnDelete.setVisibility(View.GONE);
         }

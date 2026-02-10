@@ -2,6 +2,7 @@ package com.example.cuby.ui.garden;
 
 import android.app.AlertDialog;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -227,8 +228,14 @@ public class CalendarDialog extends DialogFragment {
         }
 
 
-        builder.setView(view)
+        AlertDialog dialog = builder
+                .setView(view)
                 .setPositiveButton("Close", null)
-                .show();
+                .create();
+
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(Color.BLACK);
     }
 }

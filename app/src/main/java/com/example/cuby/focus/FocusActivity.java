@@ -17,6 +17,7 @@ import com.example.cuby.data.AppRepository;
 import com.example.cuby.logic.CubyMoodEngine;
 import com.example.cuby.logic.DailyTask;
 import com.example.cuby.model.DailyLog;
+import com.example.cuby.ui.home.HomeActivity;
 import com.example.cuby.utils.DateUtils;
 
 public class FocusActivity extends AppCompatActivity {
@@ -48,7 +49,11 @@ public class FocusActivity extends AppCompatActivity {
         tvInfo.setText("Focus mode helps you avoid distractions.\nYou can cancel anytime.");
 
         btnStart.setOnClickListener(v -> checkOverlayPermission());
-        btnCancel.setOnClickListener(v -> finishFocus(false));
+        btnCancel.setOnClickListener(v -> {
+            finishFocus(false);
+            goHome();
+        });
+
     }
 
     private void checkOverlayPermission() {
@@ -72,6 +77,7 @@ public class FocusActivity extends AppCompatActivity {
     }
 
     private void startFocus() {
+        stopProgressTracking();
         startService(new Intent(this, FocusOverlayService.class));
 
         isRunning = true;
@@ -110,4 +116,32 @@ public class FocusActivity extends AppCompatActivity {
 
         finish();
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopProgressTracking();
+        stopService(new Intent(this, FocusOverlayService.class));
+    }
+
+    private void stopProgressTracking() {
+        isRunning = false;
+
+        if (progressRunnable != null) {
+            handler.removeCallbacks(progressRunnable);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        stopProgressTracking();
+        stopService(new Intent(this, FocusOverlayService.class));
+        goHome();
+    }
+
+
+    private void goHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
 }
