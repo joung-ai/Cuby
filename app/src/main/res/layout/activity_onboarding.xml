@@ -24,11 +24,11 @@
         <!-- Cuby Image -->
         <ImageView
             android:id="@+id/ivCuby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_marginBottom="20dp"
             android:elevation="3dp"
-            android:src="@drawable/cuby_idle" />
+            android:src="@drawable/app_logo" />
 
         <!-- Welcome Text -->
         <TextView
@@ -60,14 +60,19 @@
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
+            android:textColor="@android:color/black"
+            app:boxStrokeWidthFocused="0dp"
+            app:rippleColor="#000000"
+            app:hintTextColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:padding="15dp" />
+                android:padding="15dp"
+                app:rippleColor="#000000"
+                app:hintTextColor="@color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -82,14 +87,19 @@
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
+            android:textColor="@android:color/black"
+            app:boxStrokeWidthFocused="0dp"
+            app:rippleColor="#000000"
+            app:hintTextColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etCubyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:padding="15dp" />
+                android:padding="15dp"
+                app:rippleColor="#000000"
+                app:hintTextColor="@color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Skin Selection -->
@@ -114,14 +124,14 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/radio_cuby_selector"
+                android:background="@drawable/selector_skin_blue"
                 android:button="@null" />
 
             <RadioButton
                 android:id="@+id/rbSkinPink"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/radio_cuby_selector"
+                android:background="@drawable/selector_skin_pink"
                 android:button="@null" />
         </RadioGroup>
 

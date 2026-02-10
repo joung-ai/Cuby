@@ -135,6 +135,19 @@ public class CubyMoodEngine {
     }
 
 
+    public String getIdleMessage() {
+        String[] idle = {
+                "I'm here.",
+                "Feeling calm today?",
+                "Let's take care of ourselves.",
+                "You are enough just as you are.",
+                "One step at a time is still progress.",
+                "Breathe in calm, breathe out worry.",
+                "You deserve kindness, especially from yourself.",
+                "Every storm runs out of rain."
+        };
+        return idle[(int)(Math.random() * idle.length)];
+    }
 
 
 

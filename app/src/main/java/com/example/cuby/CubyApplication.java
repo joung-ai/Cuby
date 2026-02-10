@@ -1,6 +1,8 @@
 package com.example.cuby;
 
 import android.app.Application;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
@@ -20,6 +22,11 @@ public class CubyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO
+        );
+
         instance = this;
         
         database = Room.databaseBuilder(getApplicationContext(),

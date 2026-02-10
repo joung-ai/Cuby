@@ -54,7 +54,7 @@
     <!-- UI accents -->
     <color name="button_gradient_start">#FF6C63FF</color>
     <color name="button_gradient_end">#FF9D97FF</color>
-    <color name="ripple">#336C63FF</color>
+    <color name="ripple">#FF000000</color>
     <color name="divider">#1A000000</color>
     <color name="btn_blue">#246398</color>
 

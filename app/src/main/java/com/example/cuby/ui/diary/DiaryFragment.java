@@ -1,6 +1,7 @@
 package com.example.cuby.ui.diary;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +54,7 @@ public class DiaryFragment extends Fragment {
                 );
 
         viewModel = new ViewModelProvider(this).get(DiaryViewModel.class);
-        
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new DiaryAdapter(this::showEditDialog);
@@ -75,12 +76,19 @@ public class DiaryFragment extends Fragment {
     private void showEntryDialog(DiaryEntry entry) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_diary_entry, null);
-        
+
         EditText etContent = view.findViewById(R.id.etContent);
         Switch swCuby = view.findViewById(R.id.swCubyMode);
         TextView tvCubyPrompt = view.findViewById(R.id.tvCubyPrompt);
+
+// 📓 notebook styling for the prompt board
+        tvCubyPrompt.setBackgroundResource(R.drawable.bg_notebook);
+        int pad = (int) (12 * getResources().getDisplayMetrics().density);
+        tvCubyPrompt.setPadding(pad, pad, pad, pad);
+        tvCubyPrompt.setVisibility(View.GONE);
+
         Button btnDelete = view.findViewById(R.id.btnDelete);
-        
+
         swCuby.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 tvCubyPrompt.setVisibility(View.VISIBLE);
@@ -100,9 +108,10 @@ public class DiaryFragment extends Fragment {
             btnDelete.setVisibility(View.GONE);
         }
 
-        builder.setView(view)
+        AlertDialog dialog = builder
+                .setView(view)
                 .setTitle(entry == null ? "New Entry" : "Edit Entry")
-                .setPositiveButton("Save", (dialog, which) -> {
+                .setPositiveButton("Save", (d, which) -> {
                     String content = etContent.getText().toString().trim();
                     if (!content.isEmpty()) {
                         if (entry == null) {
@@ -120,7 +129,18 @@ public class DiaryFragment extends Fragment {
                     }
                 })
                 .setNegativeButton("Cancel", null)
-                .create()
-                .show();
+                .create();
+
+        dialog.show();
+
+// 🖤 FORCE PURE BLACK BUTTON TEXT
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+
+// Optional polish
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setAllCaps(false);
     }
+
+
 }

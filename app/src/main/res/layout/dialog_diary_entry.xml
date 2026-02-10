@@ -20,10 +20,11 @@
         android:text="Cuby asks..."
         android:textColor="#5D4037"
         android:textStyle="italic"
-        android:background="#FFF3E0"
-        android:padding="10dp"
+        android:background="@drawable/bg_notebook_note"
+        android:padding="12dp"
         android:layout_marginBottom="12dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:forceDarkAllowed="false"/>
 
     <EditText
         android:id="@+id/etContent"
@@ -36,7 +37,7 @@
         android:textSize="15sp"
         android:lineSpacingExtra="8dp"
         android:inputType="textMultiLine"
-        android:background="@drawable/bg_notebook_lines"/>
+        android:background="@drawable/bg_notebook_note"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDelete"
@@ -51,7 +52,7 @@
         app:backgroundTint="@color/red_soft"
         app:rippleColor="#33FFFFFF"
 
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="14sp"
         android:elevation="2dp"/>
 

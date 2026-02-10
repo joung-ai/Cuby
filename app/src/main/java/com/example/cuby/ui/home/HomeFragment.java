@@ -92,6 +92,38 @@ public class HomeFragment extends Fragment {
 
     private ActivityResultLauncher<Intent> taskLauncher;
 
+    private enum BubblePriority {
+        SYSTEM,     // task, seed, important
+        USER,       // feed, wardrobe
+        IDLE        // default chatter
+    }
+
+    private BubblePriority currentPriority = BubblePriority.IDLE;
+    private Runnable clearBubbleRunnable;
+
+    private void showCubyMessage(String text, BubblePriority priority, long durationMs) {
+        if (priority.ordinal() < currentPriority.ordinal()) return;
+
+        currentPriority = priority;
+
+        tvCubyBubble.setVisibility(View.VISIBLE);
+        tvCubyBubble.setText(text);
+
+        if (clearBubbleRunnable != null) {
+            tvCubyBubble.removeCallbacks(clearBubbleRunnable);
+        }
+
+        clearBubbleRunnable = () -> {
+            currentPriority = BubblePriority.IDLE;
+            tvCubyBubble.setText(
+                    cubyMoodEngine.getIdleMessage()
+            );
+        };
+
+        tvCubyBubble.postDelayed(clearBubbleRunnable, durationMs);
+    }
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
@@ -231,7 +263,12 @@ public class HomeFragment extends Fragment {
                         );
                         layoutPlayChoice.setVisibility(View.VISIBLE);
                     } else {
-                        tvCubyBubble.setText("Yum! Thank you 💕");
+                        showCubyMessage(
+                                "Yum! Thank you 💕",
+                                BubblePriority.USER,
+                                2500
+                        );
+
                     }
 
                     Toast.makeText(
@@ -517,9 +554,12 @@ public class HomeFragment extends Fragment {
             // 🌱 SEED MESSAGE — SHOW ONCE
             if (log.taskCompleted && log.seedUnlocked && !log.seedShown
                     && cubyMoodEngine.getCurrentTaskFromLog(log) == null) {
-                tvCubyBubble.setText(
-                        "🌱 You did it!\nI have a seed for you.\nGo check the garden!"
+                showCubyMessage(
+                        "🌱 You did it!\nI have a seed for you.\nGo check the garden!",
+                        BubblePriority.SYSTEM,
+                        4000
                 );
+
 
                 // mark as shown (background thread)
                 repository.getExecutor().execute(() -> {
@@ -628,34 +668,36 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.btnCosmeticCat).setOnClickListener(v -> {
             cubyController.setCosmetic("cat");
             repository.updateCubyCosmetic("cat");
-            tvCubyBubble.setText("Meow~ ");
+            showCubyMessage("Meow~", BubblePriority.USER, 2000);
+
             dialog.dismiss();
         });
 
         view.findViewById(R.id.btnCosmeticDog).setOnClickListener(v -> {
             cubyController.setCosmetic("dog");
             repository.updateCubyCosmetic("dog");
-            tvCubyBubble.setText("Woof! ");
+            showCubyMessage("Woof", BubblePriority.USER, 2000);
             dialog.dismiss();
         });
 
         view.findViewById(R.id.btnCosmeticGlasses).setOnClickListener(v -> {
             cubyController.setCosmetic("glasses");
             repository.updateCubyCosmetic("glasses");
-            tvCubyBubble.setText("I look smart ");
+            showCubyMessage("I look smart", BubblePriority.USER, 2000);
             dialog.dismiss();
         });
 
         view.findViewById(R.id.btnCosmeticEmployed).setOnClickListener(v -> {
             cubyController.setCosmetic("employed");
             repository.updateCubyCosmetic("employed");
-            tvCubyBubble.setText("I have a job now ");
+            showCubyMessage("I have a job now.", BubblePriority.USER, 2000);
             dialog.dismiss();
         });
 
         view.findViewById(R.id.btnCosmeticNone).setOnClickListener(v -> {
             cubyController.clearCosmetic();
-            tvCubyBubble.setText("All comfy again ✨");
+            showCubyMessage("All comfy again ✨", BubblePriority.USER, 2000);
+
 
             // 💾 Save to DB
             repository.updateCubyCosmetic(null);
